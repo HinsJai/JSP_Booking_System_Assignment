@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/loginTest.jsp", "/loginFailTest.jsp"})
+@WebFilter(urlPatterns = {"/loginTest.jsp"})
 public class AuthenticationFilter implements Filter {
 
     public FilterConfig config;

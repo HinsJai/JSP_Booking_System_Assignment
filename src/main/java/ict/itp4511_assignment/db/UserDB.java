@@ -17,7 +17,7 @@ public class UserDB {
     private String dbPassword;
     private String dbUrl;
 
-    public UserDB(String dbUser, String dbPassword, String dbUrl) {
+    public UserDB(String dbUrl, String dbUser, String dbPassword) {
         this.dbUser = dbUser;
         this.dbPassword = dbPassword;
         this.dbUrl = dbUrl;
@@ -30,7 +30,7 @@ public class UserDB {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return DriverManager.getConnection(dbUser, dbPassword, dbUrl);
+        return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
     }
 
     public void createUserTable() {
@@ -40,7 +40,16 @@ public class UserDB {
         try {
             conn = getConnection();
             stmnt = conn.createStatement();
-            String sql = "Create table if not exists userInfo (" + "userID int(5) AUTO_INCREMENT PRIMARY KEY ," + "email varchar(50) not null," + "password varchar(50) not null," + "fName varchar(25) not null," + "lName varchar(25) not null," + "gender ENUM('M', 'F') not null," + "contact int(8) not null," + "root ENUM('User', 'Staff', 'Technician', 'Technician_admin', 'Courier') NOT NULL)";
+            String sql = "Create table if not exists userInfo (" + "userID int(5) AUTO_INCREMENT PRIMARY KEY ," +
+                    "email varchar(50) not null," +
+                    "password varchar(50) not null," +
+                    "fName varchar(25) not null," +
+                    "lName varchar(25) not null," +
+                    "gender ENUM('M', 'F') not null," +
+                    "contact int(8) not null," +
+                    "root ENUM('User', 'Staff', 'Technician', 'Technician_admin', 'Courier') NOT NULL," +
+                    "campusID ENUM('CW','LWL','ST','TM','TY') not null," +
+                    "FOREIGN KEY (campusID) REFERENCES campus(campusID))";
             stmnt.execute(sql);
             stmnt.close();
             conn.close();
@@ -54,6 +63,35 @@ public class UserDB {
             e.printStackTrace();
         }
     }
+
+    public void insertUserRecord() {
+        Statement stmnt = null;
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            stmnt = conn.createStatement();
+            String sql = "Insert into userInfo (email, password, fName,lName,gender, contact, root, campusID) values" +
+                    " ('jason199794@gmail.com', " +
+                    "'Bb123456'," +
+                    " 'Jason', " +
+                    "'Kong', " +
+                    "'M', " +
+                    "53283616, " +
+                    "'Technician_admin', " +
+                    "'TY')";
+            stmnt.execute(sql);
+            stmnt.close();
+            conn.close();
+        } catch (SQLException e) {
+            while (e != null) {
+                e.printStackTrace();
+                e = e.getNextException();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public UserInfoBean isValidUser(String email, String password) {
         Connection conn = null;

@@ -18,8 +18,9 @@ import java.io.IOException;
  * @Description: ict.itp4511_assignment.servlet
  * @version: 1.0
  */
-@WebServlet(name = "LoginController", urlPatterns = "/login")
+@WebServlet(name = "LoginController", urlPatterns = {"/verify_login"})
 public class LoginController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
     private UserDB userDB;
 
     public void init() {
@@ -36,7 +37,7 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String action = request.getParameter("action");
+        String action = request.getParameter("loginAction");
         if (!isAuthenticated(request) && !("authenticate".equals(action))) {
             doLogin(request, response);
             return;
@@ -52,25 +53,25 @@ public class LoginController extends HttpServlet {
     }
 
     private void doAuthenticate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String username = request.getParameter("username");
+        String username = request.getParameter("email");
         String password = request.getParameter("password");
         String targetURL;
         UserInfoBean userBean = userDB.isValidUser(username, password);
 
         if (userBean.getIsValidUser()) {
             HttpSession session = request.getSession(true);
-//            UserInfoBean bean = new UserInfoBean();
-//            bean.setUsername(username);
             session.setAttribute("userInfo", userBean);
-            targetURL = "/loginTest.jsp";
-            response.sendRedirect(request.getContextPath() + targetURL);
+            response.sendRedirect("login?success=true");
+//            targetURL = "/loginTest.jsp";
+//            RequestDispatcher dispatcher = request.getRequestDispatcher(targetURL);
+//            dispatcher.forward(request, response);
         } else {
-            targetURL = "/loginFailTest.jsp";
-            response.sendRedirect(request.getContextPath() + targetURL);
+//            targetURL = "/login.jsp";
+////            RequestDispatcher dispatcher = request.getRequestDispatcher(targetURL);
+////            dispatcher.forward(request, response);
+            response.sendRedirect("login?success=false");
         }
-//        RequestDispatcher rd;
-//        rd = getServletContext().getRequestDispatcher(targetURL);
-//        rd.forward(request, response);
+
     }
 
     private boolean isAuthenticated(HttpServletRequest request) {
@@ -83,8 +84,9 @@ public class LoginController extends HttpServlet {
     }
 
     private void doLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String targetURL = "/";
-        response.sendRedirect(request.getContextPath() + targetURL);
+//        String targetURL = "/";
+//        response.sendRedirect(request.getContextPath() + targetURL);
+        response.sendRedirect("login?logout=true");
 //        RequestDispatcher rd;
 //        rd = getServletContext().getRequestDispatcher(targetURL);
 //        rd.forward(request, response);
@@ -94,7 +96,6 @@ public class LoginController extends HttpServlet {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.removeAttribute("userInfo");
-//            session.setAttribute("userInfo", null);
             session.invalidate();
         }
         doLogin(request, response);

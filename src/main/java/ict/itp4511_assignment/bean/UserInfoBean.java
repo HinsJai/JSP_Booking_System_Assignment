@@ -1,12 +1,14 @@
 package ict.itp4511_assignment.bean;
 
+import java.io.Serializable;
+
 /**
  * @Author: Kong Kwok Hin
  * @Date: 2024/3/25 - 03 - 25 - 下午 11:30
  * @Description: ict.itp4511_assignment.bean
  * @version: 1.0
  */
-public class UserInfoBean {
+public class UserInfoBean implements Serializable {
 
     private String email;
     private String root;

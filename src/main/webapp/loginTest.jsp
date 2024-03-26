@@ -16,12 +16,10 @@
             <jsp:getProperty name="userInfo" property="userID" />
         </b>
         <p>Welcome to the ICT</p>
-        <form method="post" action="login">
-            <input type="hidden" name="action" value="logout">
-            <input type="submit" value="Logout" name="logoutButton">
+        <form method="post" action="verify_login">
+            <button name="loginAction" value="logout">Logout</button>
         </form>
         <hr>
-<%--        <a href="${pageContext.request.contextPath}/list?action=list">Brand</a>--%>
 
 
     </body>

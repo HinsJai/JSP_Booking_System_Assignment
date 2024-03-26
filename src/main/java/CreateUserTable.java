@@ -6,12 +6,13 @@ import ict.itp4511_assignment.db.UserDB;
  * @Description: PACKAGE_NAME
  * @version: 1.0
  */
-public class CreateTable {
+public class CreateUserTable {
     public static void main(String[] args) {
         String dbUrl = "jdbc:mysql://localhost:3306/ITP4511_DB?useSSL=false";
         String dbUser = "root";
-        String dbPassword = "";
-        UserDB userDb = new UserDB(dbUrl, dbUser, dbPassword);
-        userDb.createUserTable();
+        String dbPassword = "root";
+        UserDB userDB = new UserDB(dbUrl, dbUser, dbPassword);
+        userDB.createUserTable();
+        userDB.insertUserRecord();
     }
 }

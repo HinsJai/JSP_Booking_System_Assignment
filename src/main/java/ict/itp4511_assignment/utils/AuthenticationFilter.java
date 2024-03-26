@@ -14,24 +14,39 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/loginTest.jsp","/loginFailTest.jsp"})
-
+@WebFilter(urlPatterns = {"/loginTest.jsp", "/loginFailTest.jsp"})
 public class AuthenticationFilter implements Filter {
+
+    public FilterConfig config;
+
+    @Override
+    public void init(FilterConfig config) throws ServletException {
+        this.config = config;
+    }
+
+
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
 
-        String loginURI = req.getContextPath() + "/";
+//        String loginURI = req.getContextPath() + "/login";
 
         boolean loggedIn = session != null && session.getAttribute("userInfo") != null;
-        System.out.println("loggedIn: " + loggedIn);
-        boolean loginRequest = req.getRequestURI().equals(loginURI);
+//        boolean loginRequest = req.getRequestURI().equals(loginURI);
 
-        if (loggedIn || loginRequest) {
+        if (loggedIn) {
             chain.doFilter(request, response);
         } else {
-            res.sendRedirect(loginURI);
+            res.sendRedirect("login?success=false");
+
         }
     }
+
+    @Override
+    public void destroy() {
+        this.config = null;
+    }
+
 }

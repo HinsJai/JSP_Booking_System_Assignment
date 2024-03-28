@@ -4,6 +4,7 @@
 #!**/src/test/**/target/
 
 **/src/main/webapp/lib
+.idea
 
 ### IntelliJ IDEA ###
 #.idea/modules.xml

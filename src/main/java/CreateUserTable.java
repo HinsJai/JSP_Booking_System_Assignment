@@ -10,7 +10,7 @@ public class CreateUserTable {
     public static void main(String[] args) {
         String dbUrl = "jdbc:mysql://localhost:3306/ITP4511_DB?useSSL=false";
         String dbUser = "root";
-        String dbPassword = "root";
+        String dbPassword = "";
         UserDB userDB = new UserDB(dbUrl, dbUser, dbPassword);
         userDB.createUserTable();
         userDB.insertUserRecord();

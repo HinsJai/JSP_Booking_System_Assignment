@@ -1,0 +1,4 @@
+#table_outer {
+    height: 5em;
+    overflow: auto;
+}

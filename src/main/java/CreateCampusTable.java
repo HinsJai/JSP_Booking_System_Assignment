@@ -9,9 +9,9 @@ import ict.itp4511_assignment.db.CampusDB;
 public class CreateCampusTable {
 
     public static void main(String[] args) {
-        String dbUrl = "jdbc:mysql://localhost:3306/ITP4511_DB?useSSL=false";
+        String dbUrl = "jdbc:mysql://localhost:3306/ITP4511_DB?allowPublicKeyRetrieval=true&useSSL=false";
         String dbUser = "root";
-        String dbPassword = "root";
+        String dbPassword = "";
         CampusDB campusDB = new CampusDB(dbUrl, dbUser, dbPassword);
         campusDB.createCampusTable();
         campusDB.insertCampusRecord();

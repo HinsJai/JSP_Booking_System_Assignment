@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Objects;
 
 /**
  * @Author: Kong Kwok Hin
@@ -23,13 +22,16 @@ public class LoginAccessController extends HttpServlet {
         HttpSession session = request.getSession(false);
         boolean sessionCheck = session != null && session.getAttribute("userInfo") != null;
         if (loginPass && sessionCheck) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/loginTest.jsp");
-            dispatcher.forward(request, response);
+//            RequestDispatcher dispatcher = request.getRequestDispatcher("/home.jsp");
+//            dispatcher.forward(request, response);
+            response.sendRedirect("home?action=list");
         } else if (!loginPass && !sessionCheck) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
             dispatcher.forward(request, response);
         } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+//            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
+            dispatcher.forward(request, response);
         }
     }
 }

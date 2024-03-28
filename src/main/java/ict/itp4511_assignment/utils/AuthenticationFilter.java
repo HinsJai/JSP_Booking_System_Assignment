@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/loginTest.jsp"})
+@WebFilter(urlPatterns = {"/home.jsp"})
 public class AuthenticationFilter implements Filter {
 
     public FilterConfig config;
@@ -23,7 +23,6 @@ public class AuthenticationFilter implements Filter {
     public void init(FilterConfig config) throws ServletException {
         this.config = config;
     }
-
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

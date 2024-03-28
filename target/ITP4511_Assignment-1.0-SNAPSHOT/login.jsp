@@ -23,7 +23,7 @@
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="card-body p-3 p-md-4 p-xl-5">
-                                <div class="row">
+                                <div class="">
                                     <div class="col-6">
                                         <div class="mb-5 ">
                                             <div class="text-center">
@@ -31,8 +31,10 @@
                                                      loading="lazy"
                                                      src="images/HKIIT_logo.png" alt="login logo">
                                             </div>
-                                            <h5><%= request.getParameter("success") == null ? "" : "<div class=\"alert alert-danger\" role=\"alert\">Incorrect email or password , please try again!</div>"%>
-                                            </h5>
+                                            <div>
+                                                <%= request.getParameter("success") == null ? "" :
+                                                        "<div class=\"alert alert-danger\" role=\"alert\">Incorrect email or password , please try again!</div>"%>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

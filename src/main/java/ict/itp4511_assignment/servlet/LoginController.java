@@ -3,7 +3,6 @@ package ict.itp4511_assignment.servlet;
 import ict.itp4511_assignment.bean.UserInfoBean;
 import ict.itp4511_assignment.db.UserDB;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,7 +46,8 @@ public class LoginController extends HttpServlet {
         } else if ("logout".equals(action)) {
             doLogout(request, response);
         } else {
-            response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED);
+            response.sendRedirect("login?success=false");
+//            response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED);
         }
 
     }
@@ -62,7 +62,7 @@ public class LoginController extends HttpServlet {
             HttpSession session = request.getSession(true);
             session.setAttribute("userInfo", userBean);
             response.sendRedirect("login?success=true");
-//            targetURL = "/loginTest.jsp";
+//            targetURL = "/home.jsp";
 //            RequestDispatcher dispatcher = request.getRequestDispatcher(targetURL);
 //            dispatcher.forward(request, response);
         } else {

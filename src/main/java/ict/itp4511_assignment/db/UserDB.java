@@ -114,7 +114,10 @@ public class UserDB {
                 userBean.setRoot(rs.getString("root"));
                 userBean.setfName(rs.getString("fName"));
                 userBean.setlName(rs.getString("lName"));
+                userBean.setGender(rs.getString("gender"));
                 userBean.setUserID(rs.getInt("userID"));
+                userBean.setContact(rs.getInt("contact"));
+                userBean.setCampus(rs.getString("campusID"));
             } else {
                 userBean = new UserInfoBean();
                 userBean.setIsValidUser(false);

@@ -14,6 +14,9 @@ public class UserInfoBean implements Serializable {
     private String root;
     private String fName;
     private String lName;
+    private String gender;
+    private int contact;
+    private String campus;
     private boolean isValidUser = false;
     private int userID;
 
@@ -58,6 +61,30 @@ public class UserInfoBean implements Serializable {
 
     public void setlName(String lName) {
         this.lName = lName;
+    }
+
+    public String getGender() {
+        return this.gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public int getContact() {
+        return contact;
+    }
+
+    public void setContact(int contact) {
+        this.contact = contact;
+    }
+
+    public String getCampus() {
+        return campus;
+    }
+
+    public void setCampus(String campus) {
+        this.campus = campus;
     }
 
     public boolean getIsValidUser() {

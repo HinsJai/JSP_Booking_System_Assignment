@@ -62,13 +62,7 @@ public class LoginController extends HttpServlet {
             HttpSession session = request.getSession(true);
             session.setAttribute("userInfo", userBean);
             response.sendRedirect("login?success=true");
-//            targetURL = "/home.jsp";
-//            RequestDispatcher dispatcher = request.getRequestDispatcher(targetURL);
-//            dispatcher.forward(request, response);
         } else {
-//            targetURL = "/login.jsp";
-////            RequestDispatcher dispatcher = request.getRequestDispatcher(targetURL);
-////            dispatcher.forward(request, response);
             response.sendRedirect("login?success=false");
         }
 
@@ -84,12 +78,8 @@ public class LoginController extends HttpServlet {
     }
 
     private void doLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-//        String targetURL = "/";
-//        response.sendRedirect(request.getContextPath() + targetURL);
         response.sendRedirect("login?logout=true");
-//        RequestDispatcher rd;
-//        rd = getServletContext().getRequestDispatcher(targetURL);
-//        rd.forward(request, response);
+
     }
 
     private void doLogout(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

@@ -14,11 +14,16 @@
                 <img class="w-60 h-20" src="images/HKIIT_logo.png" alt="">
             </a>
             <!-- Nav Links -->
-            <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
-                <li><a class="hover:text-orange-500" href="">Home</a></li>
-                <li><a class="hover:text-orange-500" href="">Catagory</a></li>
-                <li><a class="hover:text-orange-500" href="#">Collections</a></li>
-                <li><a class="hover:text-orange-2500" href="#">Contact Us</a></li>
+            <ul class="hidden md:flex px-4 mt-4 mx-auto font-semibold font-heading space-x-12">
+                <li><a class="" href="home?action=list"><p class="text-white text-2xl hover:text-orange-500">Home</p>
+                </a>
+                </li>
+                <li><a class="hover:text-orange-500" href=""><p class="text-white text-2xl hover:text-orange-500">
+                    Home</p></a></li>
+                <li><a class="hover:text-orange-500" href="#"><p class="text-white text-2xl hover:text-orange-500">
+                    Home</p></a></li>
+                <li><a class="hover:text-orange-2500" href="#"><p class="text-white text-2xl hover:text-orange-500">
+                    Home</p></a></li>
             </ul>
             <!-- Header Icons -->
             <div class="hidden xl:flex items-center space-x-5 items-center">
@@ -44,7 +49,7 @@
                             </span>
                 </a>
                 <!-- Sign In / Register      -->
-                <a class="flex items-center hover:text-gray-200" href="#">
+                <a class="flex items-center hover:text-gray-200" href="userProfile?action=profile">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200"
                          fill="none"
                          viewBox="0 0 24 24" stroke="currentColor">
@@ -79,7 +84,7 @@
 
 </section>
 <%--</div>--%>
-<!-- Does this resource worth a follow? -->
+
 <div class="absolute bottom-0 right-0 mb-4 mr-4 z-10">
     <div>
         <a title="Follow me on twitter" href="https://www.twitter.com/asad_codes" target="_blank"

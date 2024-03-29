@@ -39,22 +39,56 @@ public class UserProfileController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String action = request.getParameter("action");
         RequestDispatcher rd;
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            UserInfoBean userBean = (UserInfoBean) session.getAttribute("userInfo");
+            if (session.getAttribute("userInfo") != null) {
+                switch (action) {
+                    case "profile":
+                        if (userBean != null) {
+                            request.setAttribute("user", userBean);
+                            rd = getServletContext().getRequestDispatcher("/userProfile.jsp");
+                            rd.forward(request, response);
+                        }
+                        break;
+                    case "updatePassword":
+                        String password = request.getParameter("password");
+                        int userId = userBean.getUserID();
+                        boolean updatePasswordResult = userDB.updateUserPassword(userId, password);
+                        if (updatePasswordResult) {
+                            response.sendRedirect("userProfile?action=profile&updatePassword=success");
+                        } else {
+                            response.sendRedirect("userProfile?action=profile&updatePassword=fail");
+                        }
+                        break;
 
+                    case "updatePasswordPage":
+                        response.sendRedirect("userProfile?action=profile&page=updatePassword");
+                        break;
 
-        switch (action) {
-            case "profile":
-                HttpSession session = request.getSession(false);
-                if (session != null) {
-                    UserInfoBean userBean = (UserInfoBean) session.getAttribute("userInfo");
-                    if (userBean != null) {
-                        request.setAttribute("user", userBean);
-                        rd = getServletContext().getRequestDispatcher("/userProfile.jsp");
-                        rd.forward(request, response);
-                    } else {
-                        response.sendRedirect("login?success=false");
-                    }
+                    case "save":
+                        String email = request.getParameter("email");
+                        int phone = Integer.parseInt(request.getParameter("phone"));
+                        String userID = request.getParameter("userID");
+                        if (email == null || phone == 0) {
+                            response.sendRedirect("userProfile?updateUser=fail");
+                            return;
+                        }
+                        boolean updateResult = userDB.updateUserProfile(userID, email, phone);
+                        if (updateResult) {
+                            userBean.setEmail(email);
+                            userBean.setContact(phone);
+                            session.setAttribute("userInfo", userBean);
+                            response.sendRedirect("userProfile?action=profile&updateUser=success");
+                        } else {
+                            response.sendRedirect("userProfile?action=profile&updateUser=fail");
+                        }
+                        break;
                 }
-                break;
+            }
+        } else {
+            response.sendRedirect("login?success=false");
         }
     }
 }
+

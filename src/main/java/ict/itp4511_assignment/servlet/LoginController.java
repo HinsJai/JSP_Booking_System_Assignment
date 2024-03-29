@@ -61,6 +61,7 @@ public class LoginController extends HttpServlet {
         if (userBean.getIsValidUser()) {
             HttpSession session = request.getSession(true);
             session.setAttribute("userInfo", userBean);
+            session.setAttribute("userID", userBean.getUserID());
             response.sendRedirect("login?success=true");
         } else {
             response.sendRedirect("login?success=false");

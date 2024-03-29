@@ -133,4 +133,57 @@ public class UserDB {
         }
         return userBean;
     }
+
+    public boolean updateUserProfile(String userID, String email, int phone) {
+        Connection conn = null;
+        PreparedStatement pStmnt = null;
+        boolean result = false;
+        try {
+            conn = getConnection();
+            String sql = "Update userInfo set email=?, contact=? where userID=?";
+            pStmnt = conn.prepareStatement(sql);
+            pStmnt.setString(1, email);
+            pStmnt.setInt(2, phone);
+            pStmnt.setString(3, userID);
+            int count = pStmnt.executeUpdate();
+            if (count > 0) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            while (e != null) {
+                e = e.getNextException();
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public boolean updateUserPassword(int userID, String password) {
+        Connection conn = null;
+        PreparedStatement pStmnt = null;
+        boolean result = false;
+        try {
+            conn = getConnection();
+            String sql = "Update userInfo set password=? where userID=?";
+            pStmnt = conn.prepareStatement(sql);
+            pStmnt.setString(1, password);
+            pStmnt.setInt(2, userID);
+            int count = pStmnt.executeUpdate();
+            if (count > 0) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            while (e != null) {
+                e = e.getNextException();
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

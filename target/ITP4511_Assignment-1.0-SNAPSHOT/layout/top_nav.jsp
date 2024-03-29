@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%--<div class="flex flex-wrap h-screen">--%>
+<%--<%@ include file="../tailwindcss/tailwindcss_cdn.jsp" %>--%>
 <section class="relative mx-auto">
     <!-- navbar -->
     <nav class="flex justify-between bg-gray-900 text-white w-screen">

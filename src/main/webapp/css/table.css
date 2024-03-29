@@ -2,3 +2,33 @@
     height: 5em;
     overflow: auto;
 }
+
+/*paging css*/
+.paging-nav {
+    text-align: right;
+    padding: 10px;
+    margin-right: 10px;
+    height: 6.3rem;
+    background: #F0FFFF;
+}
+
+.paging-nav a {
+    margin: auto 1px;
+    text-decoration: none;
+    display: inline-block;
+    padding: 1px 7px;
+    background: #191970;
+    color: white;
+    border-radius: 3px;
+
+}
+
+a:hover {
+    background: #FF4500;
+}
+
+.paging-nav .selected-page {
+    /*background: #187ed5;*/
+    /*font-weight: bold;*/
+    /*font-size: 10px;*/
+}

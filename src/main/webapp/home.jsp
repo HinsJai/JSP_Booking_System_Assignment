@@ -79,30 +79,36 @@
 
                                     <td class="px-6 py-4">
                                         <c:choose>
-                                            <c:when test="${e.w_equipmentID == e.e_equipmentID}">
-                                                <button class=" p-4 text-xl rounded rounded-lg bg-red-500" disabled>
+                                        <c:when test="${e.w_equipmentID >0 && e.status == 'CheckedOut'}">
+                                            <button class=" p-4 text-xl rounded rounded-lg bg-red-500" disabled>
                                                 <span class=" font-bold
                                                 text-white">In Wish</span>
-                                                </button>
-                                            </c:when>
-                                            <c:when test="${ e.status == 'Available' }">
+                                            </button>
+                                        </c:when>
 
-                                                <button class=" p-4 text-xl rounded rounded-lg bg-green-500 hover:bg-orange-500">
-                                                    <a href="wish?&equipmentId=${e.e_equipmentID}"
-                                                       class="font-bold hover:bg-orange-500 text-white"><span
-                                                            class=" font-bold text-white">Reserve</span></a>
-                                                </button>
+                                        <c:when test="${ e.status == 'Available' && e.cartID ==0}">
+                                            <button class=" p-4 text-xl rounded rounded-lg bg-green-500 hover:bg-orange-500">
+                                                <a href="reserve?action=add&equipmentId=${e.e_equipmentID}"
+                                                   class="font-bold hover:bg-orange-500 text-white"><span
+                                                        class=" font-bold text-white">Reserve</span></a>
+                                            </button>
+                                        </c:when>
 
-                                            </c:when>
-                                            <c:otherwise>
-                                                <button class=" p-4 text-xl rounded rounded-lg bg-blue-500 font-bold cursor-pointer hover:bg-orange-500
+                                        <c:when test="${  e.cartID >0  }">
+                                            <button class=" p-4 text-xl rounded rounded-lg bg-orange-500 "
+                                                    disabled>
+                                                <span class=" font-bold  text-white">In Cart</span>
+                                            </button>
+                                        </c:when>
+
+                                        <c:when test="${ e.status == 'CheckedOut' && e.cartID ==0 && e.wishID ==0}">
+                                        <button class=" p-4 text-xl rounded rounded-lg bg-blue-500 font-bold cursor-pointer hover:bg-orange-500
                                                 text-white" id="addWish">
-                                                    <a href="wish?action=add&equipmentId=${e.e_equipmentID}"
-                                                       class="font-bold hover:bg-orange-500 text-white"><span
-                                                            class=" font-bold text-white">Add Wish</span></a>
-                                                </button>
-                                            </c:otherwise>
-                                        </c:choose>
+                                            <a href="wish?action=add&equipmentId=${e.e_equipmentID}"
+                                               class="font-bold hover:bg-orange-500 text-white"><span
+                                                    class=" font-bold text-white">Add Wish</span></a>
+                                            </c:when>
+                                            </c:choose>
                                     </td>
                                 </tr>
                             </tbody>
@@ -111,6 +117,16 @@
                                     Swal.fire({
                                         title: 'Added',
                                         text: 'Equipment has been added to your wishlist',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    });
+                                </script>
+                            </c:if>
+                            <c:if test="${param.addCart.equals('success')}">
+                                <script>
+                                    Swal.fire({
+                                        title: 'Added',
+                                        text: 'Equipment has been added to cart',
                                         icon: 'success',
                                         confirmButtonText: 'OK'
                                     });

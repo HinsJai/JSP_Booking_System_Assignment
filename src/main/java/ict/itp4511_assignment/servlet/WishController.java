@@ -1,7 +1,7 @@
 package ict.itp4511_assignment.servlet;
 
 import ict.itp4511_assignment.bean.UserInfoBean;
-import ict.itp4511_assignment.bean.WishEquipmentBean;
+import ict.itp4511_assignment.bean.WishCartEquipmentBean;
 import ict.itp4511_assignment.db.WishListDB;
 
 import javax.servlet.RequestDispatcher;
@@ -79,7 +79,7 @@ public class WishController extends HttpServlet {
 
     protected void fetchData(HttpServletRequest request, HttpServletResponse response, int userID) throws ServletException, IOException {
         RequestDispatcher rd;
-        ArrayList<WishEquipmentBean> wishList = db.getWishList(userID);
+        ArrayList<WishCartEquipmentBean> wishList = db.getWishList(userID);
         request.setAttribute("wishList", wishList);
         rd = getServletContext().getRequestDispatcher("/wishList.jsp");
         rd.forward(request, response);

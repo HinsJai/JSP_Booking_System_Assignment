@@ -1,6 +1,6 @@
 package ict.itp4511_assignment.db;
 
-import ict.itp4511_assignment.bean.WishEquipmentBean;
+import ict.itp4511_assignment.bean.WishCartEquipmentBean;
 
 import java.io.IOException;
 import java.sql.*;
@@ -66,6 +66,7 @@ public class WishListDB {
             if (count > 0) {
                 result = true;
             }
+            stmnt.close();
             conn.close();
         } catch (SQLException e) {
             while (e != null) {
@@ -80,8 +81,8 @@ public class WishListDB {
         return result;
     }
 
-    public ArrayList<WishEquipmentBean> getWishList(int userId) {
-        ArrayList<WishEquipmentBean> equipmentList = new ArrayList<>();
+    public ArrayList<WishCartEquipmentBean> getWishList(int userId) {
+        ArrayList<WishCartEquipmentBean> equipmentList = new ArrayList<>();
         String sql = "";
         try {
             Connection conn = getConnection();
@@ -90,7 +91,7 @@ public class WishListDB {
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                WishEquipmentBean equipment = new WishEquipmentBean();
+                WishCartEquipmentBean equipment = new WishCartEquipmentBean();
                 equipment.setE_equipmentID(rs.getInt("equipment.equipmentID"));
                 equipment.setEquipmentName(rs.getString("equipmentName"));
                 equipment.setEquipmentType(rs.getString("equipmentType"));

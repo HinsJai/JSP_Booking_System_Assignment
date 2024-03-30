@@ -1,6 +1,6 @@
 package ict.itp4511_assignment.servlet;
 
-import ict.itp4511_assignment.bean.WishEquipmentBean;
+import ict.itp4511_assignment.bean.WishCartEquipmentBean;
 import ict.itp4511_assignment.db.EquipmentDB;
 
 import javax.servlet.RequestDispatcher;
@@ -52,7 +52,7 @@ public class EquipmentListController extends HttpServlet {
         RequestDispatcher rd;
         switch (action) {
             case "list":
-                ArrayList<WishEquipmentBean> equipments = db.getEquipmentList(userID, userType, campus);
+                ArrayList<WishCartEquipmentBean> equipments = db.getEquipmentList(userID, userType, campus);
                 request.setAttribute("equipments", equipments);
                 rd = getServletContext().getRequestDispatcher("/home.jsp");
                 rd.forward(request, response);
@@ -92,7 +92,7 @@ public class EquipmentListController extends HttpServlet {
 
     public void fetchData(HttpServletRequest request, HttpServletResponse response, String type, int userID, int userType, String campus) throws ServletException, IOException {
         RequestDispatcher rd;
-        ArrayList<WishEquipmentBean> data = db.getEquipmentListByType(type, userID, userType, campus);
+        ArrayList<WishCartEquipmentBean> data = db.getEquipmentListByType(type, userID, userType, campus);
         request.setAttribute("equipments", data);
         rd = getServletContext().getRequestDispatcher("/home.jsp");
         rd.forward(request, response);

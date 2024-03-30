@@ -6,7 +6,7 @@ package ict.itp4511_assignment.bean;
  * @Description: ict.itp4511_assignment.bean
  * @version: 1.0
  */
-public class WishEquipmentBean {
+public class WishCartEquipmentBean {
 
     private int e_equipmentID;
     private String equipmentName;
@@ -19,8 +19,11 @@ public class WishEquipmentBean {
     private int userID;
     private int wishID;
     private int w_equipmentID;
+    private int cartID;
+    private int r_userID;
+    private int r_equipmentID;
 
-    public WishEquipmentBean() {
+    public WishCartEquipmentBean() {
     }
 
     public int getE_equipmentID() {
@@ -31,6 +34,29 @@ public class WishEquipmentBean {
         this.e_equipmentID = e_equipmentID;
     }
 
+    public int getCartID() {
+        return cartID;
+    }
+
+    public void setCartID(int cartID) {
+        this.cartID = cartID;
+    }
+
+    public int getR_userID() {
+        return r_userID;
+    }
+
+    public void setR_userID(int r_userID) {
+        this.r_userID = r_userID;
+    }
+
+    public int getR_equipmentID() {
+        return r_equipmentID;
+    }
+
+    public void setR_equipmentID(int r_equipmentID) {
+        this.r_equipmentID = r_equipmentID;
+    }
 
     public String getEquipmentName() {
         return equipmentName;

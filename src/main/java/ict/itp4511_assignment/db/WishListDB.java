@@ -1,10 +1,10 @@
 package ict.itp4511_assignment.db;
 
+import ict.itp4511_assignment.bean.WishEquipmentBean;
+
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * @Author: Kong Kwok Hin
@@ -61,6 +61,68 @@ public class WishListDB {
         try {
             conn = getConnection();
             String sql = "INSERT INTO wishList (userID, equipmentID) VALUES (" + userID + ", " + equipmentID + ")";
+            stmnt = conn.createStatement();
+            int count = stmnt.executeUpdate(sql);
+            if (count > 0) {
+                result = true;
+            }
+            conn.close();
+        } catch (SQLException e) {
+            while (e != null) {
+                e.printStackTrace();
+                e = e.getNextException();
+            }
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return result;
+    }
+
+    public ArrayList<WishEquipmentBean> getWishList(int userId) {
+        ArrayList<WishEquipmentBean> equipmentList = new ArrayList<>();
+        String sql = "";
+        try {
+            Connection conn = getConnection();
+            sql = "SELECT   * FROM wishlist" + " INNER JOIN " + "equipment" + " ON" + " equipment.equipmentID = wishlist.equipmentID" + " AND userID = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                WishEquipmentBean equipment = new WishEquipmentBean();
+                equipment.setE_equipmentID(rs.getInt("equipment.equipmentID"));
+                equipment.setEquipmentName(rs.getString("equipmentName"));
+                equipment.setEquipmentType(rs.getString("equipmentType"));
+                equipment.setSerialNumber(rs.getString("serialNumber"));
+                equipment.setPurchaseDate(rs.getString("purchaseDate"));
+                equipment.setWarrantyPeriod(rs.getInt("warrantyPeriod"));
+                equipment.setStatus(rs.getString("status"));
+                equipment.setCampusID(rs.getString("campusID"));
+                equipment.setWishID(rs.getInt("wishID"));
+                equipment.setUserID(rs.getInt("userID"));
+                equipment.setW_equipmentID(rs.getInt("equipmentID"));
+                equipmentList.add(equipment);
+            }
+            conn.close();
+        } catch (SQLException e) {
+            while (e != null) {
+                e.printStackTrace();
+                e = e.getNextException();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return equipmentList;
+    }
+
+    public boolean removeWish(int userID, int equipmentID) {
+        boolean result = false;
+        Statement stmnt = null;
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            String sql = "DELETE FROM wishList WHERE userID = " + userID + " AND equipmentID = " + equipmentID;
             stmnt = conn.createStatement();
             int count = stmnt.executeUpdate(sql);
             if (count > 0) {

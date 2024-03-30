@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: jason
-  Date: 2024/3/26
-  Time: 上午 12:12
+  Date: 2024/3/30
+  Time: 下午 07:46
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -12,9 +12,9 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
-
 <html>
     <head>
+        <title>Wish List</title>
         <title>Home</title>
         <link rel="stylesheet" href="css/table.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -27,12 +27,11 @@
                 $('#table').paging({limit: 5});
             });
         </script>
-
     </head>
     <body>
         <section class=" bg-slate-100 text-black w-screen  h-full">
             <div class="flex flex-wrap">
-                <%@ include file="layout/equipement_menu.jsp" %>
+                <%--                <%@ include file="layout/equipement_menu.jsp" %>--%>
                 <main class="flex-1">
 
                     <div class="relative overflow-x-auto shadow-md ">
@@ -58,7 +57,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="e" items="${requestScope.equipments}">
+                                <c:forEach var="w" items="${requestScope.wishList}">
 
                                 <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                                     <td class="p-4">
@@ -66,61 +65,58 @@
                                              class="w-16 md:w-32 max-w-full max-h-full" alt="">
                                     </td>
                                     <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white text-xl">
-                                            ${e.equipmentName}
+                                            ${w.equipmentName}
                                     </td>
                                     <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white text-xl">
-                                            ${e.equipmentType}
+                                            ${w.equipmentType}
                                     </td>
-
                                     <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white text-xl ">
-                                        <p class="${e.status=='CheckedOut'? 'text-red-500':'text-green-600'}"> ${e.status}</p>
+                                        <p class="${w.status=='CheckedOut'? 'text-red-500':'text-green-600'}"> ${w.status}</p>
                                     </td>
-
-
                                     <td class="px-6 py-4">
                                         <c:choose>
-                                            <c:when test="${e.w_equipmentID == e.e_equipmentID}">
+                                            <c:when test="${w.status == 'CheckedOut'}">
                                                 <button class=" p-4 text-xl rounded rounded-lg bg-red-500" disabled>
-                                                <span class=" font-bold
-                                                text-white">In Wish</span>
+                                                                                                                                        <span class=" font-bold
+                                                                                                                                        text-white">In Wish</span>
+                                                </button>
+                                                <button class="ml-6 p-4 text-xl rounded rounded-lg bg-blue-500 hover:bg-orange-500">
+                                                    <a href="wish?action=remove&equipmentId=${w.e_equipmentID}"
+                                                       class="font-bold text-white hover:bg-orange-500">Remove</a>
                                                 </button>
                                             </c:when>
-                                            <c:when test="${ e.status == 'Available' }">
+                                            <c:otherwise>
 
-                                                <button class=" p-4 text-xl rounded rounded-lg bg-green-500 hover:bg-orange-500">
-                                                    <a href="wish?&equipmentId=${e.e_equipmentID}"
+                                                <button class=" p-4 text-xl rounded rounded-lg bg-green-500 font-bold cursor-pointer hover:bg-orange-500
+                                                                                                                                        text-white">
+                                                    <a href=""
                                                        class="font-bold hover:bg-orange-500 text-white"><span
                                                             class=" font-bold text-white">Reserve</span></a>
                                                 </button>
 
-                                            </c:when>
-                                            <c:otherwise>
-                                                <button class=" p-4 text-xl rounded rounded-lg bg-blue-500 font-bold cursor-pointer hover:bg-orange-500
-                                                text-white" id="addWish">
-                                                    <a href="wish?action=add&equipmentId=${e.e_equipmentID}"
-                                                       class="font-bold hover:bg-orange-500 text-white"><span
-                                                            class=" font-bold text-white">Add Wish</span></a>
+                                                <button class="ml-6 p-4 text-xl rounded rounded-lg bg-blue-500 hover:bg-orange-500">
+                                                    <a href="wish?action=remove&equipmentId=${w.e_equipmentID}"
+                                                       class="font-bold text-white hover:bg-orange-500">Remove</a>
                                                 </button>
+
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
                                 </tr>
                             </tbody>
-                            <c:if test="${param.addWish.equals('success')}">
+                            <c:if test="${param.removeWish.equals('success')}">
                                 <script>
                                     Swal.fire({
-                                        title: 'Added',
-                                        text: 'Equipment has been added to your wishlist',
+                                        title: 'Removed',
+                                        text: 'Equipment has been remove to your wishlist',
                                         icon: 'success',
                                         confirmButtonText: 'OK'
                                     });
                                 </script>
                             </c:if>
                             </c:forEach>
-
                         </table>
                     </div>
-
                 </main>
             </div>
         </section>

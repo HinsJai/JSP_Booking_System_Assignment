@@ -1,6 +1,6 @@
 package ict.itp4511_assignment.db;
 
-import ict.itp4511_assignment.bean.EquipmentBean;
+import ict.itp4511_assignment.bean.WishEquipmentBean;
 
 import java.io.IOException;
 import java.sql.*;
@@ -36,10 +36,7 @@ public class EquipmentDB {
     public void createEquipmentTable() {
         try {
             Connection conn = getConnection();
-            String sql = "Create table if not exists equipment (" +
-                    "equipmentID int(5) AUTO_INCREMENT PRIMARY KEY ," +
-                    "equipmentName varchar(50) not null,"
-                    + "equipmentType ENUM('Laptop', 'Tablet', 'Printer and Scanner','Smartphone', 'Projector', 'Monitor', 'robot','Server', 'Networking', 'Audio-Visual', 'Others') not null," + "serialNumber varchar(50) not null UNIQUE," + "purchaseDate date not null," + "warrantyPeriod int(3) not null," + "status ENUM('Available', 'CheckedOut', 'UnderMaintenance', 'Damaged') not null," + "campusID ENUM('CW','LWL','ST','TM','TY') not null," + "FOREIGN KEY (campusID) REFERENCES campus(campusID))";
+            String sql = "Create table if not exists equipment (" + "equipmentID int(5) AUTO_INCREMENT PRIMARY KEY ," + "equipmentName varchar(50) not null," + "equipmentType ENUM('Laptop', 'Tablet', 'Printer and Scanner','Smartphone', 'Projector', 'Monitor', 'robot','Server', 'Networking', 'Audio-Visual', 'Others') not null," + "serialNumber varchar(50) not null UNIQUE," + "purchaseDate date not null," + "warrantyPeriod int(3) not null," + "status ENUM('Available', 'CheckedOut', 'UnderMaintenance', 'Damaged') not null," + "campusID ENUM('CW','LWL','ST','TM','TY') not null," + "FOREIGN KEY (campusID) REFERENCES campus(campusID))";
             conn.createStatement().execute(sql);
             conn.close();
         } catch (SQLException e) {
@@ -58,27 +55,7 @@ public class EquipmentDB {
         try {
             conn = getConnection();
             stmnt = conn.createStatement();
-            String sql = "INSERT INTO equipment (equipmentName, equipmentType ,serialNumber, purchaseDate, warrantyPeriod, status, campusID) " +
-                    "VALUES ('MacBook Pro 16-inch', 'Laptop',  'SN001', '2024-01-10', 12, 'Available', 'CW'),"
-                    + "('MacBook Air 13-inch', 'Laptop', 'SN002', '2024-01-15', 12, 'CheckedOut', 'LWL'),"
-                    + "('iPad Pro 12.9-inch', 'Tablet','SN003', '2024-02-01', 12, 'Available', 'ST'),"
-                    + "('iPad mini 8.3-inch', 'Tablet',  'SN004', '2024-02-05', 12, 'CheckedOut', 'TM'),"
-                    + "('Canon PIXMA MG3620', 'Printer and Scanner',  'SN005', '2024-03-01', 24, 'Available', 'TY'),"
-                    + "('Canon imageCLASS MF743Cdw', 'Printer and Scanner',  'SN006', '2024-03-05', 24, 'Available', 'CW'),"
-                    + "('iPhone 13 Pro Max', 'Smartphone',  'SN007', '2024-04-01', 12, 'Available', 'LWL'),"
-                    + " ('iPhone SE', 'Smartphone',  'SN008', '2024-04-05', 12, 'Available', 'ST'),"
-                    + "('Dell UltraSharp 27', 'Monitor','SN011', '2024-06-01', 36, 'Available', 'CW'),"
-                    + " ('Dell P Series 24', 'Monitor',  'SN012', '2024-06-05', 36, 'Available', 'LWL'),"
-                    + "('LEGO Mindstorms EV3', 'Robot',  'SN013', '2024-07-01', 24, 'Available', 'ST'),"
-                    + "('LEGO Boost Creative Toolbox', 'Robot', 'SN014', '2024-07-05', 24, 'Available', 'TM'),"
-                    + "('HP ProLiant DL380 Gen10', 'Server',  'SN015', '2024-08-01', 36, 'Available', 'TY'),"
-                    + "('HP ProLiant ML350 Gen10', 'Server',  'SN016', '2024-08-05', 36, 'Available', 'CW'),"
-                    + "('Cisco 4000 Series Integrated Services Router', 'Networking', 'SN017', '2024-09-01', 48, 'Available', 'LWL'),"
-                    + "('Cisco Catalyst 2960-X Series Switches', 'Networking', 'SN018', '2024-09-05', 48, 'Available', 'ST'),"
-                    + "('Bose L1 Compact Portable Line Array System', 'Audio-Visual', 'SN019', '2024-10-01', 24, 'Available', 'TM'),"
-                    + " ('Bose S1 Pro Multi-Position PA System', 'Audio-Visual',   'SN020','2024-10-05', 24, 'Available', 'TY'),"
-                    + "('Wacom Intuos Pro', 'Others','SN021', '2024-11-01', 24, 'Available', 'CW'),"
-                    + "('Wacom Cintiq 22', 'Others','SN022', '2024-11-05', 24, 'Available', 'LWL');";
+            String sql = "INSERT INTO equipment (equipmentName, equipmentType ,serialNumber, purchaseDate, warrantyPeriod, status,private, campusID) " + "VALUES ('MacBook Pro 16-inch', 'Laptop',  'SN001', '2024-01-10', 12, 'Available',0, 'CW')," + "('MacBook Air 13-inch', 'Laptop', 'SN002', '2024-01-15', 12, 'CheckedOut',0, 'LWL')," + "('iPad Pro 12.9-inch', 'Tablet','SN003', '2024-02-01', 12, 'Available',0, 'ST')," + "('iPad mini 8.3-inch', 'Tablet',  'SN004', '2024-02-05', 12, 'CheckedOut',0, 'TM')," + "('Canon PIXMA MG3620', 'Printer and Scanner',  'SN005', '2024-03-01', 24, 'Available',0, 'TY')," + "('Canon imageCLASS MF743Cdw', 'Printer and Scanner',  'SN006', '2024-03-05', 24, 'Available', 0,'CW')," + "('iPhone 13 Pro Max', 'Smartphone',  'SN007', '2024-04-01', 12, 'Available', 0,'LWL')," + " ('iPhone SE', 'Smartphone',  'SN008', '2024-04-05', 12, 'Available', 0,'ST')," + "('Dell UltraSharp 27', 'Monitor','SN011', '2024-06-01', 36, 'Available',1, 'CW')," + " ('Dell P Series 24', 'Monitor',  'SN012', '2024-06-05', 36, 'Available', 0,'LWL')," + "('LEGO Mindstorms EV3', 'Robot',  'SN013', '2024-07-01', 24, 'Available', 1,'ST')," + "('LEGO Boost Creative Toolbox', 'Robot', 'SN014', '2024-07-05', 24, 'Available',0, 'TM')," + "('HP ProLiant DL380 Gen10', 'Server',  'SN015', '2024-08-01', 36, 'Available',1, 'TY')," + "('HP ProLiant ML350 Gen10', 'Server',  'SN016', '2024-08-05', 36, 'Available', 1,'CW')," + "('Cisco 4000 Series Integrated Services Router', 'Networking', 'SN017', '2024-09-01', 48, 'Available', 1,'LWL')," + "('Cisco Catalyst 2960-X Series Switches', 'Networking', 'SN018', '2024-09-05', 48, 'Available', 0,'ST')," + "('Bose L1 Compact Portable Line Array System', 'Audio-Visual', 'SN019', '2024-10-01', 24, 'Available',0, 'TM')," + " ('Bose S1 Pro Multi-Position PA System', 'Audio-Visual',   'SN020','2024-10-05', 24, 'Available', 0,'TY')," + "('Wacom Intuos Pro', 'Others','SN021', '2024-11-01', 24, 'Available', 0,'CW')," + "('Wacom Cintiq 22', 'Others','SN022', '2024-11-05', 24, 'Available', 0,'LWL');";
 
             stmnt.execute(sql);
             stmnt.close();
@@ -94,15 +71,25 @@ public class EquipmentDB {
         }
     }
 
-    public ArrayList<EquipmentBean> getEquipmentList() {
-        ArrayList<EquipmentBean> equipmentList = new ArrayList<>();
+    public ArrayList<WishEquipmentBean> getEquipmentList(int userId, int userType, String campus) {
+        ArrayList<WishEquipmentBean> equipmentList = new ArrayList<>();
+        String sql = "";
+
         try {
             Connection conn = getConnection();
-            String sql = "SELECT * FROM equipment where status = 'Available' or status =  'CheckedOut'";
-            ResultSet rs = conn.createStatement().executeQuery(sql);
+            if (userType == 0) {
+                sql = "SELECT * FROM wishlist right join   equipment ON wishlist.equipmentID = equipment.equipmentID " + "where (status = 'Available' or status =  'CheckedOut') and (userID = ? or userID is null) and private = 0 AND campusID=? ";
+            } else {
+                sql = "SELECT   * FROM wishlist" + " RIGHT JOIN " + "equipment" + " ON" + " equipment.equipmentID = wishlist.equipmentID" + " WHERE (status = 'Available' OR status = 'CheckedOut')" + " AND (userID = ? OR userID IS NULL) AND campusID=?";
+            }
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ps.setString(2, campus);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                EquipmentBean equipment = new EquipmentBean();
-                equipment.setEquipmentID(rs.getInt("equipmentID"));
+//                EquipmentBean equipment = new EquipmentBean();
+                WishEquipmentBean equipment = new WishEquipmentBean();
+                equipment.setE_equipmentID(rs.getInt("equipment.equipmentID"));
                 equipment.setEquipmentName(rs.getString("equipmentName"));
                 equipment.setEquipmentType(rs.getString("equipmentType"));
                 equipment.setSerialNumber(rs.getString("serialNumber"));
@@ -110,6 +97,9 @@ public class EquipmentDB {
                 equipment.setWarrantyPeriod(rs.getInt("warrantyPeriod"));
                 equipment.setStatus(rs.getString("status"));
                 equipment.setCampusID(rs.getString("campusID"));
+                equipment.setWishID(rs.getInt("wishID"));
+                equipment.setUserID(rs.getInt("userID"));
+                equipment.setW_equipmentID(rs.getInt("equipmentID"));
                 equipmentList.add(equipment);
             }
             conn.close();
@@ -124,17 +114,25 @@ public class EquipmentDB {
         return equipmentList;
     }
 
-    public ArrayList<EquipmentBean> getEquipmentListByType(String type) {
-        ArrayList<EquipmentBean> equipmentList = new ArrayList<>();
+    public ArrayList<WishEquipmentBean> getEquipmentListByType(String type, int userID, int userType, String campus) {
+        ArrayList<WishEquipmentBean> equipmentList = new ArrayList<>();
+        String sql = "";
         try {
             Connection conn = getConnection();
-            String sql = "SELECT * FROM equipment WHERE (status = 'Available' OR status = 'CheckedOut') AND equipmentType = ?";
+            if (userType == 0) {
+                sql = "SELECT * " + "FROM wishlist" + " RIGHT JOIN" + "  equipment" + "     ON" + " wishlist.equipmentID = equipment.equipmentID " + "WHERE (status = 'Available' OR status = 'CheckedOut')" + "  AND equipmentType = ?" + "  AND (userID = ? OR userID IS NULL) and private = 0 and campusID=?";
+            } else {
+                sql = "SELECT * " + "FROM wishlist" + " RIGHT JOIN" + "  equipment" + "     ON" + " wishlist.equipmentID = equipment.equipmentID " + "WHERE (status = 'Available' OR status = 'CheckedOut')" + "  AND equipmentType = ?" + "  AND (userID = ? OR userID IS NULL) and campusID=?";
+            }
+
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, type);
+            ps.setInt(2, userID);
+            ps.setString(3, campus);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                EquipmentBean equipment = new EquipmentBean();
-                equipment.setEquipmentID(rs.getInt("equipmentID"));
+                WishEquipmentBean equipment = new WishEquipmentBean();
+                equipment.setE_equipmentID(rs.getInt("equipment.equipmentID"));
                 equipment.setEquipmentName(rs.getString("equipmentName"));
                 equipment.setEquipmentType(rs.getString("equipmentType"));
                 equipment.setSerialNumber(rs.getString("serialNumber"));
@@ -142,6 +140,9 @@ public class EquipmentDB {
                 equipment.setWarrantyPeriod(rs.getInt("warrantyPeriod"));
                 equipment.setStatus(rs.getString("status"));
                 equipment.setCampusID(rs.getString("campusID"));
+                equipment.setWishID(rs.getInt("wishID"));
+                equipment.setUserID(rs.getInt("userID"));
+                equipment.setW_equipmentID(rs.getInt("equipmentID"));
                 equipmentList.add(equipment);
             }
             conn.close();

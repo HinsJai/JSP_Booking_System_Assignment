@@ -7,16 +7,16 @@ import java.sql.SQLException;
 
 /**
  * @Author: Kong Kwok Hin
- * @Date: 2024/3/27 - 03 - 27 - 上午 03:57
+ * @Date: 2024/3/31 - 03 - 31 - 下午 04:29
  * @Description: ict.itp4511_assignment.db
  * @version: 1.0
  */
-public class BookingDB {
+public class BookingEquipmentDB {
     private String dbUser;
     private String dbPassword;
     private String dbUrl;
 
-    public BookingDB(String dbUrl, String dbUser, String dbPassword) {
+    public BookingEquipmentDB(String dbUrl, String dbUser, String dbPassword) {
         this.dbUser = dbUser;
         this.dbPassword = dbPassword;
         this.dbUrl = dbUrl;
@@ -32,18 +32,14 @@ public class BookingDB {
         return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
     }
 
-    public void createBookingTable() {
+    public void createBookingEquipmentTable() {
         try {
             Connection conn = getConnection();
-            String sql = "Create table if not exists booking (" +
-                    "bookingID int(5) AUTO_INCREMENT PRIMARY KEY ," +
-                    "userID int(5) not null," +
-                    "bookingDate date not null," +
-                    "returnDate date not null," +
-                    "status ENUM('Pending', 'Approved', 'Declined', 'Completed', 'Cancelled') not null," +
-                    "rejectReason varchar(255)," +
-                    "FOREIGN KEY (userID) REFERENCES userInfo(userID))";
-//                    "FOREIGN KEY (equipmentID) REFERENCES equipment(equipmentID))";
+            String sql = "Create table if not exists bookingEquipment (" +
+                    "bookingID int(5) PRIMARY KEY ," +
+                    "equipmentID int(5) not null," +
+                    "FOREIGN KEY (bookingID) REFERENCES booking(bookingID)," +
+                    "FOREIGN KEY (equipmentID) REFERENCES equipment(equipmentID))";
             conn.createStatement().execute(sql);
             conn.close();
         } catch (SQLException e) {

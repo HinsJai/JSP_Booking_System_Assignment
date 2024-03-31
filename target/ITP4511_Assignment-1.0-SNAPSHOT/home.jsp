@@ -8,10 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="tailwindcss/tailwindcss_cdn.jsp" %>
 <%@ include file="layout/top_nav.jsp" %>
-
 <%@ page import="java.util.ArrayList" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+
 
 <html>
     <head>
@@ -20,6 +20,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
         <script src="./js/paging.js"></script>
+        <script src="js/nav.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10">
         </script>
         <script>
@@ -30,9 +31,22 @@
 
     </head>
     <body>
-        <section class=" bg-slate-100 text-black w-screen  h-full">
+        <c:if test="${param.reserve.equals('showCart')}">
+            <script>
+                $(document).ready(function () {
+                    $("#cart-container").show();
+                });
+            </script>
+        </c:if>
+
+        <%@ include file="side-cart.jsp" %>
+
+        <section class=" bg-slate-100 text-black w-screen h-full">
+
             <div class="flex flex-wrap">
+
                 <%@ include file="layout/equipement_menu.jsp" %>
+
                 <main class="flex-1">
 
                     <div class="relative overflow-x-auto shadow-md ">
@@ -140,5 +154,19 @@
                 </main>
             </div>
         </section>
+        <%--        <script>--%>
+        <%--            $(document).ready(function () {--%>
+        <%--                $("#cart").on("click", function () {--%>
+        <%--                    window.location.replace(`reserve?action=showCart`);--%>
+        <%--                    $("#cart-container").show();--%>
+        <%--                });--%>
+        <%--            });--%>
+
+        <%--            $(document).ready(function () {--%>
+        <%--                $("#close").on("click", function () {--%>
+        <%--                    $("#cart-container").hide();--%>
+        <%--                });--%>
+        <%--            });--%>
+        <%--        </script>--%>
     </body>
 </html>

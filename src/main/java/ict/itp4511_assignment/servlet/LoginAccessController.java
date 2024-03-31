@@ -24,6 +24,7 @@ public class LoginAccessController extends HttpServlet {
         if (loginPass && sessionCheck) {
 //            RequestDispatcher dispatcher = request.getRequestDispatcher("/home.jsp");
 //            dispatcher.forward(request, response);
+            session.setAttribute("page", "home");
             response.sendRedirect("home?action=list");
         } else if (!loginPass && !sessionCheck) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");

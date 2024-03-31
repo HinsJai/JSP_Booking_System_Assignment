@@ -26,7 +26,6 @@
     <body>
         <c:choose>
             <c:when test="${param.page.equals('updatePassword')}">
-
                 <div>
                     <jsp:include page="updatePassword.jsp" />
                 </div>
@@ -46,18 +45,18 @@
                                                              class="img-radius" alt="User-Profile-Image">
                                                     </div>
                                                     <h6 class="f-w-600 text-xl">${requestScope.user.fName} ${requestScope.user.lName}</h6>
-                                                    <span class="text-xl"><span
-                                                            class="font-semibold text-xl">User ID: </span>
-    </span>
+                                                    <span class="text-xl">
+                                                       <span class="font-semibold text-xl">User ID: </span>
+                                                    </span>
                                                     <span id="userID"
                                                           class="font-semibold text-xl">${requestScope.user.userID}</span>
                                                 </div>
                                             </div>
                                             <div class="p-4 bg-slate-200">
                                                 <div class="flex justify-between items-center">
-    <span class="font-bold text-2xl">
-    Information
-    </span>
+                                                    <span class="font-bold text-2xl">
+                                                    Information
+                                                    </span>
                                                     <div class="inline">
                                                         <button
                                                                 class="p-4 bg-green-500 rounded-md font-bold text-white hover:bg-orange-500"

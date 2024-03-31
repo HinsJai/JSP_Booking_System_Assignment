@@ -20,6 +20,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
         <script src="./js/paging.js"></script>
+        <script src="js/nav.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10">
         </script>
         <script>
@@ -29,6 +30,16 @@
         </script>
     </head>
     <body>
+        <c:if test="${param.reserve =='showCart'}">
+            <script>
+                $(document).ready(function () {
+                    $("#cart-container").show();
+                });
+            </script>
+        </c:if>
+
+
+        <%@ include file="side-cart.jsp" %>
         <section class=" bg-slate-100 text-black w-screen  h-full">
             <div class="flex flex-wrap">
                 <%--                <%@ include file="layout/equipement_menu.jsp" %>--%>

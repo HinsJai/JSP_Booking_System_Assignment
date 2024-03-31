@@ -42,13 +42,13 @@ public class WishController extends HttpServlet {
         String action = request.getParameter("action");
         HttpSession session = request.getSession(false);
         int userID = (int) session.getAttribute("userID");
-
+        session.setAttribute("page", "wish");
         switch (action) {
             case "add":
                 addToWish(request, response);
                 break;
             case "list":
-                fetchData(request, response, userID);
+                fetchData(request, response, userID, session);
                 break;
             case "remove":
                 int equipmentId = Integer.parseInt(request.getParameter("equipmentId"));
@@ -77,10 +77,11 @@ public class WishController extends HttpServlet {
         }
     }
 
-    protected void fetchData(HttpServletRequest request, HttpServletResponse response, int userID) throws ServletException, IOException {
+    protected void fetchData(HttpServletRequest request, HttpServletResponse response, int userID, HttpSession session) throws ServletException, IOException {
         RequestDispatcher rd;
         ArrayList<WishCartEquipmentBean> wishList = db.getWishList(userID);
         request.setAttribute("wishList", wishList);
+        session.setAttribute("page", "wish");
         rd = getServletContext().getRequestDispatcher("/wishList.jsp");
         rd.forward(request, response);
     }

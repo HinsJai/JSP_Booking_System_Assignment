@@ -46,6 +46,7 @@ public class EquipmentListController extends HttpServlet {
         String action = request.getParameter("action");
 //        String id = null;
         HttpSession session = request.getSession(false);
+
         int userID = (int) session.getAttribute("userID");
         int userType = (int) session.getAttribute("userType");
         String campus = (String) session.getAttribute("campus");
@@ -54,37 +55,48 @@ public class EquipmentListController extends HttpServlet {
             case "list":
                 ArrayList<WishCartEquipmentBean> equipments = db.getEquipmentList(userID, userType, campus);
                 request.setAttribute("equipments", equipments);
+                session.setAttribute("page", "home");
                 rd = getServletContext().getRequestDispatcher("/home.jsp");
                 rd.forward(request, response);
                 break;
             case "laptop":
+                session.setAttribute("page", "laptop");
                 fetchData(request, response, "laptop", userID, userType, campus);
                 break;
             case "tablet":
+                session.setAttribute("page", "tablet");
                 fetchData(request, response, "tablet", userID, userType, campus);
                 break;
             case "printer_scanner":
+                session.setAttribute("page", "printer and scanner");
                 fetchData(request, response, "printer and scanner", userID, userType, campus);
                 break;
             case "phone":
+                session.setAttribute("page", "smartphone");
                 fetchData(request, response, "smartphone", userID, userType, campus);
                 break;
             case "monitor":
+                session.setAttribute("page", "monitor");
                 fetchData(request, response, "monitor", userID, userType, campus);
                 break;
             case "robot":
+                session.setAttribute("page", "robot");
                 fetchData(request, response, "robot", userID, userType, campus);
                 break;
             case "networking":
+                session.setAttribute("page", "networking");
                 fetchData(request, response, "networking", userID, userType, campus);
                 break;
             case "audio_visual":
+                session.setAttribute("page", "Audio-Visual");
                 fetchData(request, response, "Audio-Visual", userID, userType, campus);
                 break;
             case "server":
+                session.setAttribute("page", "server");
                 fetchData(request, response, "server", userID, userType, campus);
                 break;
             case "others":
+                session.setAttribute("page", "others");
                 fetchData(request, response, "others", userID, userType, campus);
                 break;
         }

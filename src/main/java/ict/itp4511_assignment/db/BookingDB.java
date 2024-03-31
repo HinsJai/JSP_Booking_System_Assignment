@@ -39,6 +39,7 @@ public class BookingDB {
                     "bookingID int(5) AUTO_INCREMENT PRIMARY KEY ," +
                     "userID int(5) not null," +
                     "bookingDate date not null," +
+                    "pickupDate date not null," +
                     "returnDate date not null," +
                     "status ENUM('Pending', 'Approved', 'Declined', 'Completed', 'Cancelled') not null," +
                     "rejectReason varchar(255)," +

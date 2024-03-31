@@ -154,6 +154,7 @@
                 </main>
             </div>
         </section>
+
         <%--        <script>--%>
         <%--            $(document).ready(function () {--%>
         <%--                $("#cart").on("click", function () {--%>

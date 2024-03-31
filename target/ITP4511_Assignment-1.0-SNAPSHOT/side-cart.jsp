@@ -110,8 +110,8 @@
 
                         <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
                             <div class="mt-6 flex items-center justify-center">
-                                <button <%=(cartList.isEmpty()) ? "disabled" : ""%>
-                                        class="<%=(cartList.isEmpty()) ? "bg-slate-500" : "hover:bg-orange-500 bg-indigo-600"%> w-60 rounded-md border border-transparent  px-6 py-3 text-xl font-bold text-white shadow-sm ">
+                                <button <%=(cartList.isEmpty()) ? "disabled" : ""%> id="checkout"
+                                                                                    class="<%=(cartList.isEmpty()) ? "bg-slate-500" : "hover:bg-orange-500 bg-indigo-600"%> w-60 rounded-md border border-transparent  px-6 py-3 text-xl font-bold text-white shadow-sm ">
                                     Checkout
                                 </button>
                             </div>

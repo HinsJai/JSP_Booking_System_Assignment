@@ -1,6 +1,8 @@
 package ict.itp4511_assignment.servlet;
 
+import ict.itp4511_assignment.bean.EquipmentBean;
 import ict.itp4511_assignment.bean.UserInfoBean;
+import ict.itp4511_assignment.db.ReserveCartDB;
 import ict.itp4511_assignment.db.UserDB;
 
 import javax.servlet.ServletException;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * @Author: Kong Kwok Hin
@@ -65,6 +68,9 @@ public class LoginController extends HttpServlet {
             session.setAttribute("campus", userBean.getCampus());
             int userType = getIdentity(userBean.getRoot());
             session.setAttribute("userType", userType);
+            ReserveCartDB db = new ReserveCartDB("jdbc:mysql://localhost:3306/itp4511_db", "root", "root");
+            ArrayList<EquipmentBean> cartList = db.showCart(userBean.getUserID());
+            session.setAttribute("cartList", cartList);
             response.sendRedirect("login?success=true");
         } else {
             response.sendRedirect("login?success=false");

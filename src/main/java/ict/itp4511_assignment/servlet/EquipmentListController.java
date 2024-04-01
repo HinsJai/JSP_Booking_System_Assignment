@@ -51,11 +51,15 @@ public class EquipmentListController extends HttpServlet {
         int userType = (int) session.getAttribute("userType");
         String campus = (String) session.getAttribute("campus");
         RequestDispatcher rd;
+
         switch (action) {
             case "list":
                 ArrayList<WishCartEquipmentBean> equipments = db.getEquipmentList(userID, userType, campus);
                 request.setAttribute("equipments", equipments);
                 session.setAttribute("page", "home");
+//                ReserveCartDB reserveDB = new ReserveCartDB("jdbc:mysql://localhost:3306/itp4511_db", "root", "root");
+//                ArrayList<EquipmentBean> cartList = reserveDB.showCart(1);
+//                session.setAttribute("cartList", cartList);
                 rd = getServletContext().getRequestDispatcher("/home.jsp");
                 rd.forward(request, response);
                 break;

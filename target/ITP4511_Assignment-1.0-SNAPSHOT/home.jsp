@@ -7,11 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="tailwindcss/tailwindcss_cdn.jsp" %>
-<%@ include file="layout/top_nav.jsp" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 
+<%@ page import="java.util.ArrayList" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+<%@ include file="layout/top_nav.jsp" %>
 
 <html>
     <head>
@@ -31,6 +31,7 @@
 
     </head>
     <body>
+
         <c:if test="${param.reserve.equals('showCart')}">
             <script>
                 $(document).ready(function () {

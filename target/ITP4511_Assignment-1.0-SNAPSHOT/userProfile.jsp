@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="tailwindcss/tailwindcss_cdn.jsp" %>
 <%@ include file="layout/top_nav.jsp" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cp" %>
 <%--<%@ include file="bootstrap/bootstrp_css.jsp" %>--%>
 
 <html>
@@ -24,14 +24,14 @@
         </script>
     </head>
     <body>
-        <c:choose>
-            <c:when test="${param.page.equals('updatePassword')}">
+        <cp:choose>
+            <cp:when test="${param.page.equals('updatePassword')}">
                 <div>
                     <jsp:include page="updatePassword.jsp" />
                 </div>
-            </c:when>
-            <c:otherwise>
-                <c:if test="${requestScope.user.isValidUser == true}">
+            </cp:when>
+            <cp:otherwise>
+                <cp:if test="${requestScope.user.isValidUser == true}">
                     <div class="page-content page-container " id="profile-container">
                         <div class="padding ">
                             <div class="row container d-flex justify-content-center ">
@@ -78,7 +78,7 @@
                                                             Cancel
                                                         </button>
                                                     </div>
-                                                    <c:if test="${param.updateUser.equals('success')}">
+                                                    <cp:if test="${param.updateUser.equals('success')}">
                                                         <script>
                                                             Swal.fire({
                                                                 title: 'Updated',
@@ -87,8 +87,8 @@
                                                                 confirmButtonText: 'OK'
                                                             });
                                                         </script>
-                                                    </c:if>
-                                                    <c:if test="${param.updatePassword.equals('success')}">
+                                                    </cp:if>
+                                                    <cp:if test="${param.updatePassword.equals('success')}">
                                                         <script>
                                                             Swal.fire({
                                                                 title: 'Updated',
@@ -97,7 +97,7 @@
                                                                 confirmButtonText: 'OK'
                                                             });
                                                         </script>
-                                                    </c:if>
+                                                    </cp:if>
                                                 </div>
                                                 <hr class="h-px my-4  bg-gray-600 border-1 dark:bg-gray-600">
                                                 <div class="row">
@@ -131,9 +131,9 @@
                             </div>
                         </div>
                     </div>
-                </c:if>
-            </c:otherwise>
-        </c:choose>
+                </cp:if>
+            </cp:otherwise>
+        </cp:choose>
         <script src="js/userProfile.js">
         </script>
     </body>

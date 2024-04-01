@@ -10,7 +10,7 @@
 <%@ include file="layout/top_nav.jsp" %>
 
 <%@ page import="java.util.ArrayList" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cw" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <html>
     <head>
@@ -30,13 +30,13 @@
         </script>
     </head>
     <body>
-        <c:if test="${param.reserve =='showCart'}">
+        <cw:if test="${param.reserve =='showCart'}">
             <script>
                 $(document).ready(function () {
                     $("#cart-container").show();
                 });
             </script>
-        </c:if>
+        </cw:if>
 
 
         <%@ include file="side-cart.jsp" %>
@@ -68,7 +68,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="w" items="${requestScope.wishList}">
+                                <cw:forEach var="w" items="${requestScope.wishList}">
 
                                 <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                                     <td class="p-4">
@@ -85,8 +85,8 @@
                                         <p class="${w.status=='CheckedOut'? 'text-red-500':'text-green-600'}"> ${w.status}</p>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <c:choose>
-                                            <c:when test="${w.status == 'CheckedOut'}">
+                                        <cw:choose>
+                                            <cw:when test="${w.status == 'CheckedOut'}">
                                                 <button class=" p-4 text-xl rounded rounded-lg bg-red-500" disabled>
                                                                                                                                         <span class=" font-bold
                                                                                                                                         text-white">In Wish</span>
@@ -95,8 +95,8 @@
                                                     <a href="wish?action=remove&equipmentId=${w.e_equipmentID}"
                                                        class="font-bold text-white hover:bg-orange-500">Remove</a>
                                                 </button>
-                                            </c:when>
-                                            <c:otherwise>
+                                            </cw:when>
+                                            <cw:otherwise>
 
                                                 <button class=" p-4 text-xl rounded rounded-lg bg-green-500 font-bold cursor-pointer hover:bg-orange-500
                                                                                                                                         text-white">
@@ -110,12 +110,12 @@
                                                        class="font-bold text-white hover:bg-orange-500">Remove</a>
                                                 </button>
 
-                                            </c:otherwise>
-                                        </c:choose>
+                                            </cw:otherwise>
+                                        </cw:choose>
                                     </td>
                                 </tr>
                             </tbody>
-                            <c:if test="${param.removeWish.equals('success')}">
+                            <cw:if test="${param.removeWish.equals('success')}">
                                 <script>
                                     Swal.fire({
                                         title: 'Removed',
@@ -124,8 +124,8 @@
                                         confirmButtonText: 'OK'
                                     });
                                 </script>
-                            </c:if>
-                            </c:forEach>
+                            </cw:if>
+                            </cw:forEach>
                         </table>
                     </div>
                 </main>

@@ -18,13 +18,14 @@ import java.io.IOException;
 @WebServlet(name = "LoginAccessController", urlPatterns = {"/login"})
 public class LoginAccessController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
         boolean loginPass = "true".equals(request.getParameter("success"));
         HttpSession session = request.getSession(false);
         boolean sessionCheck = session != null && session.getAttribute("userInfo") != null;
         if (loginPass && sessionCheck) {
 //            RequestDispatcher dispatcher = request.getRequestDispatcher("/home.jsp");
 //            dispatcher.forward(request, response);
-
             response.sendRedirect("home?action=list");
         } else if (!loginPass && !sessionCheck) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");

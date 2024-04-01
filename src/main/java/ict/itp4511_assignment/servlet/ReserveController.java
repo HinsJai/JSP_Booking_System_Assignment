@@ -3,6 +3,7 @@ package ict.itp4511_assignment.servlet;
 import ict.itp4511_assignment.bean.EquipmentBean;
 import ict.itp4511_assignment.db.ReserveCartDB;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -52,6 +53,16 @@ public class ReserveController extends HttpServlet {
                 int equipmentID = Integer.parseInt(request.getParameter("id"));
                 removeCartItem(request, response, equipmentID);
                 break;
+            case "checkout":
+                HttpSession session = request.getSession(false);
+                if (session == null) {
+                    response.sendRedirect("login?success=false");
+                    return;
+                }
+                session.setAttribute("page", "checkout");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/checkout.jsp");
+                dispatcher.forward(request, response);
+                break;
             default:
                 response.sendRedirect("home?action=list");
         }
@@ -63,6 +74,8 @@ public class ReserveController extends HttpServlet {
         int userID = (int) session.getAttribute("userID");
         boolean result = db.addToCart(userID, equipmentId);
         if (result) {
+            ArrayList<EquipmentBean> cartList = db.showCart(userID);
+            session.setAttribute("cartList", cartList);
             response.sendRedirect("home?action=list&addCart=success");
         } else {
             response.sendRedirect("home?action=list&addCart=fail");
@@ -78,6 +91,10 @@ public class ReserveController extends HttpServlet {
         if (result) {
             ArrayList<EquipmentBean> cartList = db.showCart(userID);
             session.setAttribute("cartList", cartList);
+            if (cartList.isEmpty()) {
+                response.sendRedirect("home?action=list&removeCartItem=success");
+                return;
+            }
             response.sendRedirect(url + "&removeCartItem=success");
         } else {
             response.sendRedirect(url + "&removeCartItem=fail");
@@ -94,47 +111,6 @@ public class ReserveController extends HttpServlet {
         String page = (String) session.getAttribute("page");
         String url = getCartPage(page);
         response.sendRedirect(url);
-//        switch (page) {
-//            case "wish":
-//                response.sendRedirect("wish?action=list&reserve=showCart");
-////                request.getRequestDispatcher("/wish?action=showCart").forward(request, response);
-//                break;
-//            case "home":
-//                response.sendRedirect("home?action=list&reserve=showCart");
-//                break;
-//            case "laptop":
-//                response.sendRedirect("home?action=laptop&reserve=showCart");
-//                break;
-//            case "tablet":
-//                response.sendRedirect("home?action=tablet&reserve=showCart");
-//                break;
-//            case "printer and scanner":
-//                response.sendRedirect("home?action=printer_scanner&reserve=showCart");
-//                break;
-//            case "smartphone":
-//                response.sendRedirect("home?action=phone&reserve=showCart");
-//                break;
-//            case "monitor":
-//                response.sendRedirect("home?action=monitor&reserve=showCart");
-//                break;
-//            case "robot":
-//                response.sendRedirect("home?action=robot&reserve=showCart");
-//                break;
-//            case "networking":
-//                response.sendRedirect("home?action=networking&reserve=showCart");
-//                break;
-//            case "Audio-Visual":
-//                response.sendRedirect("home?action=audio_visual&reserve=showCart");
-//                break;
-//            case "server":
-//                response.sendRedirect("home?action=server&reserve=showCart");
-//                break;
-//            case "others":
-//                response.sendRedirect("home?action=others&reserve=showCart");
-//                break;
-//            default:
-//                request.getRequestDispatcher("home?action=list&reserve=showCart");
-//        }
     }
 
     protected String getCartPage(String page) {
@@ -143,6 +119,8 @@ public class ReserveController extends HttpServlet {
                 return "wish?action=list&reserve=showCart";
             case "home":
                 return "home?action=list&reserve=showCart";
+            case "checkout":
+                return "reserve?action=checkout";
             case "laptop":
                 return "home?action=laptop&reserve=showCart";
             case "tablet":

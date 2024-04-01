@@ -17,79 +17,49 @@
         <title>Check Out</title>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="js/nav.js"></script>
+        <script src="js/checkout.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     </head>
     <body>
         <div class="font-[sans-serif] bg-gray-50">
             <div class="grid lg:grid-cols-2 xl:grid-cols-3 gap-4 h-full">
                 <div class="bg-[#3f3f3f] lg:h-screen lg:sticky lg:top-0">
                     <div class="relative h-full">
+
+
                         <div class="p-8 lg:overflow-auto lg:h-[calc(100vh-60px)]">
                             <h2 class="text-2xl font-bold text-white">Order Summary</h2>
                             <div class="space-y-6 mt-10">
                                 <div class="grid sm:grid-cols-2 items-start gap-6">
-                                    <div class="px-4 py-6 shrink-0 bg-gray-50 rounded-md">
-                                        <img src='https://readymadeui.com/images/product10.webp'
-                                             class="w-full object-contain" />
-                                    </div>
-                                    <div>
-                                        <h3 class="text-base text-white">Naruto: Split Sneakers</h3>
-                                        <ul class="text-xs text-white space-y-3 mt-4">
-                                            <li class="flex flex-wrap gap-4">Size <span class="ml-auto">37</span></li>
-                                            <li class="flex flex-wrap gap-4">Quantity <span class="ml-auto">2</span>
-                                            </li>
-                                            <li class="flex flex-wrap gap-4">Total Price <span
-                                                    class="ml-auto">$40</span></li>
-                                        </ul>
-                                    </div>
+                                    <c:forEach var="e" items="${sessionScope.cartList}">
+                                        <div class="px-4 py-6 shrink-0 bg-gray-50 rounded-md">
+                                            <img src=''
+                                                 class="w-full object-contain" />
+                                        </div>
+                                        <div class="p-2">
+                                            <h3 class="text-3xl text-white"> ${e.equipmentName}</h3>
+                                            <ul class="text-xs text-white space-y-3 mt-4">
+                                                <li class="flex flex-wrap gap-4 text-2xl">${e.equipmentType}
+                                                </li>
+                                                <li class="flex flex-wrap gap-4  text-2xl ">
+                                                    <button
+                                                            onclick="removeCheckoutItem(${e.equipmentID})"
+                                                            class="ml-auto text-red-500 cursor-pointer hover:text-blue-600">
+                                                        Remove
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </c:forEach>
                                 </div>
-                                <div class="grid sm:grid-cols-2 items-start gap-6">
-                                    <div class="px-4 py-6 shrink-0 bg-gray-50 rounded-md">
-                                        <img src='https://readymadeui.com/images/product11.webp'
-                                             class="w-full object-contain" />
-                                    </div>
-                                    <div>
-                                        <h3 class="text-base text-white">VelvetGlide Boots</h3>
-                                        <ul class="text-xs text-white space-y-3 mt-4">
-                                            <li>Size <span class="float-right">37</span></li>
-                                            <li>Quantity <span class="float-right">2</span></li>
-                                            <li>Total Price <span class="float-right">$40</span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="grid sm:grid-cols-2 items-start gap-6">
-                                    <div class="px-4 py-6 shrink-0 bg-gray-50 rounded-md">
-                                        <img src='https://readymadeui.com/images/product14.webp'
-                                             class="w-full object-contain" />
-                                    </div>
-                                    <div>
-                                        <h3 class="text-base text-white">Echo Elegance</h3>
-                                        <ul class="text-xs text-white space-y-3 mt-4">
-                                            <li>Size <span class="float-right">37</span></li>
-                                            <li>Quantity <span class="float-right">2</span></li>
-                                            <li>Total Price <span class="float-right">$40</span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="grid sm:grid-cols-2 items-start gap-6">
-                                    <div class="px-4 py-6 shrink-0 bg-gray-50 rounded-md">
-                                        <img src='https://readymadeui.com/images/product13.webp'
-                                             class="w-full object-contain" />
-                                    </div>
-                                    <div>
-                                        <h3 class="text-base text-white">Pumps</h3>
-                                        <ul class="text-xs text-white space-y-3 mt-4">
-                                            <li>Size <span class="float-right">37</span></li>
-                                            <li>Quantity <span class="float-right">2</span></li>
-                                            <li>Total Price <span class="float-right">$40</span></li>
-                                        </ul>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
-                        <div class="absolute left-0 bottom-0 bg-[#444] w-full p-4">
-                            <h4 class="flex flex-wrap gap-4 text-base text-white">Total <span
-                                    class="ml-auto">$84.00</span></h4>
-                        </div>
+
+                        <%--                        <div class="absolute left-0 bottom-0 bg-[#444] w-full p-4">--%>
+                        <%--                            <h4 class="flex flex-wrap gap-4 text-base text-white">Total <span--%>
+                        <%--                                    class="ml-auto">$84.00</span></h4>--%>
+                        <%--                        </div>--%>
                     </div>
                 </div>
                 <div class="xl:col-span-2 h-max rounded-md p-8 sticky top-0">

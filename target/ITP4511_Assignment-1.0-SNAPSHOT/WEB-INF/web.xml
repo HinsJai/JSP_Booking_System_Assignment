@@ -31,6 +31,7 @@
         <url-pattern>/home</url-pattern>
         <url-pattern>/userProfile</url-pattern>
         <url-pattern>/wish</url-pattern>
+        <url-pattern>/checkout</url-pattern>
     </filter-mapping>
 
     <!--    <servlet>-->

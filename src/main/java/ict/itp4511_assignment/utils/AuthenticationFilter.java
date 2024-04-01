@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/home.jsp", "/userProfile.jsp", "/wishList.jsp"})
+@WebFilter(urlPatterns = {"/home.jsp", "/userProfile.jsp", "/wishList.jsp", "/checkout.jsp"})
 public class AuthenticationFilter implements Filter {
 
     public FilterConfig config;

@@ -111,6 +111,6 @@ function removeItem(id) {
 
 $(document).ready(function () {
     $("#checkout").on("click", function () {
-        window.location.replace(`checkout.jsp`);
+        window.location.replace(`reserve?action=checkout`);
     });
 });

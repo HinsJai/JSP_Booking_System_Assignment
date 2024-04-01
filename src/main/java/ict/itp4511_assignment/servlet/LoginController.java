@@ -68,7 +68,8 @@ public class LoginController extends HttpServlet {
             session.setAttribute("campus", userBean.getCampus());
             int userType = getIdentity(userBean.getRoot());
             session.setAttribute("userType", userType);
-            ReserveCartDB db = new ReserveCartDB("jdbc:mysql://localhost:3306/itp4511_db", "root", "root");
+
+            ReserveCartDB db = new ReserveCartDB("jdbc:mysql://localhost:3306/itp4511_db?useSSL=false", "root", "root");
             ArrayList<EquipmentBean> cartList = db.showCart(userBean.getUserID());
             session.setAttribute("cartList", cartList);
             response.sendRedirect("login?success=true");

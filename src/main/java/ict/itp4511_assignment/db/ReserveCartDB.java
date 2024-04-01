@@ -80,6 +80,32 @@ public class ReserveCartDB {
         return result;
     }
 
+    public boolean clearCart(int userID) {
+        boolean result = false;
+        Statement stmnt = null;
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            stmnt = conn.createStatement();
+            String sql = "Delete from ReserveCart where userID = " + userID;
+            int count = stmnt.executeUpdate(sql);
+            if (count > 0) {
+                result = true;
+            }
+            stmnt.close();
+            conn.close();
+        } catch (SQLException e) {
+            while (e != null) {
+                e.printStackTrace();
+                e = e.getNextException();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return result;
+    }
+
     public ArrayList<EquipmentBean> showCart(int userID) {
         ArrayList<EquipmentBean> equipmentList = new ArrayList<>();
         Statement stmnt = null;

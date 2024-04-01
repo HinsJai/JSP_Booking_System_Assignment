@@ -1,6 +1,8 @@
 package ict.itp4511_assignment.servlet;
 
 import ict.itp4511_assignment.bean.EquipmentBean;
+import ict.itp4511_assignment.db.BookingDB;
+import ict.itp4511_assignment.db.BookingEquipmentDB;
 import ict.itp4511_assignment.db.ReserveCartDB;
 
 import javax.servlet.RequestDispatcher;
@@ -21,14 +23,18 @@ import java.util.ArrayList;
  */
 @WebServlet(name = "ReserveController", urlPatterns = {"/reserve"})
 public class ReserveController extends HttpServlet {
-    private ReserveCartDB db;
+    private ReserveCartDB reserveCartDB;
+    private BookingDB bkDB;
+    private BookingEquipmentDB bkEquipmentDB;
 
     @Override
     public void init() {
         String dbUser = this.getServletContext().getInitParameter("dbUser");
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
-        db = new ReserveCartDB(dbUrl, dbUser, dbPassword);
+        reserveCartDB = new ReserveCartDB(dbUrl, dbUser, dbPassword);
+        bkDB = new BookingDB(dbUrl, dbUser, dbPassword);
+        bkEquipmentDB = new BookingEquipmentDB(dbUrl, dbUser, dbPassword);
     }
 
     @Override
@@ -39,42 +45,63 @@ public class ReserveController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            response.sendRedirect("login?success=false");
+            return;
+        }
+        int userID = (int) session.getAttribute("userID");
         switch (action) {
             case "add":
-                addToCart(request, response);
+                addToCart(request, response, session, userID);
                 break;
             case "showCart":
-                showCart(request, response);
+                showCart(request, response, session, userID);
                 break;
-//            case "list":
-//                fetchData(request, response);
-//                break;
             case "removeCartItem":
                 int equipmentID = Integer.parseInt(request.getParameter("id"));
-                removeCartItem(request, response, equipmentID);
+                removeCartItem(request, response, equipmentID, session, userID);
                 break;
             case "checkout":
-                HttpSession session = request.getSession(false);
-                if (session == null) {
-                    response.sendRedirect("login?success=false");
-                    return;
-                }
+
                 session.setAttribute("page", "checkout");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/checkout.jsp");
                 dispatcher.forward(request, response);
+                break;
+            case "create_booking":
+                boolean result = false;
+                int bookingID = Integer.parseInt(request.getParameter("bookID"));
+                result = createBooking(request, response, bookingID, userID);
+
+                if (result) {
+                    ArrayList<EquipmentBean> cartList = reserveCartDB.showCart(userID);
+                    result = addBookingEquipment(bookingID, cartList);
+                    if (result) {
+                        result = reserveCartDB.clearCart(userID);
+                        if (result) {
+//                            session.setAttribute("cartList", null);
+                            response.sendRedirect("home?action=list&createBooking=success");
+                        } else {
+                            response.sendRedirect("home?action=list&createBooking=fail");
+                        }
+                    } else {
+                        response.sendRedirect("home?action=list&createBooking=fail");
+                    }
+                } else {
+                    response.sendRedirect("home?action=list&createBooking=fail");
+                }
                 break;
             default:
                 response.sendRedirect("home?action=list");
         }
     }
 
-    protected void addToCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void addToCart(HttpServletRequest request, HttpServletResponse response, HttpSession session, int userID) throws ServletException, IOException {
         int equipmentId = Integer.parseInt(request.getParameter("equipmentId"));
-        HttpSession session = request.getSession(false);
-        int userID = (int) session.getAttribute("userID");
-        boolean result = db.addToCart(userID, equipmentId);
+
+        boolean result = reserveCartDB.addToCart(userID, equipmentId);
         if (result) {
-            ArrayList<EquipmentBean> cartList = db.showCart(userID);
+            ArrayList<EquipmentBean> cartList = reserveCartDB.showCart(userID);
             session.setAttribute("cartList", cartList);
             response.sendRedirect("home?action=list&addCart=success");
         } else {
@@ -82,14 +109,14 @@ public class ReserveController extends HttpServlet {
         }
     }
 
-    protected void removeCartItem(HttpServletRequest request, HttpServletResponse response, int equipmentID) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        int userID = (int) session.getAttribute("userID");
+    protected void removeCartItem(HttpServletRequest request, HttpServletResponse response, int equipmentID, HttpSession session, int userID) throws ServletException, IOException {
+//        HttpSession session = request.getSession(false);
+//        int userID = (int) session.getAttribute("userID");
         String page = (String) session.getAttribute("page");
-        boolean result = db.removeFromCart(userID, equipmentID);
+        boolean result = reserveCartDB.removeFromCart(userID, equipmentID);
         String url = getCartPage(page);
         if (result) {
-            ArrayList<EquipmentBean> cartList = db.showCart(userID);
+            ArrayList<EquipmentBean> cartList = reserveCartDB.showCart(userID);
             session.setAttribute("cartList", cartList);
             if (cartList.isEmpty()) {
                 response.sendRedirect("home?action=list&removeCartItem=success");
@@ -101,16 +128,35 @@ public class ReserveController extends HttpServlet {
         }
     }
 
-    protected void showCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        int userID = (int) session.getAttribute("userID");
-        ArrayList<EquipmentBean> cartList = db.showCart(userID);
+    protected void showCart(HttpServletRequest request, HttpServletResponse response, HttpSession session, int userID) throws ServletException, IOException {
+//        HttpSession session = request.getSession(false);
+//        int userID = (int) session.getAttribute("userID");
+        ArrayList<EquipmentBean> cartList = reserveCartDB.showCart(userID);
         session.setAttribute("cartList", cartList);
 //        RequestDispatcher rd = getServletContext().getRequestDispatcher("/home.jsp");
 //        rd.forward(request, response);
         String page = (String) session.getAttribute("page");
         String url = getCartPage(page);
         response.sendRedirect(url);
+    }
+
+    protected boolean createBooking(HttpServletRequest request, HttpServletResponse response, int bookingID, int userID) throws ServletException, IOException {
+
+        String bookingDate = request.getParameter("bookDate");
+        String pickupDate = request.getParameter("pickUpDate");
+        String returnDate = request.getParameter("returnDate");
+        return bkDB.createBooking(bookingID, userID, bookingDate, pickupDate, returnDate);
+//        if (result) {
+//            ArrayList<EquipmentBean> cartList = db.showCart(userID);
+//            session.setAttribute("cartList", cartList);
+//            response.sendRedirect("home?action=list&addCart=success");
+//        } else {
+//            response.sendRedirect("home?action=list&addCart=fail");
+//        }
+    }
+
+    protected boolean addBookingEquipment(int bookingID, ArrayList<EquipmentBean> cardList) {
+        return bkEquipmentDB.addBookingEquipment(bookingID, cardList);
     }
 
     protected String getCartPage(String page) {

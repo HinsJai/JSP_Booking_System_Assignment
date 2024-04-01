@@ -1,7 +1,9 @@
 package ict.itp4511_assignment.servlet;
 
+import ict.itp4511_assignment.bean.EquipmentBean;
 import ict.itp4511_assignment.bean.WishCartEquipmentBean;
 import ict.itp4511_assignment.db.EquipmentDB;
+import ict.itp4511_assignment.db.ReserveCartDB;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -52,14 +54,17 @@ public class EquipmentListController extends HttpServlet {
         String campus = (String) session.getAttribute("campus");
         RequestDispatcher rd;
 
+
         switch (action) {
             case "list":
                 ArrayList<WishCartEquipmentBean> equipments = db.getEquipmentList(userID, userType, campus);
                 request.setAttribute("equipments", equipments);
                 session.setAttribute("page", "home");
-//                ReserveCartDB reserveDB = new ReserveCartDB("jdbc:mysql://localhost:3306/itp4511_db", "root", "root");
-//                ArrayList<EquipmentBean> cartList = reserveDB.showCart(1);
-//                session.setAttribute("cartList", cartList);
+
+                ReserveCartDB cartDB = new ReserveCartDB("jdbc:mysql://localhost:3306/itp4511_db?useSSL=false", "root", "root");
+                ArrayList<EquipmentBean> cartList = cartDB.showCart(userID);
+                session.setAttribute("cartList", cartList);
+
                 rd = getServletContext().getRequestDispatcher("/home.jsp");
                 rd.forward(request, response);
                 break;

@@ -9,9 +9,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="tailwindcss/tailwindcss_cdn.jsp" %>
 <%@ include file="layout/top_nav.jsp" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cc" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
     <head>
         <title>Check Out</title>
@@ -21,6 +21,11 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     </head>
     <body>
+
+        <sql:setDataSource var="booking" driver="com.mysql.cj.jdbc.Driver"
+                           url="jdbc:mysql://localhost:3306/itp4511_db?useSSL=false"
+                           user="root" password="root" />
+
         <div class="font-[sans-serif] bg-gray-50">
             <div class="grid lg:grid-cols-2 xl:grid-cols-3 gap-4 h-full">
                 <div class="bg-[#3f3f3f] lg:h-screen lg:sticky lg:top-0">
@@ -28,10 +33,10 @@
 
 
                         <div class="p-8 lg:overflow-auto lg:h-[calc(100vh-60px)]">
-                            <h2 class="text-2xl font-bold text-white">Order Summary</h2>
+                            <h2 class="text-2xl font-bold text-white">Booking Summary</h2>
                             <div class="space-y-6 mt-10">
                                 <div class="grid sm:grid-cols-2 items-start gap-6">
-                                    <c:forEach var="e" items="${sessionScope.cartList}">
+                                    <cc:forEach var="e" items="${sessionScope.cartList}">
                                         <div class="px-4 py-6 shrink-0 bg-gray-50 rounded-md">
                                             <img src=''
                                                  class="w-full object-contain" />
@@ -50,26 +55,21 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                    </c:forEach>
+                                    </cc:forEach>
                                 </div>
-
                             </div>
                         </div>
-
-                        <%--                        <div class="absolute left-0 bottom-0 bg-[#444] w-full p-4">--%>
-                        <%--                            <h4 class="flex flex-wrap gap-4 text-base text-white">Total <span--%>
-                        <%--                                    class="ml-auto">$84.00</span></h4>--%>
-                        <%--                        </div>--%>
                     </div>
                 </div>
                 <div class="xl:col-span-2 h-max rounded-md p-8 sticky top-0">
-                    <h2 class="text-2xl font-bold text-[#333]">Complete your order</h2>
+                    <h2 class="text-2xl font-bold text-[#333]">Complete your booking</h2>
                     <form class="mt-10">
                         <div>
-                            <h3 class="text-lg font-bold text-[#333] mb-6">Personal Details</h3>
+                            <h3 class="text-2xl font-bold text-[#333] mb-6">Personal Details</h3>
                             <div class="grid sm:grid-cols-2 gap-6">
                                 <div class="relative flex items-center">
-                                    <input type="text" placeholder="First Name"
+                                    <span class=" w-40 font-bold">First Name</span>
+                                    <input type="text" value="${sessionScope.userInfo.getfName()}" disabled
                                            class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb"
                                          class="w-[18px] h-[18px] absolute right-4"
@@ -81,7 +81,8 @@
                                     </svg>
                                 </div>
                                 <div class="relative flex items-center">
-                                    <input type="text" placeholder="Last Name"
+                                    <span class=" w-40 font-bold">Last Name</span>
+                                    <input type="text" value="${sessionScope.userInfo.getlName()}" disabled
                                            class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb"
                                          class="w-[18px] h-[18px] absolute right-4"
@@ -93,7 +94,8 @@
                                     </svg>
                                 </div>
                                 <div class="relative flex items-center">
-                                    <input type="email" placeholder="Email"
+                                    <span class=" w-40 font-bold">Email</span>
+                                    <input type="email" value="${sessionScope.userInfo.getEmail()}" disabled
                                            class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb"
                                          class="w-[18px] h-[18px] absolute right-4"
@@ -114,7 +116,8 @@
                                     </svg>
                                 </div>
                                 <div class="relative flex items-center">
-                                    <input type="number" placeholder="Phone No."
+                                    <span class=" w-40 font-bold">Contact</span>
+                                    <input type="number" value="${sessionScope.userInfo.getContact()}" disabled
                                            class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
                                     <svg fill="#bbb" class="w-[18px] h-[18px] absolute right-4" viewBox="0 0 64 64">
                                         <path
@@ -125,25 +128,53 @@
                             </div>
                         </div>
                         <div class="mt-6">
-                            <h3 class="text-lg font-bold text-[#333] mb-6">Shipping Address</h3>
+                            <h3 class="text-2xl font-bold text-[#333] mb-6">Booking Details</h3>
                             <div class="grid sm:grid-cols-2 gap-6">
-                                <input type="text" placeholder="Address Line"
-                                       class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
-                                <input type="text" placeholder="City"
-                                       class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
-                                <input type="text" placeholder="State"
-                                       class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
-                                <input type="text" placeholder="Zip Code"
-                                       class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
+                                <div class="relative flex items-center">
+                                    <span class=" w-40 font-bold">Booking ID</span>
+                                    <cc:set var="now" value="<%=new java.util.Date()%>" />
+                                    <sql:query dataSource="${booking}" var="result">
+                                        SELECT IFNULL(MAX(bookingID), 0) + 1 AS nextBookingID FROM booking;
+                                    </sql:query>
+                                    <%--                                    <input type="number" value="" disabled--%>
+                                    <%--                                           class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />--%>
+                                    <cc:forEach var="row" items="${result.rows}">
+                                        <input type="number" value="${row.nextBookingID}" disabled name="bookID"
+                                               id="bookID"
+                                               class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
+                                    </cc:forEach>
+                                </div>
+                                <div class="relative flex items-center">
+                                    <span class=" w-40 font-bold">Booking Date</span>
+                                    <input type="date" name="bookDate" value="<fmt:formatDate pattern="yyyy-MM-dd"
+                                                    value="${now}" />" disabled id="bookDate"
+                                           class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
+
+                                </div>
+                                <div class="relative flex items-center">
+                                    <span class=" w-40 font-bold">Pick-up date</span>
+                                    <input type="date" name="pickUpDate" min="<fmt:formatDate pattern="yyyy-MM-dd"
+                                                    value="${now}" />" id="pickUpDate"
+                                           class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
+
+                                </div>
+                                <div class="relative flex items-center">
+                                    <span class=" w-40 font-bold">Return date</span>
+                                    <input type="date" name="returnDate" min="<fmt:formatDate pattern="yyyy-MM-dd"
+                                                    value="${now}" />" id="returnDate"
+                                           class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
+
+                                </div>
+
                             </div>
                             <div class="flex gap-6 max-sm:flex-col mt-10">
                                 <button type="button"
                                         class="rounded-md px-6 py-3 w-full text-sm font-semibold bg-transparent hover:bg-gray-100 border-2 text-[#333]">
                                     Cancel
                                 </button>
-                                <button type="button"
+                                <button type="button" id="bookingBtn"
                                         class="rounded-md px-6 py-3 w-full text-sm font-semibold bg-[#333] text-white hover:bg-[#222]">
-                                    Complete Purchase
+                                    Complete Booking
                                 </button>
                             </div>
                         </div>

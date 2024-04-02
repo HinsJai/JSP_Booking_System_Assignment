@@ -1,5 +1,7 @@
 package ict.itp4511_assignment.servlet;
 
+import ict.itp4511_assignment.db.BookingDB;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,12 +20,14 @@ import java.io.IOException;
 
 @WebServlet(name = "BookingController", urlPatterns = {"/booking"})
 public class BookingController extends HttpServlet {
+    private BookingDB bookingDB;
 
     @Override
     public void init() {
         String dbUser = this.getServletContext().getInitParameter("dbUser");
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
+        bookingDB = new BookingDB(dbUrl, dbUser, dbPassword);
     }
 
     @Override
@@ -35,6 +39,7 @@ public class BookingController extends HttpServlet {
         String action = request.getParameter("action");
         HttpSession session = request.getSession(false);
         RequestDispatcher rd;
+        boolean result = false;
         if (session == null) {
             response.sendRedirect("login?success=false");
             return;
@@ -49,6 +54,15 @@ public class BookingController extends HttpServlet {
             case "details":
                 rd = request.getRequestDispatcher("/bookingDetails.jsp");
                 rd.forward(request, response);
+                break;
+            case "cancel":
+                int bookingID = Integer.parseInt(request.getParameter("id"));
+                result = bookingDB.cancelBooking(bookingID);
+                if (result) {
+                    response.sendRedirect("booking?action=details&bookID=" + bookingID + "&cancel=success");
+                } else {
+                    response.sendRedirect("booking?action=details&id=" + request.getParameter("id"));
+                }
                 break;
         }
     }

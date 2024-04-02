@@ -26,7 +26,7 @@
             });
         </script>
     </head>
-    <body>
+    <body class="bg-gray-900">
         <sql:setDataSource var="booking" driver="com.mysql.cj.jdbc.Driver"
                            url="jdbc:mysql://localhost:3306/itp4511_db?useSSL=false"
                            user="root" password="root" />
@@ -88,21 +88,21 @@
                                         </span>
                                     </td>
                                 </c:when>
-                                <c:when test="${row.status == 'Declined'}">
+                                <c:when test="${row.bookingStatus == 'Declined'}">
                                     <td class="px-6 py-4 text-2xl">
                                         <span class="text-2xl text-black bg-red-500 dark:bg-red-500  p-2 rounded-md">
                                             <c:out value="${row.bookingStatus}" />
                                         </span>
                                     </td>
                                 </c:when>
-                                <c:when test="${row.status == 'Completed'}">
+                                <c:when test="${row.bookingStatus == 'Completed'}">
                                     <td class="px-6 py-4 text-2xl">
                                         <span class="text-2xl  bg-blue-500 text-black  p-2 rounded-md">
                                             <c:out value="${row.bookingStatus}" />
                                         </span>
                                     </td>
                                 </c:when>
-                                <c:when test="${row.status == 'Cancelled'}">
+                                <c:when test="${row.bookingStatus == 'Cancelled'}">
                                     <td class="px-6 py-4 ">
                                         <span class="text-2xl  bg-pink-500 text-black  p-2 rounded-md">
                                             <c:out value="${row.bookingStatus}" />

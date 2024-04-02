@@ -81,4 +81,44 @@ public class BookingDB {
         }
         return result;
     }
+
+    public boolean cancelBooking(int bookingID) {
+        boolean result = false;
+        PreparedStatement pStmt = null;
+        Connection conn = null;
+        String sql = "";
+        try {
+            conn = getConnection();
+            sql = "UPDATE booking SET bookingStatus = 'Cancelled' WHERE bookingID = ?";
+            pStmt = conn.prepareStatement(sql);
+            pStmt.setInt(1, bookingID);
+            int rowCount = pStmt.executeUpdate();
+            if (rowCount > 0) {
+                result = true;
+            } else {
+                return false;
+            }
+            conn.close();
+
+            sql = "Update equipment set status = 'Available' where equipmentID " +
+                    "in (select equipmentID from bookingEquipment where bookingID =" + bookingID + ")";
+            conn = getConnection();
+            pStmt = conn.prepareStatement(sql);
+            rowCount = pStmt.executeUpdate();
+            if (rowCount == 0) {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            while (e != null) {
+                e.printStackTrace();
+                e = e.getNextException();
+            }
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return result;
+    }
 }

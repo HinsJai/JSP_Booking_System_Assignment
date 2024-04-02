@@ -18,7 +18,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
         <script src="./js/paging.js"></script>
-        <script src="js/nav.js"></script>
+        <script src="js/cart.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10">
         </script>
         <script>
@@ -46,7 +46,7 @@
 
                 <%@ include file="layout/equipement_menu.jsp" %>
 
-                <main class="flex-1">
+                <main class="flex-1 bg-gray-900">
 
                     <div class="relative overflow-x-auto shadow-md ">
                         <table class="w-full text-sm text-left rtl:text-right text-white dark:text-gray-400" id="table">
@@ -153,20 +153,5 @@
                 </main>
             </div>
         </section>
-
-        <%--        <script>--%>
-        <%--            $(document).ready(function () {--%>
-        <%--                $("#cart").on("click", function () {--%>
-        <%--                    window.location.replace(`reserve?action=showCart`);--%>
-        <%--                    $("#cart-container").show();--%>
-        <%--                });--%>
-        <%--            });--%>
-
-        <%--            $(document).ready(function () {--%>
-        <%--                $("#close").on("click", function () {--%>
-        <%--                    $("#cart-container").hide();--%>
-        <%--                });--%>
-        <%--            });--%>
-        <%--        </script>--%>
     </body>
 </html>

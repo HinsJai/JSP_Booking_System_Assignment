@@ -16,7 +16,7 @@
     <head>
         <title>Check Out</title>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script src="js/nav.js"></script>
+        <script src="js/cart.js"></script>
         <script src="js/checkout.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     </head>

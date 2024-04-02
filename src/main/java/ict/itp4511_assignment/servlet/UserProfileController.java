@@ -47,6 +47,7 @@ public class UserProfileController extends HttpServlet {
                     case "profile":
                         if (userBean != null) {
                             request.setAttribute("user", userBean);
+                            session.setAttribute("page", "profile");
                             rd = getServletContext().getRequestDispatcher("/userProfile.jsp");
                             rd.forward(request, response);
                         }

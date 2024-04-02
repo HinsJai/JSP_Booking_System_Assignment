@@ -15,12 +15,13 @@
                 <img class="w-60 h-20" src="images/HKIIT_logo.png" alt="">
             </a>
             <!-- Nav Links -->
-            <ul class="hidden md:flex px-4 mt-4 mx-auto font-semibold font-heading space-x-12">
+            <ul class="hidden md:flex px-4 mt-4 mx-auto font-semibold font-heading space-x-16">
                 <li><a class="" href="home?action=list"><p class="text-white text-2xl hover:text-orange-500">Home</p>
                 </a>
                 </li>
-                <li><a class="hover:text-orange-500" href=""><p class="text-white text-2xl hover:text-orange-500">
-                    Home</p></a></li>
+                <li><a class="hover:text-orange-500" href="booking?action=list"><p
+                        class="text-white text-2xl hover:text-orange-500">
+                    Booking</p></a></li>
                 <li><a class="hover:text-orange-500" href="#"><p class="text-white text-2xl hover:text-orange-500">
                     Home</p></a></li>
                 <li><a class="hover:text-orange-2500" href="#"><p class="text-white text-2xl hover:text-orange-500">

@@ -3,6 +3,7 @@ package ict.itp4511_assignment.servlet;
 import ict.itp4511_assignment.bean.EquipmentBean;
 import ict.itp4511_assignment.db.BookingDB;
 import ict.itp4511_assignment.db.BookingEquipmentDB;
+import ict.itp4511_assignment.db.EquipmentDB;
 import ict.itp4511_assignment.db.ReserveCartDB;
 
 import javax.servlet.RequestDispatcher;
@@ -26,6 +27,7 @@ public class ReserveController extends HttpServlet {
     private ReserveCartDB reserveCartDB;
     private BookingDB bkDB;
     private BookingEquipmentDB bkEquipmentDB;
+    private EquipmentDB equipmentDB;
 
     @Override
     public void init() {
@@ -35,6 +37,7 @@ public class ReserveController extends HttpServlet {
         reserveCartDB = new ReserveCartDB(dbUrl, dbUser, dbPassword);
         bkDB = new BookingDB(dbUrl, dbUser, dbPassword);
         bkEquipmentDB = new BookingEquipmentDB(dbUrl, dbUser, dbPassword);
+        equipmentDB = new EquipmentDB(dbUrl, dbUser, dbPassword);
     }
 
     @Override
@@ -72,11 +75,17 @@ public class ReserveController extends HttpServlet {
                 boolean result = false;
                 int bookingID = Integer.parseInt(request.getParameter("bookID"));
                 result = createBooking(request, response, bookingID, userID);
-
+                boolean updateEquipmentStatus = false;
                 if (result) {
                     ArrayList<EquipmentBean> cartList = reserveCartDB.showCart(userID);
                     result = addBookingEquipment(bookingID, cartList);
-                    if (result) {
+                    for (EquipmentBean equipment : cartList) {
+                        updateEquipmentStatus = equipmentDB.updateStatus("CheckedOut", equipment.getEquipmentID());
+                        if (!updateEquipmentStatus) {
+                            break;
+                        }
+                    }
+                    if (result && updateEquipmentStatus) {
                         result = reserveCartDB.clearCart(userID);
                         if (result) {
 //                            session.setAttribute("cartList", null);
@@ -167,6 +176,8 @@ public class ReserveController extends HttpServlet {
                 return "home?action=list&reserve=showCart";
             case "checkout":
                 return "reserve?action=checkout";
+//            case "profile":
+//                return "userProfile?action=profile&reserve=showCart";
             case "laptop":
                 return "home?action=laptop&reserve=showCart";
             case "tablet":

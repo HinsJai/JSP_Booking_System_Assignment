@@ -202,4 +202,30 @@ public class EquipmentDB {
         return equipmentList;
     }
 
+    public boolean updateStatus(String status, int equipmentID) {
+        boolean result = false;
+        PreparedStatement pStmt = null;
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            String sql = "UPDATE equipment SET status = ? WHERE equipmentID = ?";
+            pStmt = conn.prepareStatement(sql);
+            pStmt.setString(1, status);
+            pStmt.setInt(2, equipmentID);
+            int rowCount = pStmt.executeUpdate();
+            if (rowCount > 0) {
+                result = true;
+            }
+            conn.close();
+        } catch (SQLException e) {
+            while (e != null) {
+                e.printStackTrace();
+                e = e.getNextException();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 }

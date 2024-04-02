@@ -7,9 +7,9 @@
 .paging-nav {
     text-align: right;
     padding: 10px;
-    margin-right: 10px;
-    height: 6.3rem;
-    background: #F0FFFF;
+    height: 4.3rem;
+    border: none;
+    background: rgb(17 24 39);
 }
 
 .paging-nav a {
@@ -20,10 +20,9 @@
     background: #191970;
     color: white;
     border-radius: 3px;
-
 }
 
-a:hover {
+.paging-nav a:hover {
     background: #FF4500;
 }
 

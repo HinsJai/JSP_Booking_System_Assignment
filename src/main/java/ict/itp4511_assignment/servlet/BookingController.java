@@ -45,23 +45,33 @@ public class BookingController extends HttpServlet {
             return;
         }
         int userID = (int) session.getAttribute("userID");
-        session.setAttribute("page", "booking");
+//        session.setAttribute("page", "booking");
         switch (action) {
             case "list":
+                session.setAttribute("page", "booking");
                 rd = request.getRequestDispatcher("/bookingList.jsp");
                 rd.forward(request, response);
                 break;
+            case "requestList":
+                session.setAttribute("page", "bookingRequest");
+                rd = request.getRequestDispatcher("/bookingRequest.jsp");
+                rd.forward(request, response);
+                break;
+
             case "details":
+                session.setAttribute("page", "booking");
                 rd = request.getRequestDispatcher("/bookingDetails.jsp");
                 rd.forward(request, response);
                 break;
             case "cancel":
+                session.setAttribute("page", "booking");
                 int bookingID = Integer.parseInt(request.getParameter("id"));
                 result = bookingDB.cancelBooking(bookingID);
                 if (result) {
                     response.sendRedirect("booking?action=details&bookID=" + bookingID + "&cancel=success");
                 } else {
-                    response.sendRedirect("booking?action=details&id=" + request.getParameter("id"));
+//                    response.sendRedirect("booking?action=details&id=" + request.getParameter("id"));
+                    response.sendRedirect("booking?action=details&bookID=" + bookingID + "&cancel=failed");
                 }
                 break;
         }

@@ -50,7 +50,7 @@ public class EquipmentListController extends HttpServlet {
         HttpSession session = request.getSession(false);
 
         int userID = (int) session.getAttribute("userID");
-        int userType = (int) session.getAttribute("userType");
+        String userType = (String) session.getAttribute("userType");
         String campus = (String) session.getAttribute("campus");
         RequestDispatcher rd;
 
@@ -111,7 +111,7 @@ public class EquipmentListController extends HttpServlet {
         }
     }
 
-    public void fetchData(HttpServletRequest request, HttpServletResponse response, String type, int userID, int userType, String campus) throws ServletException, IOException {
+    public void fetchData(HttpServletRequest request, HttpServletResponse response, String type, int userID, String userType, String campus) throws ServletException, IOException {
         RequestDispatcher rd;
         ArrayList<WishCartEquipmentBean> data = db.getEquipmentListByType(type, userID, userType, campus);
         request.setAttribute("equipments", data);

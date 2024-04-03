@@ -48,8 +48,9 @@ public class NotificationController extends HttpServlet {
             case "wishNotification":
                 session.setAttribute("wishNotification", db.getAvailableWishList(userID));
                 break;
+            case "wish_dismiss":
+                session.setAttribute("notificationDismiss", true);
+                break;
         }
     }
-
-
 }

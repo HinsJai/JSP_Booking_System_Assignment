@@ -9,7 +9,7 @@
 <%@ include file="tailwindcss/tailwindcss_cdn.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
-<%@ include file="layout/top_nav.jsp" %>
+<%@ include file="layout/user_nav.jsp" %>
 <html>
     <head>
         <title>Booking</title>

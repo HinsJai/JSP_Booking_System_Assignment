@@ -26,7 +26,8 @@ public class LoginAccessController extends HttpServlet {
         if (loginPass && sessionCheck) {
 //            RequestDispatcher dispatcher = request.getRequestDispatcher("/home.jsp");
 //            dispatcher.forward(request, response);
-            response.sendRedirect("home?action=list");
+            getAccessPage(request, response, (String) session.getAttribute("userType"));
+//            response.sendRedirect("home?action=list");
         } else if (!loginPass && !sessionCheck) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
             dispatcher.forward(request, response);
@@ -34,6 +35,28 @@ public class LoginAccessController extends HttpServlet {
 //            response.sendError(HttpServletResponse.SC_NOT_FOUND);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
             dispatcher.forward(request, response);
+        }
+    }
+
+    protected void getAccessPage(HttpServletRequest request, HttpServletResponse response, String userType) throws ServletException, IOException {
+//        RequestDispatcher dispatcher;
+        switch (userType) {
+            case "User":
+            case "Staff":
+                response.sendRedirect("home?action=list");
+                break;
+            case "Technician":
+                response.sendRedirect("booking?action=requestList");
+//                dispatcher = request.getRequestDispatcher("/staff.jsp");
+//                dispatcher.forward(request, response);
+                break;
+            case "Technician_admin":
+                response.sendRedirect("booking?action=requestList");
+                break;
+            case "Courier":
+                break;
+            default:
+                response.sendRedirect("login?success=false");
         }
     }
 }

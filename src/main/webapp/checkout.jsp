@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="tailwindcss/tailwindcss_cdn.jsp" %>
-<%@ include file="layout/top_nav.jsp" %>
+<%@ include file="layout/user_nav.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cc" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>

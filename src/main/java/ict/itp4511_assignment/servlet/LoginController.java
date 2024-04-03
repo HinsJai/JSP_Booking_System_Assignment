@@ -68,8 +68,8 @@ public class LoginController extends HttpServlet {
             session.setAttribute("userInfo", userBean);
             session.setAttribute("userID", userBean.getUserID());
             session.setAttribute("campus", userBean.getCampus());
-            int userType = getIdentity(userBean.getRoot());
-            session.setAttribute("userType", userType);
+//            int userType = getIdentity(userBean.getRoot());
+            session.setAttribute("userType", userBean.getRoot());
 
             ReserveCartDB db = new ReserveCartDB("jdbc:mysql://localhost:3306/itp4511_db?useSSL=false", "root", "root");
             ArrayList<EquipmentBean> cartList = db.showCart(userBean.getUserID());
@@ -103,14 +103,5 @@ public class LoginController extends HttpServlet {
             session.invalidate();
         }
         doLogin(request, response);
-    }
-
-    // 0 for User, 1 for staff or technician
-    private int getIdentity(String userType) {
-        if ("User".equals(userType)) {
-            return 0;
-        } else {
-            return 1;
-        }
     }
 }

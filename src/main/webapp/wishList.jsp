@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="tailwindcss/tailwindcss_cdn.jsp" %>
-<%@ include file="layout/top_nav.jsp" %>
+<%@ include file="layout/user_nav.jsp" %>
 
 <%@ page import="java.util.ArrayList" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cw" %>
@@ -44,24 +44,27 @@
             <div class="flex flex-wrap">
                 <%--                <%@ include file="layout/equipement_menu.jsp" %>--%>
                 <main class="flex-1">
-
+                    <div class="flex items-center justify-center p-4 bg-gray-600"><h1
+                            class="text-4xl font-bold text-yellow-500">Wish
+                                                                       List</h1>
+                    </div>
                     <div class="relative overflow-x-auto shadow-md ">
-                        <table class="w-full text-sm text-left rtl:text-right text-white dark:text-gray-400" id="table">
+                        <table class="w-full text-sm text-left rtl:text-right text-white" id="table">
                             <thead class="text-xl text-white uppercase bg-gray-50 dark:bg-gray-700 dark:text-white">
                                 <tr>
                                     <th scope="col" class="px-16 py-3">
                                         <span class="sr-only">Image</span>
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 text-3xl">
                                         Equipment
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 text-3xl">
                                         Type
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 text-3xl">
                                         Status
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
+                                    <th scope="col" class="px-6 py-3 text-3xl">
                                         Action
                                     </th>
 
@@ -72,7 +75,7 @@
 
                                 <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                                     <td class="p-4">
-                                        <img src="#"
+                                        <img src="images/equipment/${w.e_equipmentID}.jpg"
                                              class="w-16 md:w-32 max-w-full max-h-full" alt="">
                                     </td>
                                     <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white text-xl">

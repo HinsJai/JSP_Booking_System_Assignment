@@ -5,6 +5,7 @@ import ict.itp4511_assignment.bean.WishCartEquipmentBean;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * @Author: Kong Kwok Hin
@@ -97,13 +98,13 @@ public class EquipmentDB {
         }
     }
 
-    public ArrayList<WishCartEquipmentBean> getEquipmentList(int userId, int userType, String campus) {
+    public ArrayList<WishCartEquipmentBean> getEquipmentList(int userId, String userType, String campus) {
         ArrayList<WishCartEquipmentBean> equipmentList = new ArrayList<>();
         String sql = "";
 
         try {
             Connection conn = getConnection();
-            if (userType == 0) {
+            if (Objects.equals(userType, "User")) {
                 sql = "SELECT * " +
                         "FROM wishlist\n" +
                         "         RIGHT JOIN equipment\n" +
@@ -111,8 +112,8 @@ public class EquipmentDB {
                         "         LEFT JOIN reserveCart" +
                         "                   ON equipment.equipmentID = reserveCart.equipmentID " +
                         "WHERE (equipment.status = 'Available' OR equipment.status = 'CheckedOut') " +
-                        "and isPrivate = 0 " +
-                        "  AND equipment.campusID = ?";
+                        "and isPrivate = 0 ";
+//                        "  AND equipment.campusID = ?";
 //                sql = "SELECT * FROM wishlist right join   equipment ON wishlist.equipmentID = equipment.equipmentID " + "where (status = 'Available' or status =  'CheckedOut') and (userID = ? or userID is null) and private = 0 AND campusID=? ";
             } else {
 //                sql = "SELECT   * FROM wishlist" + " RIGHT JOIN " + "equipment" + " ON" + " equipment.equipmentID = wishlist.equipmentID" + " WHERE (status = 'Available' OR status = 'CheckedOut')" + " AND (userID = ? OR userID IS NULL) AND campusID=?";
@@ -122,13 +123,13 @@ public class EquipmentDB {
                         "                    ON wishlist.equipmentID = equipment.equipmentID " +
                         "         LEFT JOIN reserveCart" +
                         "                   ON equipment.equipmentID = reserveCart.equipmentID " +
-                        "WHERE (equipment.status = 'Available' OR equipment.status = 'CheckedOut') " +
+                        "WHERE (equipment.status = 'Available' OR equipment.status = 'CheckedOut') ";
 //                        "  AND (wishlist.userID = ? OR wishlist.userID IS NULL)" +
-                        "  AND equipment.campusID = ?";
+//                        "  AND equipment.campusID = ?";
             }
             PreparedStatement ps = conn.prepareStatement(sql);
 //            ps.setInt(1, userId);
-            ps.setString(1, campus);
+//            ps.setString(1, campus);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
 //                EquipmentBean equipment = new EquipmentBean();
@@ -161,12 +162,12 @@ public class EquipmentDB {
         return equipmentList;
     }
 
-    public ArrayList<WishCartEquipmentBean> getEquipmentListByType(String type, int userID, int userType, String campus) {
+    public ArrayList<WishCartEquipmentBean> getEquipmentListByType(String type, int userID, String userType, String campus) {
         ArrayList<WishCartEquipmentBean> equipmentList = new ArrayList<>();
         String sql = "";
         try {
             Connection conn = getConnection();
-            if (userType == 0) {
+            if (Objects.equals(userType, "User")) {
 //                sql = "SELECT * " + "FROM wishlist" + " RIGHT JOIN" + "  equipment" + "     ON" + " wishlist.equipmentID = equipment.equipmentID " + "WHERE (status = 'Available' OR status = 'CheckedOut')" + "  AND equipmentType = ?" + "  AND (userID = ? OR userID IS NULL) and private = 0 and campusID=?";
                 sql = "SELECT * " +
                         "FROM wishlist\n" +
@@ -176,8 +177,8 @@ public class EquipmentDB {
                         "                   ON equipment.equipmentID = reserveCart.equipmentID " +
                         "WHERE (equipment.status = 'Available' OR equipment.status = 'CheckedOut') " +
                         "  AND equipmentType = ?" +
-                        " AND isPrivate = 0 " +
-                        "  AND equipment.campusID = ?";
+                        " AND isPrivate = 0 ";
+//                        "  AND equipment.campusID = ?";
             } else {
 //                sql = "SELECT * " + "FROM wishlist" + " RIGHT JOIN" + "  equipment" + "     ON" + " wishlist.equipmentID = equipment.equipmentID " + "WHERE (status = 'Available' OR status = 'CheckedOut')" + "  AND equipmentType = ?" + "  AND (userID = ? OR userID IS NULL) and campusID=?";
                 sql = "SELECT * " +
@@ -187,16 +188,16 @@ public class EquipmentDB {
                         "         LEFT JOIN reserveCart" +
                         "                   ON equipment.equipmentID = reserveCart.equipmentID " +
                         "WHERE (equipment.status = 'Available' OR equipment.status = 'CheckedOut') " +
-                        "  AND equipmentType = ?" +
+                        "  AND equipmentType = ?";
 //                        "  AND (wishlist.userID = ? OR wishlist.userID IS NULL)" +
-                        "  AND equipment.campusID = ?";
+//                        "  AND equipment.campusID = ?";
 
             }
 
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, type);
 //            ps.setInt(2, userID);
-            ps.setString(2, campus);
+//            ps.setString(2, campus);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 WishCartEquipmentBean equipment = new WishCartEquipmentBean();

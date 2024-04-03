@@ -7,7 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="tailwindcss/tailwindcss_cdn.jsp" %>
-<%@ include file="layout/top_nav.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cp" %>
 <%--<%@ include file="bootstrap/bootstrp_css.jsp" %>--%>
 
@@ -25,13 +24,22 @@
         </script>
     </head>
     <body>
-        <c:if test="${param.reserve.equals('showCart')}">
+        <cp:choose>
+            <cp:when test="${sessionScope.userType == 'User' || sessionScope.userType == 'Staff'  }">
+                <%@ include file="layout/user_nav.jsp" %>
+            </cp:when>
+            <cp:when test="${sessionScope.userType == 'Technician_admin' }">
+                <%@ include file="layout/technician_nav.jsp" %>
+            </cp:when>
+        </cp:choose>
+
+        <cp:if test="${param.reserve.equals('showCart')}">
             <script>
                 $(document).ready(function () {
                     $("#cart-container").show();
                 });
             </script>
-        </c:if>
+        </cp:if>
         <cp:choose>
             <cp:when test="${param.page.equals('updatePassword')}">
                 <div>

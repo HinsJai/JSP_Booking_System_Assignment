@@ -4,6 +4,7 @@ import ict.itp4511_assignment.bean.EquipmentBean;
 import ict.itp4511_assignment.bean.UserInfoBean;
 import ict.itp4511_assignment.db.ReserveCartDB;
 import ict.itp4511_assignment.db.UserDB;
+import ict.itp4511_assignment.db.WishListDB;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,6 +31,7 @@ public class LoginController extends HttpServlet {
         String dbUser = this.getServletContext().getInitParameter("dbUser");
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
         userDB = new UserDB(dbUrl, dbUser, dbPassword);
+        WishListDB wishListDB = new WishListDB(dbUrl, dbUser, dbPassword);
     }
 
     @Override
@@ -58,7 +60,7 @@ public class LoginController extends HttpServlet {
     private void doAuthenticate(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String username = request.getParameter("email");
         String password = request.getParameter("password");
-        String targetURL;
+//        String targetURL;
         UserInfoBean userBean = userDB.isValidUser(username, password);
 
         if (userBean.getIsValidUser()) {
@@ -72,6 +74,7 @@ public class LoginController extends HttpServlet {
             ReserveCartDB db = new ReserveCartDB("jdbc:mysql://localhost:3306/itp4511_db?useSSL=false", "root", "root");
             ArrayList<EquipmentBean> cartList = db.showCart(userBean.getUserID());
             session.setAttribute("cartList", cartList);
+            session.setAttribute("notificationDismiss", false);
             response.sendRedirect("login?success=true");
         } else {
             response.sendRedirect("login?success=false");

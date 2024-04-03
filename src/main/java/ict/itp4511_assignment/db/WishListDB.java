@@ -1,6 +1,7 @@
 package ict.itp4511_assignment.db;
 
 import ict.itp4511_assignment.bean.WishCartEquipmentBean;
+import ict.itp4511_assignment.bean.WishNotificationBean;
 
 import java.io.IOException;
 import java.sql.*;
@@ -141,5 +142,35 @@ public class WishListDB {
             return false;
         }
         return result;
+    }
+
+    public ArrayList<WishNotificationBean> getAvailableWishList(int userID) {
+        ArrayList<WishNotificationBean> wishList = new ArrayList<>();
+        String sql = "";
+        try {
+            Connection conn = getConnection();
+            sql = "SELECT * FROM wishlist" + " INNER JOIN " + "equipment" + " ON" + " equipment.equipmentID = wishlist.equipmentID" + " AND userID = ? AND status = 'Available'";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, userID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                WishNotificationBean wish = new WishNotificationBean();
+                wish.setWishID(rs.getInt("wishID"));
+                wish.setUserID(rs.getInt("userID"));
+                wish.setEquipmentID(rs.getInt("equipmentID"));
+                wish.setEquipmentName(rs.getString("equipmentName"));
+                wish.setEquipmentType(rs.getString("equipmentType"));
+                wishList.add(wish);
+            }
+            conn.close();
+        } catch (SQLException e) {
+            while (e != null) {
+                e.printStackTrace();
+                e = e.getNextException();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return wishList;
     }
 }

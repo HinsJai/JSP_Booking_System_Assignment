@@ -7,6 +7,8 @@ package ict.itp4511_assignment.utils;
  * @version: 1.0
  */
 
+import ict.itp4511_assignment.db.WishListDB;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -18,10 +20,13 @@ import java.io.IOException;
 public class AuthenticationFilter implements Filter {
 
     public FilterConfig config;
+    private WishListDB wishListDB;
 
     @Override
     public void init(FilterConfig config) throws ServletException {
         this.config = config;
+        DBConnection conn = new DBConnection();
+        wishListDB = new WishListDB(conn.getDbUrl(), conn.getDbUser(), conn.getDbPassword());
     }
 
     @Override
@@ -36,10 +41,10 @@ public class AuthenticationFilter implements Filter {
 //        boolean loginRequest = req.getRequestURI().equals(loginURI);
 
         if (loggedIn) {
+            session.setAttribute("wishNotification", wishListDB.getAvailableWishList((int) session.getAttribute("userID")));
             chain.doFilter(request, response);
         } else {
             res.sendRedirect("login?success=false");
-
         }
     }
 

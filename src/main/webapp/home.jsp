@@ -10,7 +10,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ include file="layout/top_nav.jsp" %>
-
+<%@ include file="wishNotification.jsp" %>
 <html>
     <head>
         <title>Home</title>
@@ -30,6 +30,7 @@
     </head>
     <body>
 
+
         <c:if test="${param.reserve.equals('showCart')}">
             <script>
                 $(document).ready(function () {
@@ -39,6 +40,7 @@
         </c:if>
 
         <%@ include file="side-cart.jsp" %>
+
 
         <section class=" bg-slate-100 text-black w-screen h-full">
 

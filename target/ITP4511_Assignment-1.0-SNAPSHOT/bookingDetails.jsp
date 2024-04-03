@@ -46,7 +46,7 @@
 
                                     <cb:forEach var="b" items="${result.rows}">
                                         <div class="px-4 py-6 shrink-0 bg-gray-50 rounded-md">
-                                            <img src=''
+                                            <img src="images/equipment/${b.equipmentID}.jpg"
                                                  class="w-full object-contain" />
                                         </div>
                                         <div class="p-2">

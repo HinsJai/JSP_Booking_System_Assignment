@@ -57,7 +57,7 @@
                 </thead>
                 <tbody>
                     <sql:query dataSource="${booking}" var="result">
-                        SELECT * FROM booking where userID = ${sessionScope.userID}
+                        SELECT * FROM booking where userID = ${sessionScope.userID} ORDER BY CASE WHEN bookingStatus = 'Pending' THEN 0 ELSE 1 END, bookingStatus;
                     </sql:query>
                     <c:forEach var="row" items="${result.rows}">
                         <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">

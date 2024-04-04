@@ -154,7 +154,8 @@ public class ReserveController extends HttpServlet {
         String bookingDate = request.getParameter("bookDate");
         String pickupDate = request.getParameter("pickUpDate");
         String returnDate = request.getParameter("returnDate");
-        return bkDB.createBooking(bookingID, userID, bookingDate, pickupDate, returnDate);
+        String campusID = request.getParameter("campusID");
+        return bkDB.createBooking(bookingID, userID, bookingDate, pickupDate, returnDate, campusID);
 //        if (result) {
 //            ArrayList<EquipmentBean> cartList = db.showCart(userID);
 //            session.setAttribute("cartList", cartList);

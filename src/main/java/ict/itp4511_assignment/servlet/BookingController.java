@@ -39,6 +39,7 @@ public class BookingController extends HttpServlet {
         String action = request.getParameter("action");
         HttpSession session = request.getSession(false);
         RequestDispatcher rd;
+        int bookID;
         boolean result = false;
         if (session == null) {
             response.sendRedirect("login?success=false");
@@ -54,7 +55,7 @@ public class BookingController extends HttpServlet {
                 break;
             case "requestList":
                 session.setAttribute("page", "bookingRequest");
-                rd = request.getRequestDispatcher("/bookingRequest.jsp");
+                rd = request.getRequestDispatcher("/bookingRequestList.jsp");
                 rd.forward(request, response);
                 break;
 
@@ -63,15 +64,43 @@ public class BookingController extends HttpServlet {
                 rd = request.getRequestDispatcher("/bookingDetails.jsp");
                 rd.forward(request, response);
                 break;
+
+            case "requestDetails":
+                session.setAttribute("page", "bookingRequest");
+                session.setAttribute("bookingID", request.getParameter("bookingID"));
+                rd = request.getRequestDispatcher("/bookingRequestDetails.jsp");
+                rd.forward(request, response);
+                break;
+
+            case "approveBooking":
+                bookID = Integer.parseInt(request.getParameter("bookingID"));
+                result = bookingDB.approveBooking(bookID);
+                if (result) {
+                    response.sendRedirect("booking?action=requestList&approve=success");
+                } else {
+                    response.sendRedirect("booking?action=requestList&approve=failed");
+                }
+                break;
+            case "rejectBooking":
+                bookID = Integer.parseInt(request.getParameter("bookingID"));
+                String rejectReason = request.getParameter("rejectReason");
+                result = bookingDB.rejectBooking(bookID, rejectReason);
+                if (result) {
+                    response.sendRedirect("booking?action=requestList&reject=success");
+                } else {
+                    response.sendRedirect("booking?action=requestList&reject=failed");
+                }
+                break;
+
             case "cancel":
                 session.setAttribute("page", "booking");
-                int bookingID = Integer.parseInt(request.getParameter("id"));
-                result = bookingDB.cancelBooking(bookingID);
+                bookID = Integer.parseInt(request.getParameter("id"));
+                result = bookingDB.cancelBooking(bookID);
                 if (result) {
-                    response.sendRedirect("booking?action=details&bookID=" + bookingID + "&cancel=success");
+                    response.sendRedirect("booking?action=details&bookID=" + bookID + "&cancel=success");
                 } else {
 //                    response.sendRedirect("booking?action=details&id=" + request.getParameter("id"));
-                    response.sendRedirect("booking?action=details&bookID=" + bookingID + "&cancel=failed");
+                    response.sendRedirect("booking?action=details&bookID=" + bookID + "&cancel=failed");
                 }
                 break;
         }

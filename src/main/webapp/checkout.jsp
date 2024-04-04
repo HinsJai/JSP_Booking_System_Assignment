@@ -158,6 +158,7 @@
                                            class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
 
                                 </div>
+
                                 <div class="relative flex items-center">
                                     <span class=" w-40 font-bold">Return date</span>
                                     <input type="date" name="returnDate" min="<fmt:formatDate pattern="yyyy-MM-dd"
@@ -166,6 +167,29 @@
 
                                 </div>
 
+                                <div class="relative flex items-center">
+                                    <label for="campusID" class=" w-40 font-bold">Pick-up Campus</label>
+                                    <%--                                    <input type="text" value="${bd.campusID}" disabled--%>
+                                    <%--                                           class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />--%>
+                                    <%--                                    <select name="campus" id="campus" class="p-2">--%>
+                                    <select id="campusID"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+                                            focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                        <option value="TY">Tsing Yi</option>
+                                        <option value="CW">Chai Wan</option>
+                                        <option value="LWL">Lee Wai Lee</option>
+                                        <option value="ST">Sha Tin</option>
+                                        <option value="TM">Tuen Mun</option>
+                                    </select>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb"
+                                         class="w-[18px] h-[18px] absolute right-4"
+                                         viewBox="0 0 213.195 213.195" xml:space="preserve">
+                                        <circle cx="10" cy="7" r="6" data-original="#000000"></circle>
+                                        <path d="M210.856,203.383l-25.689-79.277c-1.002-3.093-3.884-5.188-7.135-5.188h-18.135c8.12-14.714,13.953-32.089,13.953-51.658 C173.85,30.173,143.68,0,106.596,0c-37.081,0-67.25,30.173-67.25,67.26c0,19.569,5.833,36.944,13.952,51.658H35.164 c-3.252,0-6.132,2.095-7.135,5.188L2.34,203.383c-0.74,2.283-0.342,4.782,1.069,6.723c1.411,1.941,3.666,3.089,6.066,3.089h194.246 c2.4,0,4.654-1.148,6.066-3.089C211.198,208.165,211.595,205.666,210.856,203.383z M106.596,15c28.813,0,52.254,23.444,52.254,52.26 c0,46.04-39.284,79.696-52.262,89.557C93.6,146.983,54.346,113.433,54.346,67.26C54.346,38.444,77.785,15,106.596,15z M19.789,198.195l20.829-64.277h22.295c17.32,23.623,38.092,37.444,39.58,38.417c1.247,0.815,2.675,1.222,4.104,1.222 c1.429,0,2.857-0.407,4.104-1.222c1.486-0.972,22.261-14.794,39.582-38.417h22.297l20.828,64.277H19.789z"></path>
+
+                                    </svg>
+
+                                </div>
                             </div>
                             <div class="flex gap-6 max-sm:flex-col mt-10">
                                 <button type="button"

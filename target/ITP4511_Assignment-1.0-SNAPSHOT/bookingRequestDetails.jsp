@@ -1,29 +1,26 @@
 <%--
   Created by IntelliJ IDEA.
   User: jason
-  Date: 2024/4/2
-  Time: 下午 05:03
+  Date: 2024/4/4
+  Time: 下午 04:28
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="tailwindcss/tailwindcss_cdn.jsp" %>
-<%@ include file="layout/user_nav.jsp" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cb" %>
+<%@ include file="layout/technician_nav.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cr" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
     <head>
-        <title>Booking Details</title>
+        <title>Booking Request Details</title>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script src="js/cart.js"></script>
-        <script src="js/checkout.js"></script>
-        <script src="js/booking.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script src="js/bookingRequest.js"></script>
     </head>
     <body>
-
-        <sql:setDataSource var="bookDetails" driver="com.mysql.cj.jdbc.Driver"
+        <sql:setDataSource var="bookRequestDetails" driver="com.mysql.cj.jdbc.Driver"
                            url="jdbc:mysql://localhost:3306/itp4511_db?useSSL=false"
                            user="root" password="root" />
 
@@ -37,14 +34,14 @@
                             <div class="space-y-6 mt-10">
                                 <div class="grid sm:grid-cols-2 items-start gap-6">
 
-                                    <sql:query dataSource="${bookDetails}" var="result">
+                                    <sql:query dataSource="${bookRequestDetails}" var="result">
                                         select * from booking right join
                                         bookingequipment on booking.bookingID = bookingequipment.bookingID
                                         LEFT JOIN equipment on bookingequipment.equipmentID = equipment.equipmentID
-                                        where userID = ${sessionScope.userID} and booking.bookingID=${param.bookID};
+                                        where booking.bookingID=${sessionScope.bookingID};
                                     </sql:query>
 
-                                    <cb:forEach var="b" items="${result.rows}">
+                                    <cr:forEach var="b" items="${result.rows}">
                                         <div class="px-4 py-6 shrink-0 bg-gray-50 rounded-md">
                                             <img src="images/equipment/${b.equipmentID}.jpg"
                                                  class="w-full object-contain" />
@@ -58,22 +55,34 @@
                                                 <li class="flex flex-wrap gap-4 text-2xl text-red-500">${b.status}
                                                 </li>
                                             </ul>
+                                            <div class="flex justify-end">
+                                                <a href=""
+                                                   class="text-black bg-yellow-500 p-4 rounded-md hover:bg-blue-500 font-bold">
+                                                    Details
+                                                </a>
+                                            </div>
                                         </div>
-                                    </cb:forEach>
+                                    </cr:forEach>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="xl:col-span-2 h-max rounded-md p-8 sticky top-0">
+                    <sql:query dataSource="${bookRequestDetails}" var="result">
+                        select * from userinfo right join
+                        booking on booking.userID = userinfo.userID
+                        where booking.bookingID=${sessionScope.bookingID};
+                    </sql:query>
                     <h2 class="text-4xl font-bold text-[#333]">Booking Details</h2>
                     <div class="mt-10">
+                        <cr:forEach var="bd" items="${result.rows}">
                         <div>
                             <h3 class="text-2xl font-bold text-[#333] mb-6">Personal Details</h3>
                             <div class="grid sm:grid-cols-2 gap-6">
                                 <div class="relative flex items-center">
                                     <span class=" w-40 font-bold">First Name</span>
-                                    <input type="text" value="${sessionScope.userInfo.getfName()}" disabled
+                                    <input type="text" value="${bd.fName}" disabled
                                            class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb"
                                          class="w-[18px] h-[18px] absolute right-4"
@@ -86,7 +95,7 @@
                                 </div>
                                 <div class="relative flex items-center">
                                     <span class=" w-40 font-bold">Last Name</span>
-                                    <input type="text" value="${sessionScope.userInfo.getlName()}" disabled
+                                    <input type="text" value="${bd.lName}" disabled
                                            class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb"
                                          class="w-[18px] h-[18px] absolute right-4"
@@ -99,7 +108,7 @@
                                 </div>
                                 <div class="relative flex items-center">
                                     <span class=" w-40 font-bold">Email</span>
-                                    <input type="email" value="${sessionScope.userInfo.getEmail()}" disabled
+                                    <input type="email" value="${bd.email}" disabled
                                            class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb"
                                          class="w-[18px] h-[18px] absolute right-4"
@@ -121,13 +130,27 @@
                                 </div>
                                 <div class="relative flex items-center">
                                     <span class=" w-40 font-bold">Contact</span>
-                                    <input type="number" value="${sessionScope.userInfo.getContact()}" disabled
+                                    <input type="number" value="${bd.contact}" disabled
                                            class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
                                     <svg fill="#bbb" class="w-[18px] h-[18px] absolute right-4" viewBox="0 0 64 64">
                                         <path
                                                 d="m52.148 42.678-6.479-4.527a5 5 0 0 0-6.963 1.238l-1.504 2.156c-2.52-1.69-5.333-4.05-8.014-6.732-2.68-2.68-5.04-5.493-6.73-8.013l2.154-1.504a4.96 4.96 0 0 0 2.064-3.225 4.98 4.98 0 0 0-.826-3.739l-4.525-6.478C20.378 10.5 18.85 9.69 17.24 9.69a4.69 4.69 0 0 0-1.628.291 8.97 8.97 0 0 0-1.685.828l-.895.63a6.782 6.782 0 0 0-.63.563c-1.092 1.09-1.866 2.472-2.303 4.104-1.865 6.99 2.754 17.561 11.495 26.301 7.34 7.34 16.157 11.9 23.011 11.9 1.175 0 2.281-.136 3.29-.406 1.633-.436 3.014-1.21 4.105-2.302.199-.199.388-.407.591-.67l.63-.899a9.007 9.007 0 0 0 .798-1.64c.763-2.06-.007-4.41-1.871-5.713z"
                                                 data-original="#000000"></path>
                                     </svg>
+                                </div>
+
+                                <div class="relative flex items-center">
+                                    <span class=" w-40 font-bold">Campus</span>
+                                    <input type="text" value="${bd.campusID}" disabled
+                                           class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="#bbb" stroke="#bbb"
+                                         class="w-[18px] h-[18px] absolute right-4"
+                                         viewBox="0 0 213.195 213.195" xml:space="preserve">
+                                        <circle cx="10" cy="7" r="6" data-original="#000000"></circle>
+                                        <path d="M210.856,203.383l-25.689-79.277c-1.002-3.093-3.884-5.188-7.135-5.188h-18.135c8.12-14.714,13.953-32.089,13.953-51.658 C173.85,30.173,143.68,0,106.596,0c-37.081,0-67.25,30.173-67.25,67.26c0,19.569,5.833,36.944,13.952,51.658H35.164 c-3.252,0-6.132,2.095-7.135,5.188L2.34,203.383c-0.74,2.283-0.342,4.782,1.069,6.723c1.411,1.941,3.666,3.089,6.066,3.089h194.246 c2.4,0,4.654-1.148,6.066-3.089C211.198,208.165,211.595,205.666,210.856,203.383z M106.596,15c28.813,0,52.254,23.444,52.254,52.26 c0,46.04-39.284,79.696-52.262,89.557C93.6,146.983,54.346,113.433,54.346,67.26C54.346,38.444,77.785,15,106.596,15z M19.789,198.195l20.829-64.277h22.295c17.32,23.623,38.092,37.444,39.58,38.417c1.247,0.815,2.675,1.222,4.104,1.222 c1.429,0,2.857-0.407,4.104-1.222c1.486-0.972,22.261-14.794,39.582-38.417h22.297l20.828,64.277H19.789z"></path>
+
+                                    </svg>
+
                                 </div>
                             </div>
                         </div>
@@ -136,22 +159,9 @@
                             <div class="grid sm:grid-cols-2 gap-6">
                                 <div class="relative flex items-center">
                                     <span class=" w-40 font-bold">Booking ID</span>
-                                    <%--                                    <cc:set var="now" value="<%=new java.util.Date()%>" />--%>
-                                    <%--                                    <sql:query dataSource="${booking}" var="result">--%>
-                                    <%--                                        SELECT IFNULL(MAX(bookingID), 0) + 1 AS nextBookingID FROM booking;--%>
-                                    <%--                                    </sql:query>--%>
-                                    <%--                                    <input type="number" value="" disabled--%>
-                                    <%--                                           class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />--%>
-                                    <%--                                    <cc:forEach var="row" items="${result.rows}">--%>
-                                    <input type="number" value="${param.bookID}" disabled id="bookID"
+                                    <input type="number" value="${sessionScope.bookingID}" disabled id="bookID"
                                            class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
-                                    <%--                                    </cc:forEach>--%>
                                 </div>
-                                <sql:query dataSource="${bookDetails}" var="result">
-                                    select * from booking where bookingID = ${param.bookID};
-                                </sql:query>
-                                <cb:forEach var="bd" items="${result.rows}">
-
                                 <div class="relative flex items-center">
                                     <span class=" w-40 font-bold">Booking Date</span>
                                     <input type="date" name="bookDate" value="<fmt:formatDate pattern="yyyy-MM-dd"
@@ -189,26 +199,34 @@
                                         <%--                                        <span class=" w-40 font-bold"></span>--%>
                                     <label for="reason" class="w-40 font-bold">Reject Reason</label>
                                     <textarea id="reason" name="reason" disabled
-                                              class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none"
+                                              class="bg-gray-200 px-4 py-3.5 text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none"
                                               rows="4" cols="50">${bd.rejectReason}</textarea>
                                 </div>
 
                             </div>
                             <div class="flex gap-6 max-sm:flex-col mt-10">
-                                <cb:if test="${bd.bookingStatus == 'Pending'}">
-                                    <button type="button" id="cancel" onclick="cancelBooking()"
-                                            class="rounded-md px-6 py-3 w-full text-xl font-semibold bg-red-500 hover:bg-orange-500 border-2 text-[#333]">
-                                        Cancel Booking
+                                <cr:if test="${bd.bookingStatus == 'Pending'}">
+                                    <button type="button" id="approve" onclick="approveBooking()"
+                                            class="rounded-md px-6 py-3 w-full text-xl font-semibold bg-green-500 hover:bg-orange-500 border-2 text-[#333]">
+                                        Approve Booking
                                     </button>
-                                </cb:if>
-                                    <%--                                <button type="button" id="bookingBtn"--%>
-                                    <%--                                        class="rounded-md px-6 py-3 w-full text-sm font-semibold bg-[#333] text-white hover:bg-[#222]">--%>
-                                    <%--                                    Complete Booking--%>
-                                    <%--                                </button>--%>
+                                    <button type="button" id="reject" onclick="rejectBooking()"
+                                            class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-red-500 hover:bg-orange-500 border-2 text-[#333]">
+                                        Reject Booking
+                                    </button>
+                                    <button type="button" id="cancelReject" onclick="cancelReject()" hidden
+                                            class="bg-gray-200 rounded-md px-6 py-3 w-full text-xl font-semibold hover:bg-orange-500 border-2 text-[#333]">
+                                        Cancel
+                                    </button>
+                                    <button type="button" id="confirmedReject" onclick="confirmReject()" hidden
+                                            class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-green-500 hover:bg-orange-500 border-2 text-[#333]">
+                                        Confirm
+                                    </button>
+                                </cr:if>
                             </div>
-                            </cb:forEach>
                         </div>
                     </div>
+                    </cr:forEach>
                 </div>
             </div>
         </div>

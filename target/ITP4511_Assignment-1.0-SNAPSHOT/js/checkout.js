@@ -16,11 +16,11 @@ $(document).ready(function () {
         }).then((result) => {
             if (result.isConfirmed) {
                 let bookID = $("#bookID").val().trim();
-                console.log(bookID)
                 let bookDate = $("#bookDate").val().trim();
                 let pickUpDate = $("#pickUpDate").val().trim();
                 let returnDate = $("#returnDate").val().trim();
-                window.location.replace(`reserve?action=create_booking&bookID=${bookID}&bookDate=${bookDate}&pickUpDate=${pickUpDate}&returnDate=${returnDate}`);
+                let campusID = $("#campusID").val();
+                window.location.replace(`reserve?action=create_booking&bookID=${bookID}&bookDate=${bookDate}&pickUpDate=${pickUpDate}&returnDate=${returnDate}&campusID=${campusID}`);
             }
         });
     });

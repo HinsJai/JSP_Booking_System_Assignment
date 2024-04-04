@@ -177,6 +177,11 @@
                                            class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
                                 </div>
                                 <div class="relative flex items-center">
+                                    <span class=" w-40 font-bold">Pick-up Place</span>
+                                    <input type="text" name="returnDate" value="${bd.pickupPlace}" disabled
+                                           class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
+                                </div>
+                                <div class="relative flex items-center">
                                     <span class=" w-40 font-bold">Booking Status</span>
                                         ${bd.bookingStatus}
                                 </div>

@@ -50,19 +50,20 @@ public class BookingDB {
         }
     }
 
-    public boolean createBooking(int bookingID, int userID, String bookingDate, String pickupDate, String returnDate) {
+    public boolean createBooking(int bookingID, int userID, String bookingDate, String pickupDate, String returnDate, String campusID) {
         boolean result = false;
         PreparedStatement pStmt = null;
         Connection conn = null;
         try {
             conn = getConnection();
-            String sql = "INSERT INTO  booking (bookingID,userID,bookingDate,pickupDate,returnDate) values (?,?,?,?,?)";
+            String sql = "INSERT INTO  booking (bookingID,userID,bookingDate,pickupDate,returnDate,pickupPlace) values (?,?,?,?,?,?)";
             pStmt = conn.prepareStatement(sql);
             pStmt.setInt(1, bookingID);
             pStmt.setInt(2, userID);
             pStmt.setString(3, bookingDate);
             pStmt.setString(4, pickupDate);
             pStmt.setString(5, returnDate);
+            pStmt.setString(6, campusID);
             int rowCount = pStmt.executeUpdate();
             if (rowCount > 0) {
                 result = true;
@@ -100,8 +101,7 @@ public class BookingDB {
             }
             conn.close();
 
-            sql = "Update equipment set status = 'Available' where equipmentID " +
-                    "in (select equipmentID from bookingEquipment where bookingID =" + bookingID + ")";
+            sql = "Update equipment set status = 'Available' where equipmentID " + "in (select equipmentID from bookingEquipment where bookingID =" + bookingID + ")";
             conn = getConnection();
             pStmt = conn.prepareStatement(sql);
             rowCount = pStmt.executeUpdate();
@@ -109,6 +109,61 @@ public class BookingDB {
                 return false;
             }
 
+        } catch (SQLException e) {
+            while (e != null) {
+                e.printStackTrace();
+                e = e.getNextException();
+            }
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return result;
+    }
+
+    public boolean approveBooking(int bookingID) {
+        boolean result = false;
+        PreparedStatement pStmt = null;
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            String sql = "UPDATE booking SET bookingStatus = 'Approved' WHERE bookingID = ?";
+            pStmt = conn.prepareStatement(sql);
+            pStmt.setInt(1, bookingID);
+            int rowCount = pStmt.executeUpdate();
+            if (rowCount > 0) {
+                result = true;
+            }
+            conn.close();
+        } catch (SQLException e) {
+            while (e != null) {
+                e.printStackTrace();
+                e = e.getNextException();
+            }
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return result;
+    }
+
+    public boolean rejectBooking(int bookingID, String rejectReason) {
+        boolean result = false;
+        PreparedStatement pStmt = null;
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            String sql = "UPDATE booking SET bookingStatus = 'Declined', rejectReason = ? WHERE bookingID = ?";
+            pStmt = conn.prepareStatement(sql);
+            pStmt.setString(1, rejectReason);
+            pStmt.setInt(2, bookingID);
+            int rowCount = pStmt.executeUpdate();
+            if (rowCount > 0) {
+                result = true;
+            }
+            conn.close();
         } catch (SQLException e) {
             while (e != null) {
                 e.printStackTrace();

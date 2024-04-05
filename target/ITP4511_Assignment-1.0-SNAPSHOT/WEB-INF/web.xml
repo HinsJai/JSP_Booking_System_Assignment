@@ -18,7 +18,7 @@
     </context-param>
     <session-config>
         <session-timeout>
-            30
+            360
         </session-timeout>
     </session-config>
 
@@ -34,6 +34,17 @@
         <url-pattern>/checkout</url-pattern>
         <url-pattern>/bookingList</url-pattern>
     </filter-mapping>
+
+    <!--    <servlet>-->
+    <!--        <display-name>UploadServlet</display-name>-->
+    <!--        <servlet-name>UploadServlet</servlet-name>-->
+    <!--        <servlet-class>ict.itp4511_assignment.servlet.UploadServlet;</servlet-class>-->
+    <!--    </servlet>-->
+
+    <!--    <servlet-mapping>-->
+    <!--        <servlet-name>UploadServlet</servlet-name>-->
+    <!--        <url-pattern>/</url-pattern>-->
+    <!--    </servlet-mapping>-->
 
     <!--    <servlet>-->
     <!--        <servlet-name>LoginController</servlet-name>-->

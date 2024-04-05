@@ -44,7 +44,7 @@
                                             <label for="email" class="form-label">Email <span
                                                     class="text-danger">*</span></label>
                                             <input type="email" class="form-control" name="email" id="email"
-                                                   value="staff@gmail.com" placeholder="name@example.com"
+                                                   value="ta@gmail.com" placeholder="name@example.com"
                                                    required>
                                         </div>
                                         <div class="col-12">

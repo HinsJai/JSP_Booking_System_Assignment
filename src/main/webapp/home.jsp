@@ -77,8 +77,6 @@
 
                                 <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                                     <td class="p-4">
-                                            <%--                                        <img src="#"--%>
-                                            <%--                                             class="w-16 md:w-32 max-w-full max-h-full" alt="">--%>
                                         <img src="images/equipment/${e.e_equipmentID}.jpg"
                                              class=" md:w-32 max-w-24 max-h-20" alt="">
                                     </td>

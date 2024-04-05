@@ -255,4 +255,29 @@ public class EquipmentDB {
         return result;
     }
 
+    public int getMaxID() {
+        boolean result = false;
+        PreparedStatement pStmt = null;
+        Connection conn = null;
+        int maxID = -1;
+        try {
+            conn = getConnection();
+            String sql = "SELECT MAX(equipmentID) FROM equipment";
+            pStmt = conn.prepareStatement(sql);
+            ResultSet rs = pStmt.executeQuery();
+            if (rs.next()) {
+                maxID = rs.getInt(1);
+            }
+            conn.close();
+        } catch (SQLException e) {
+            while (e != null) {
+                e.printStackTrace();
+                e = e.getNextException();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return maxID;
+    }
+
 }

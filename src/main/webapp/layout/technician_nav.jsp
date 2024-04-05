@@ -17,7 +17,12 @@
             <ul class="hidden md:flex px-4 mt-4 mx-auto font-semibold font-heading space-x-16">
                 <li><a class="hover:text-orange-500" href="booking?action=requestList"><p
                         class="text-white text-2xl hover:text-orange-500">
-                    Booking Request</p></a></li>
+                    Booking</p></a>
+                </li>
+                <li><a class="hover:text-orange-500" href="InsertEquipment.jsp"><p
+                        class="text-white text-2xl hover:text-orange-500">
+                    Insert Equipment</p></a>
+                </li>
                 <%--                <li><a class="hover:text-orange-500" href="#"><p class="text-white text-2xl hover:text-orange-500">--%>
                 <%--                    Home</p></a></li>--%>
                 <%--                <li><a class="hover:text-orange-2500" href="#"><p class="text-white text-2xl hover:text-orange-500">--%>

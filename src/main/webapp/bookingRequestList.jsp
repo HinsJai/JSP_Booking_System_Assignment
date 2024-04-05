@@ -30,7 +30,7 @@
                            url="jdbc:mysql://localhost:3306/itp4511_db?useSSL=false"
                            user="root" password="root" />
 
-        <section class=" bg-slate-100 text-black w-screen h-full">
+        <section class=" bg-slate-900 text-black w-screen h-full">
 
             <div class="flex flex-wrap">
 

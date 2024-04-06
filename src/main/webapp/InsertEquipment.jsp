@@ -12,12 +12,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cc" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%--<%! ArrayList<EquipmentBean> equipmentList = new ArrayList<>(); %>--%>
+<%! int maxTempID = -1;%>
 
 <html class="bg-gray-900">
     <head>
         <title>Insert Equipment</title>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         <script src="js/insertEquipment.js"></script>
 
     </head>
@@ -67,22 +68,117 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                </tr>
+                                <cc:if test="${sessionScope.EquipmentTempList != null}">
+                                    <cc:forEach var="e" items="${sessionScope.EquipmentTempList}">
+                                        <tr class=" odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 font-semibold">
+
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <p class="text-white  text-xl p-2"
+                                                   id="id_${e.equipmentID}">${e.equipmentID}</p>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <input type="text" id="name_${e.equipmentID}" disabled
+                                                       class=" p-2 rounded-md text-white text-xl" style="width: 90%;"
+                                                       value="${e.equipmentName}">
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <input type="text" id="type_${e.equipmentID}" disabled
+                                                       class="text-white text-xl p-2 rounded-md" style="width: 90%;"
+                                                       value="${e.equipmentType}">
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <input type="text" name="serialNumber" disabled
+                                                       value="${e.serialNumber}" id="sNo_${e.equipmentID}"
+                                                       class="text-white text-xl p-2 rounded-md" style="width: 90%;">
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <input type="date" name="purchaseDate" disabled
+                                                       value="${e.purchaseDate}" id="pDate_${e.equipmentID}"
+                                                       class="text-white text-base p-2 rounded-md" style="width: 90%;">
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <input type="text" name="warrantyPeriod" disabled
+                                                       value="${e.warrantyPeriod}" id="wPeriod_${e.equipmentID}"
+                                                       class="text-white text-xl p-2 rounded-md" style="width: 90%;">
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <input type="text" name="status" value="${e.status}" disabled
+                                                       id="status_${e.equipmentID}"
+                                                       class="text-white text-xl p-2 rounded-md" style="width: 90%;">
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <input type="text" name="private"
+                                                       value="${e.isPrivate==0?'Public':"Private"}" disabled
+                                                       id="isPrivate_${e.equipmentID}"
+                                                       class="text-white text-xl p-2 rounded-md" style="width: 90%;">
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <input type="text" name="campus" value="${e.campusID}" disabled
+                                                       id="campus_${e.equipmentID}"
+                                                       class="text-white text-xl p-2 rounded-md" style="width: 90%;">
+                                            </td>
+                                            <td
+                                                    class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <button class="mr-2 bg-red-500 text-white p-4 rounded-md font-semibold text-xl hover:bg-green-600"
+                                                        type="button"
+                                                        onclick="removeEquipment(${e.equipmentID})">
+                                                    Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </cc:forEach>
+                                </cc:if>
+
                             </tbody>
                         </table>
-                        <div class="flex justify-end relative right-10 p-4">
-                            <button class="bg-yellow-500 p-4 rounded-md font-semibold text-xl hover:bg-green-600"
-                                    type="button"
-                                    onclick="addEquipment()">
-                                New row
-                            </button>
+                        <div class="flex justify-between items-center p-4">
+                            <%
+                                ArrayList<EquipmentBean> EquipmentTempList = new ArrayList<>();
+                                if (session.getAttribute("EquipmentTempList") != null) {
+                                    EquipmentTempList = (ArrayList<EquipmentBean>) session.getAttribute("EquipmentTempList");
+                                    for (EquipmentBean e : EquipmentTempList) {
+                                        int tempID = e.getEquipmentID();
+                                        if (tempID > maxTempID) {
+                                            maxTempID = tempID;
+                                        }
+                                    }
+                                }
+                            %>
+                            <cc:choose>
+                                <cc:when test="${sessionScope.EquipmentTempList.size() > 0}">
+                                    <button class="bg-green-500 p-4 rounded-md  font-semibold text-base hover:bg-green-600"
+                                            type="button" onclick="addToDB()">
+                                        Submit
+                                    </button>
+                                    <button class="bg-yellow-500 p-4 mr-4  rounded-md font-semibold text-xl hover:bg-green-600"
+                                            type="button"
+                                            onclick="addEquipment(<%=maxTempID%>)">
+                                        New
+                                    </button>
+                                </cc:when>
+                                <cc:otherwise>
+                                    <button class="bg-yellow-500 p-4 mr-4 rounded-md font-semibold text-xl hover:bg-green-600"
+                                            type="button"
+                                            onclick="addNewEquipment()">
+                                        New
+                                    </button>
+                                </cc:otherwise>
+                            </cc:choose>
                         </div>
                     </div>
+                    <%--                    <div class="bg-white text-black">${sessionScope.EquipmentTempList.size()}</div>--%>
+                    <cc:if test="${param.insertEquipment.equals('success')}">
+                        <script>
+                            Swal.fire({
+                                title: 'Added',
+                                text: 'Equipment has been created successfully!',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            });
+                        </script>
+                    </cc:if>
                 </main>
             </div>
         </section>
-
-
     </body>
 </html>

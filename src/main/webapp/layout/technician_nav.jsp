@@ -19,7 +19,7 @@
                         class="text-white text-2xl hover:text-orange-500">
                     Booking</p></a>
                 </li>
-                <li><a class="hover:text-orange-500" href="InsertEquipment.jsp"><p
+                <li><a class="hover:text-orange-500" href="createEquipment?action=insertEquipment"><p
                         class="text-white text-2xl hover:text-orange-500">
                     Insert Equipment</p></a>
                 </li>

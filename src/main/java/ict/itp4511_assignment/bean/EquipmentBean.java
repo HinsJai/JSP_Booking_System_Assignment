@@ -16,6 +16,7 @@ public class EquipmentBean implements Serializable {
     private String purchaseDate;
     private int warrantyPeriod;
     private String status;
+    private int isPrivate;
     private String campusID;
 
     public EquipmentBean() {
@@ -75,6 +76,14 @@ public class EquipmentBean implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getIsPrivate() {
+        return isPrivate;
+    }
+
+    public void setIsPrivate(int isPrivate) {
+        this.isPrivate = isPrivate;
     }
 
     public String getCampusID() {

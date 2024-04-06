@@ -80,7 +80,7 @@ public class UploadController extends HttpServlet {
                 uploadFileList(request, response, uploadPath);
                 break;
             case "removeFile":
-                String imageID = request.getParameter("imageID");
+                String imageID = request.getParameter("id");
                 removeFromTempFileList(request, response, imageID);
                 break;
             default:
@@ -89,84 +89,6 @@ public class UploadController extends HttpServlet {
 
 
     }
-
-//    public void uploadFileList(HttpServletRequest request, HttpServletResponse response, ServletFileUpload upload, String uploadPath) {
-//        try {
-//            HttpSession session = request.getSession(false);
-//            if (session == null) {
-//                response.sendRedirect("login?success=false");
-//                return;
-//            }
-//            ArrayList<List<FileItem>> tempFileList = (ArrayList<List<FileItem>>) session.getAttribute("tempFileList");
-//            for (List<FileItem> formItems : tempFileList) {
-//                for (FileItem item : formItems) {
-//                    if (!item.isFormField()) {
-//                        String fileName = new File(item.getName()).getName();
-//                        String filePath = uploadPath + File.separator + fileName;
-//                        File storeFile = new File(filePath);
-//                        // 保存文件到硬盘
-//                        item.write(storeFile);
-//                    }
-//                }
-//            }
-//            session.removeAttribute("tempFileList");
-//            response.sendRedirect("equipment?action=list");
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-//    }
-
-//    public void uploadFileList(HttpServletRequest request, HttpServletResponse response, String uploadPath) {
-//        try {
-//            HttpSession session = request.getSession(false);
-//            if (session == null) {
-//                response.sendRedirect("login?success=false");
-//                return;
-//            }
-//
-//            // Retrieve the list of FileItem objects from the session
-//            List<FileItem> tempFileList = (List<FileItem>) session.getAttribute("tempFileList");
-//            if (tempFileList != null) {
-//                for (FileItem item : tempFileList) {
-//                    // Process only the items that are not form fields
-//                    if (!item.isFormField()) {
-//                        String fileName = new File(item.getName()).getName();
-//                        String filePath = uploadPath + File.separator + fileName;
-//                        File storeFile = new File(filePath);
-//                        // Save the file to disk
-//                        item.write(storeFile);
-//                    }
-//                }
-//                // Remove the attribute from the session after processing
-//                session.removeAttribute("tempFileList");
-////                response.sendRedirect("equipment?action=list");
-//            }
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-//    }
-
-//    public void addToTempFileList(HttpServletRequest request, HttpServletResponse response, ServletFileUpload upload) {
-//        try {
-//            HttpSession session = request.getSession(false);
-//            if (session == null) {
-//                response.sendRedirect("login?success=false");
-//                return;
-//            }
-//
-//            String imageID = request.getParameter("imageID");
-//            List<FileItem> formItems = upload.parseRequest(request);
-//            if (session.getAttribute("tempFileList") == null) {
-//                session.setAttribute("tempFileList", formItems);
-//            } else {
-//
-//                List<FileItem> tempFileList = (List<FileItem>) session.getAttribute("tempFileList");
-//                tempFileList.addAll(formItems);
-//            }
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-//    }
 
     public void uploadFileList(HttpServletRequest request, HttpServletResponse response, String uploadPath) {
         try {
@@ -253,27 +175,5 @@ public class UploadController extends HttpServlet {
             e.printStackTrace();
         }
     }
-
-//    public void addToTempFileList(HttpServletRequest request, HttpServletResponse response, ServletFileUpload upload) {
-//        try {
-//            HttpSession session = request.getSession(false);
-//            if (session == null) {
-//                response.sendRedirect("login?success=false");
-//                return;
-//            }
-//            List<FileItem> formItems = upload.parseRequest(request);
-//            if (session.getAttribute("tempFileList") == null) {
-//                ArrayList<List<FileItem>> tempFileList = new ArrayList<>();
-//                tempFileList.add(formItems);
-//                session.setAttribute("tempFileList", tempFileList);
-//            } else {
-//                ArrayList<List<FileItem>> tempFileList = (ArrayList<List<FileItem>>) session.getAttribute("tempFileList");
-//                tempFileList.add(formItems);
-//                session.setAttribute("tempFileList", tempFileList);
-//            }
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-//    }
 }
 

@@ -1,5 +1,6 @@
 package ict.itp4511_assignment.db;
 
+import ict.itp4511_assignment.bean.EquipmentBean;
 import ict.itp4511_assignment.bean.WishCartEquipmentBean;
 
 import java.io.IOException;
@@ -278,6 +279,39 @@ public class EquipmentDB {
             e.printStackTrace();
         }
         return maxID;
+    }
+
+    public boolean insertNewEquipment(EquipmentBean equipment) {
+        boolean result = false;
+        PreparedStatement pStmt = null;
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            String sql = "INSERT INTO equipment (equipmentID,equipmentName, equipmentType, serialNumber, purchaseDate, warrantyPeriod, status, isPrivate, campusID) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?)";
+            pStmt = conn.prepareStatement(sql);
+            pStmt.setInt(1, equipment.getEquipmentID());
+            pStmt.setString(2, equipment.getEquipmentName());
+            pStmt.setString(3, equipment.getEquipmentType());
+            pStmt.setString(4, equipment.getSerialNumber());
+            pStmt.setString(5, equipment.getPurchaseDate());
+            pStmt.setInt(6, equipment.getWarrantyPeriod());
+            pStmt.setString(7, equipment.getStatus());
+            pStmt.setInt(8, equipment.getIsPrivate());
+            pStmt.setString(9, equipment.getCampusID());
+            int rowCount = pStmt.executeUpdate();
+            if (rowCount > 0) {
+                result = true;
+            }
+            conn.close();
+        } catch (SQLException e) {
+            while (e != null) {
+                e.printStackTrace();
+                e = e.getNextException();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
 }

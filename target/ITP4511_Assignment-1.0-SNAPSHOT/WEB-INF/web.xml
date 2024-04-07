@@ -33,6 +33,8 @@
         <url-pattern>/wish</url-pattern>
         <url-pattern>/checkout</url-pattern>
         <url-pattern>/bookingList</url-pattern>
+        <url-pattern>/createEquipment</url-pattern>
+        <url-pattern>/technicianEquipment</url-pattern>
     </filter-mapping>
 
     <!--    <servlet>-->

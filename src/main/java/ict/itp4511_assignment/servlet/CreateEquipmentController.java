@@ -57,7 +57,7 @@ public class CreateEquipmentController extends HttpServlet {
 
             case "insertEquipment":
                 session.setAttribute("page", "insertEquipment");
-                rd = request.getRequestDispatcher("/InsertEquipment.jsp");
+                rd = request.getRequestDispatcher("/insertEquipment.jsp");
                 rd.forward(request, response);
                 break;
 

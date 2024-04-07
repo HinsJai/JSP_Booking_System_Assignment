@@ -99,7 +99,6 @@ public class BookingDB {
             } else {
                 return false;
             }
-            conn.close();
 
             sql = "Update equipment set status = 'Available' where equipmentID " + "in (select equipmentID from bookingEquipment where bookingID =" + bookingID + ")";
             conn = getConnection();
@@ -108,6 +107,8 @@ public class BookingDB {
             if (rowCount == 0) {
                 return false;
             }
+            pStmt.close();
+            conn.close();
 
         } catch (SQLException e) {
             while (e != null) {
@@ -135,6 +136,7 @@ public class BookingDB {
             if (rowCount > 0) {
                 result = true;
             }
+            pStmt.close();
             conn.close();
         } catch (SQLException e) {
             while (e != null) {
@@ -162,8 +164,20 @@ public class BookingDB {
             int rowCount = pStmt.executeUpdate();
             if (rowCount > 0) {
                 result = true;
+            } else {
+                return false;
             }
+
+            sql = "Update equipment set status = 'Available' where equipmentID " + "in (select equipmentID from bookingEquipment where bookingID =" + bookingID + ")";
+            conn = getConnection();
+            pStmt = conn.prepareStatement(sql);
+            rowCount = pStmt.executeUpdate();
+            if (rowCount == 0) {
+                return false;
+            }
+            pStmt.close();
             conn.close();
+
         } catch (SQLException e) {
             while (e != null) {
                 e.printStackTrace();

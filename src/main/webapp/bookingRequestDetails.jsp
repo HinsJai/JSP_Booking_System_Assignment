@@ -55,8 +55,8 @@
                                                 <li class="flex flex-wrap gap-4 text-2xl text-red-500">${b.status}
                                                 </li>
                                             </ul>
-                                            <div class="flex justify-end">
-                                                <a href=""
+                                            <div class="flex justify-end mt-6">
+                                                <a href="technicianEquipment?action=details&equipmentID=${b.equipmentID}"
                                                    class="text-black bg-yellow-500 p-4 rounded-md hover:bg-blue-500 font-bold">
                                                     Details
                                                 </a>

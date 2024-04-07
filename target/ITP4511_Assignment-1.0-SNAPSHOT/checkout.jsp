@@ -6,7 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="tailwindcss/tailwindcss_cdn.jsp" %>
 <%@ include file="layout/user_nav.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cc" %>
@@ -37,9 +36,10 @@
                             <div class="space-y-6 mt-10">
                                 <div class="grid sm:grid-cols-2 items-start gap-6">
                                     <cc:forEach var="e" items="${sessionScope.cartList}">
-                                        <div class="px-4 py-6 shrink-0 bg-gray-50 rounded-md">
-                                            <img src=''
-                                                 class="w-full object-contain" />
+                                        <div class=" px-4 py-6 shrink-0 bg-gray-50 rounded-md">
+
+                                            <img src="images/equipment/${e.equipmentID}.jpg"
+                                                 class="w-full  h-60">
                                         </div>
                                         <div class="p-2">
                                             <h3 class="text-3xl text-white"> ${e.equipmentName}</h3>
@@ -203,6 +203,7 @@
                             </div>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

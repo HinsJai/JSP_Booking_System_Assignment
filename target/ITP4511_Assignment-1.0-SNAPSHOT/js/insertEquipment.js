@@ -73,14 +73,12 @@ function addNewEquipment() {
                                         </select>`;
                     break;
                 case 9:
-                    cell.innerHTML = `<label class="block mb-2 text-base font-semibold text-gray-900 dark:text-white" for="file_input">Upload file</label><div style="display: flex; align-items: center;">
+                    cell.innerHTML = `<label class="block mb-2 text-base font-semibold text-gray-900 dark:text-white" for="file_input">Upload file</label>
+<div style="display: flex; align-items: center;">
 <input id="${index}" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file">
 <button class="ml-4 mr-4 bg-red-500 p-2 rounded-md font-semibold text-base hover:bg-green-600" value="${imageID}" type="button" onclick="addFileToList(this.value)">
                     ADD
                     </button>
-<!--                    <button class="ml-4 mr-2 bg-red-500 p-2 rounded-md font-semibold text-base hover:bg-green-600" hidden type="button" onclick="removeFile()">-->
-<!--                    REMOVE-->
-<!--                    </button>-->
                     </div>`;
                     break;
             }
@@ -159,17 +157,12 @@ function addEquipment(tempListMaxID) {
                                         </select>`;
                 break;
             case 9:
-                cell.innerHTML = `<label class="block mb-2 text-base font-semibold text-gray-900 dark:text-white" for="file_input">Upload file</label><div style="display: flex; align-items: center;">
+                cell.innerHTML = `<label class="block mb-2 text-base font-semibold text-gray-900 dark:text-white" for="file_input">Upload file</label>
+<div style="display: flex; align-items: center;">
 <input id="${index + 1}" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file">
 <button class="ml-4 mr-2 bg-red-500 p-2 rounded-md font-semibold text-base hover:bg-green-600" value="${imageID}" type="button" onclick="addFileToList(this.value)">
                     ADD
                     </button>
-<!--                    <button class="ml-4 mr-2 bg-red-500 p-2 rounded-md font-semibold text-base hover:bg-green-600" hidden type="button" onclick="removeEquipment(imageID)">-->
-<!--                    REMOVE-->
-<!--                    </button>-->
-<!--                    <button class="ml-4 mr-2 bg-red-500 p-2 rounded-md font-semibold text-base hover:bg-green-600" type="button" onclick="uploadFiles()">-->
-<!--                    Submit-->
-<!--                    </button>-->
                     </div>`;
                 break;
         }

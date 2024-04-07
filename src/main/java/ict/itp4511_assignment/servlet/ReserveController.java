@@ -187,6 +187,8 @@ public class ReserveController extends HttpServlet {
                 return "home?action=printer_scanner&reserve=showCart";
             case "smartphone":
                 return "home?action=phone&reserve=showCart";
+            case "projector":
+                return "home?action=projector&reserve=showCart";
             case "monitor":
                 return "home?action=monitor&reserve=showCart";
             case "robot":

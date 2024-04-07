@@ -1,7 +1,9 @@
 package ict.itp4511_assignment.servlet;
 
+import ict.itp4511_assignment.bean.EquipmentBean;
 import ict.itp4511_assignment.bean.UserInfoBean;
 import ict.itp4511_assignment.bean.WishCartEquipmentBean;
+import ict.itp4511_assignment.db.ReserveCartDB;
 import ict.itp4511_assignment.db.WishListDB;
 
 import javax.servlet.RequestDispatcher;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 @WebServlet(name = "WishController", urlPatterns = {"/wish"})
 public class WishController extends HttpServlet {
     private WishListDB db;
+    private ReserveCartDB reserveCartDB;
 
     @Override
     public void init() {
@@ -30,6 +33,7 @@ public class WishController extends HttpServlet {
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
         db = new WishListDB(dbUrl, dbUser, dbPassword);
+        reserveCartDB = new ReserveCartDB(dbUrl, dbUser, dbPassword);
     }
 
     @Override
@@ -53,6 +57,9 @@ public class WishController extends HttpServlet {
             case "remove":
                 int equipmentId = Integer.parseInt(request.getParameter("equipmentId"));
                 removeWish(request, response, userID, equipmentId);
+                break;
+            case "addToCart":
+                addToCart(request, response, session, userID);
                 break;
             default:
                 response.sendRedirect("home?action=list");
@@ -92,6 +99,24 @@ public class WishController extends HttpServlet {
             response.sendRedirect("wish?action=list&removeWish=success");
         } else {
             response.sendRedirect("wish?action=list&removeWish=failed");
+        }
+    }
+
+    protected void addToCart(HttpServletRequest request, HttpServletResponse response, HttpSession session, int userID) throws ServletException, IOException {
+        int equipmentId = Integer.parseInt(request.getParameter("equipmentId"));
+        boolean result = reserveCartDB.addToCart(userID, equipmentId);
+
+        if (result) {
+            ArrayList<EquipmentBean> cartList = reserveCartDB.showCart(userID);
+            session.setAttribute("cartList", cartList);
+            result = db.removeWish(userID, equipmentId);
+            if (result) {
+                response.sendRedirect("wish?action=list&addCart=success");
+            } else {
+                response.sendRedirect("wish?action=list&addCart=fail");
+            }
+        } else {
+            response.sendRedirect("wish?action=list&addCart=fail");
         }
     }
 }

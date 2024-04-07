@@ -72,6 +72,8 @@ public class UploadController extends HttpServlet {
             uploadDir.mkdir();
         }
 
+        String id;
+        String json;
         switch (action) {
             case "addToTempFileList":
                 addToTempFileList(request, response, upload);
@@ -80,8 +82,45 @@ public class UploadController extends HttpServlet {
                 uploadFileList(request, response, uploadPath);
                 break;
             case "removeFile":
-                String imageID = request.getParameter("id");
-                removeFromTempFileList(request, response, imageID);
+                id = request.getParameter("id");
+                removeFromTempFileList(request, response, id);
+                break;
+
+            case "updateImage":
+                id = request.getParameter("id");
+                List<FileItem> formItems = null;
+                try {
+                    formItems = upload.parseRequest(request);
+
+                    for (FileItem item : formItems) {
+                        if (!item.isFormField()) {
+                            String fileName = id + ".jpg";
+                            String filePath = uploadPath + File.separator + fileName;
+                            File storeFile = new File(filePath);
+                            item.write(storeFile);
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                json = "{\"url\":\"technicianEquipment?action=details&update=success&equipmentID=" + id + "&update=success\"}";
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(json);
+                break;
+
+            case "deleteImage":
+                id = request.getParameter("id");
+                String fileName = id + ".jpg";
+                String filePath = uploadPath + File.separator + fileName;
+                File file = new File(filePath);
+                if (file.exists()) {
+                    file.delete();
+                }
+                json = "{\"url\":\"technicianEquipment?action=list&deleted=success\"}";
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(json);
                 break;
             default:
                 response.sendRedirect("login?success=false");

@@ -103,7 +103,7 @@
 
                                                 <button class=" p-4 text-xl rounded rounded-lg bg-green-500 font-bold cursor-pointer hover:bg-orange-500
                                                                                                                                         text-white">
-                                                    <a href=""
+                                                    <a href="wish?action=addToCart&equipmentId=${w.e_equipmentID}"
                                                        class="font-bold hover:bg-orange-500 text-white"><span
                                                             class=" font-bold text-white">Reserve</span></a>
                                                 </button>
@@ -128,7 +128,18 @@
                                     });
                                 </script>
                             </cw:if>
+
                             </cw:forEach>
+                            <cw:if test="${param.addCart.equals('success')}">
+                                <script>
+                                    Swal.fire({
+                                        title: 'Added',
+                                        text: 'Equipment has been added to cart',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    });
+                                </script>
+                            </cw:if>
                         </table>
                     </div>
                 </main>

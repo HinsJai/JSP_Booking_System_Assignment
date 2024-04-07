@@ -78,6 +78,20 @@
                 </a>
             </li>
             <li>
+                <a href="home?action=projector"
+                   class="flex items-center p-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                         viewBox="0 0 512 512">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                              stroke-width="2"
+                              d=" M8 16.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 001-.75-.75Z" />
+                        <path d="m420.2,139.1h-71c-20.1-30.1-54.4-49.9-93.2-49.9-38.8,0-73.1,19.8-93.2,49.9h-71c-44.5,0-80.8,44.5-80.8,99.2v46.6c0,54.1 35.4,98.1 79.2,99.2v18.3c0,11.3 9.1,20.4 20.4,20.4 11.3,0 20.4-9.1 20.4-20.4v-18.3h250v18.3c0,11.3 9.1,20.4 20.4,20.4s20.4-9.1 20.4-20.4v-18.3c43.8-1 79.2-45.1 79.2-99.2v-46.6c5.68434e-14-54.7-36.2-99.2-80.8-99.2zm-164.2-9.1c39.3,0 71.2,31.9 71.2,71.2 0,39.3-31.9,71.2-71.2,71.2-39.3,0-71.2-31.9-71.2-71.2 0-39.2 31.9-71.2 71.2-71.2zm204.2,154.9c0,31.6-18.3,58.4-40,58.4h-328.4c-21.7,0-40-26.7-40-58.4v-46.6c0-31.6 18.3-58.4 40-58.4h54.2c-1.3,6.9-2,14-2,21.3 0,61.8 50.3,112 112,112 61.8,0 112-50.3 112-112 0-7.3-0.7-14.4-2-21.3h54.2c21.7,0 40,26.7 40,58.4v46.6z"></path>
+                    </svg>
+                    <span class="flex-1 ms-3 whitespace-nowrap font-bold">Projector</span>
+                </a>
+            </li>
+            <li>
                 <a href="home?action=monitor"
                    class="flex items-center p-4 text-white rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg fill="#ffffff" width="64px" height="64px" viewBox="0 0 32.00 32.00"

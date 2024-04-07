@@ -46,7 +46,7 @@ public class EquipmentListController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-//        String id = null;
+
         HttpSession session = request.getSession(false);
 
         int userID = (int) session.getAttribute("userID");
@@ -84,6 +84,9 @@ public class EquipmentListController extends HttpServlet {
                 session.setAttribute("page", "smartphone");
                 fetchData(request, response, "smartphone", userID, userType, campus);
                 break;
+            case "projector":
+                session.setAttribute("page", "projector");
+                fetchData(request, response, "projector", userID, userType, campus);
             case "monitor":
                 session.setAttribute("page", "monitor");
                 fetchData(request, response, "monitor", userID, userType, campus);
@@ -108,6 +111,8 @@ public class EquipmentListController extends HttpServlet {
                 session.setAttribute("page", "others");
                 fetchData(request, response, "others", userID, userType, campus);
                 break;
+
+
         }
     }
 

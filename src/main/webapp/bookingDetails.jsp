@@ -47,7 +47,7 @@
                                     <cb:forEach var="b" items="${result.rows}">
                                         <div class="px-4 py-6 shrink-0 bg-gray-50 rounded-md">
                                             <img src="images/equipment/${b.equipmentID}.jpg"
-                                                 class="w-full object-contain" />
+                                                 class="w-100  h-60" />
                                         </div>
                                         <div class="p-2">
                                             <h3 class="text-3xl text-white">${b.equipmentName}</h3>
@@ -201,10 +201,6 @@
                                         Cancel Booking
                                     </button>
                                 </cb:if>
-                                    <%--                                <button type="button" id="bookingBtn"--%>
-                                    <%--                                        class="rounded-md px-6 py-3 w-full text-sm font-semibold bg-[#333] text-white hover:bg-[#222]">--%>
-                                    <%--                                    Complete Booking--%>
-                                    <%--                                </button>--%>
                             </div>
                             </cb:forEach>
                         </div>

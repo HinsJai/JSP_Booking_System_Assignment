@@ -19,9 +19,13 @@
                         class="text-white text-2xl hover:text-orange-500">
                     Booking</p></a>
                 </li>
+                <li><a class="hover:text-orange-500" href="technicianEquipment?action=list"><p
+                        class="text-white text-2xl hover:text-orange-500">
+                    Equipment</p></a>
+                </li>
                 <li><a class="hover:text-orange-500" href="createEquipment?action=insertEquipment"><p
                         class="text-white text-2xl hover:text-orange-500">
-                    Insert Equipment</p></a>
+                    Create Equipment</p></a>
                 </li>
                 <%--                <li><a class="hover:text-orange-500" href="#"><p class="text-white text-2xl hover:text-orange-500">--%>
                 <%--                    Home</p></a></li>--%>

@@ -150,8 +150,18 @@
                             </c:forEach>
 
                         </table>
-                    </div>
 
+                    </div>
+                    <c:if test="${param.createBooking.equals('success')}">
+                        <script>
+                            Swal.fire({
+                                title: 'Created',
+                                text: 'Booking has been created successfully!',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            });
+                        </script>
+                    </c:if>
                 </main>
             </div>
         </section>

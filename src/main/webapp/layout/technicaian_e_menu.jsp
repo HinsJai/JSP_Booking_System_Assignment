@@ -1,10 +1,17 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: jason
+  Date: 2024/4/7
+  Time: 下午 04:53
+  To change this template use File | Settings | File Templates.
+--%>
 <aside
         class="flex-none w-14 top-15 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
         aria-label="Sidebar">
     <div class="h-screen px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-900">
         <ul class="space-y-2 font-medium">
             <li>
-                <a href="home?action=list"
+                <a href="technicianEquipment?action=list"
                    class="flex items-center p-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                          aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -15,7 +22,7 @@
                 </a>
             </li>
             <li>
-                <a href="home?action=laptop"
+                <a href="technicianEquipment?action=laptop"
                    class="flex items-center p-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                          aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -37,7 +44,7 @@
                 </a>
             </li>
             <li>
-                <a href="home?action=tablet"
+                <a href="technicianEquipment?action=tablet"
                    class="flex items-center p-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                          aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -50,7 +57,7 @@
                 </a>
             </li>
             <li>
-                <a href="home?action=printer_scanner"
+                <a href="technicianEquipment?action=printer and scanner"
                    class="flex items-center p-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                          aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -62,7 +69,7 @@
                 </a>
             </li>
             <li>
-                <a href="home?action=phone"
+                <a href="technicianEquipment?action=Smartphone"
                    class="flex items-center p-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                          aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -78,7 +85,7 @@
                 </a>
             </li>
             <li>
-                <a href="home?action=projector"
+                <a href="technicianEquipment?action=Projector"
                    class="flex items-center p-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                          aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -92,7 +99,7 @@
                 </a>
             </li>
             <li>
-                <a href="home?action=monitor"
+                <a href="technicianEquipment?action=monitor"
                    class="flex items-center p-4 text-white rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg fill="#ffffff" width="64px" height="64px" viewBox="0 0 32.00 32.00"
                          class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -108,7 +115,7 @@
                 </a>
             </li>
             <li>
-                <a href="home?action=robot"
+                <a href="technicianEquipment?action=robot"
                    class="flex items-center p-4 text-white rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg height="64px" width="64px" version="1.1" id="_x32_"
                          class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -137,7 +144,7 @@
                 </a>
             </li>
             <li>
-                <a href="home?action=server"
+                <a href="technicianEquipment?action=server"
                    class="flex items-center p-4 text-white rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg fill="#ffffff" width="64px" height="64px" viewBox="0 0 32.00 32.00"
                          class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -157,7 +164,7 @@
             </li>
 
             <li>
-                <a href="home?action=networking"
+                <a href="technicianEquipment?action=networking"
                    class="flex items-center p-4 text-white rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg fill="#ffffff" width="64px" height="64px" viewBox="0 0 32.00 32.00"
                          class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -175,7 +182,7 @@
                 </a>
             </li>
             <li>
-                <a href="home?action=audio_visual"
+                <a href="technicianEquipment?action=audio-visual"
                    class="flex items-center p-4 text-white rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg width="94px" height="94px" viewBox="0 0 16 16"
                          xmlns="http://www.w3.org/2000/svg"
@@ -193,7 +200,7 @@
                 </a>
             </li>
             <li>
-                <a href="home?action=others"
+                <a href="technicianEquipment?action=others"
                    class="flex items-center p-4 text-white rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg fill="#ffffff" width="94px" height="94px" viewBox="0 0 1000 1000"
                          xmlns="http://www.w3.org/2000/svg"

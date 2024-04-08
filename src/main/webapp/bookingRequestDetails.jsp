@@ -224,6 +224,16 @@
                                     </button>
                                 </cr:if>
                             </div>
+                            <div>
+                                <cr:if test="${bd.bookingStatus == 'Approved'}">
+                                    <div class=" gap-6 max-sm:flex-col mt-10">
+                                        <a href="delivery?action=arrange&bookingID=${sessionScope.bookingID}&userID=${bd.userID}"
+                                           class="flex justify-center w-full rounded-md px-6 py-3 text-xl font-semibold bg-blue-500 hover:bg-orange-500 border-2 text-[#333]">
+                                            Arrange Delivery
+                                        </a>
+                                    </div>
+                                </cr:if>
+                            </div>
                         </div>
                     </div>
                     </cr:forEach>

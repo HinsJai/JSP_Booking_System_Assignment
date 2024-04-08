@@ -42,10 +42,12 @@ public class DeliveryDB {
             stmnt = conn.createStatement();
             String sql = "Create table if not exists delivery (" +
                     "deliveryID int(5) AUTO_INCREMENT PRIMARY KEY ," +
-                    "courierID int(5) not null," +
-                    "pickupTime datetime not null," +
-                    "deliveryTime datetime not null," +
-                    "status ENUM('Pending', 'InTransit', 'Delivered', 'Cancelled') not null," +
+                    "courierID int(5)  null," +
+                    "bookingID int(5) not null," +
+                    "userPickupDate date not null," +
+                    "deliveryAddress varchar(255) not null," +
+                    "status ENUM('Pending', 'InTransit', 'Delivered', 'Cancelled') not null default 'Pending'," +
+                    "FOREIGN KEY (bookingID) REFERENCES booking(bookingID)," +
                     "FOREIGN KEY (courierID) REFERENCES userInfo(userID))";
             stmnt.execute(sql);
             stmnt.close();

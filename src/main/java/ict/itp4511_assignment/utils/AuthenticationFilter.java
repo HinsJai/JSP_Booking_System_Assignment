@@ -7,6 +7,7 @@ package ict.itp4511_assignment.utils;
  * @version: 1.0
  */
 
+import ict.itp4511_assignment.db.BookingDB;
 import ict.itp4511_assignment.db.WishListDB;
 
 import javax.servlet.*;
@@ -16,17 +17,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/home.jsp", "/userProfile.jsp", "/wishList.jsp", "/checkout.jsp", "/bookingList.jsp", "/insertEquipment.jsp", "/technician_e_list.jsp", "/equipmentDetails.jsp"})
+@WebFilter(urlPatterns = {"/home.jsp", "/userProfile.jsp", "/wishList.jsp", "/checkout.jsp", "/bookingList.jsp", "/bookingRequestList", "/insertEquipment.jsp", "/technician_e_list.jsp", "/equipmentDetails.jsp"})
 public class AuthenticationFilter implements Filter {
 
     public FilterConfig config;
     private WishListDB wishListDB;
+    private BookingDB bookingDB;
 
     @Override
     public void init(FilterConfig config) throws ServletException {
         this.config = config;
         DBConnection conn = new DBConnection();
         wishListDB = new WishListDB(conn.getDbUrl(), conn.getDbUser(), conn.getDbPassword());
+        bookingDB = new BookingDB(conn.getDbUrl(), conn.getDbUser(), conn.getDbPassword());
     }
 
     @Override
@@ -44,7 +47,18 @@ public class AuthenticationFilter implements Filter {
 //        boolean loginRequest = req.getRequestURI().equals(loginURI);
 
         if (loggedIn) {
-            session.setAttribute("wishNotification", wishListDB.getAvailableWishList((int) session.getAttribute("userID")));
+            switch ((String) session.getAttribute("userType")) {
+                case "User":
+                case "Staff":
+                    session.setAttribute("wishNotification", wishListDB.getAvailableWishList((int) session.getAttribute("userID")));
+                    break;
+                case "Technician":
+                case "Technician_admin":
+                    session.setAttribute("bookingRequestNotification", bookingDB.getBookingNotification());
+                    break;
+
+            }
+//            session.setAttribute("wishNotification", wishListDB.getAvailableWishList((int) session.getAttribute("userID")));
             chain.doFilter(request, response);
         } else {
             res.sendRedirect("login?success=false");

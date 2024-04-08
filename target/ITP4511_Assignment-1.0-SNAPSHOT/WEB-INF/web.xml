@@ -35,6 +35,7 @@
         <url-pattern>/bookingList</url-pattern>
         <url-pattern>/createEquipment</url-pattern>
         <url-pattern>/technicianEquipment</url-pattern>
+        <url-pattern>/booking</url-pattern>
     </filter-mapping>
 
     <!--    <servlet>-->

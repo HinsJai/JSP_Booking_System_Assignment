@@ -51,11 +51,16 @@ function updateEquipment() {
                     wPeriod: wPeriod,
                     isPrivate: isPrivate,
                 }, success: function (response) {
-                    if ($("#upload")[0].files.length > 0) {
-                        uploadFile(id);
+                    if (response.update === "success") {
+                        if ($("#upload")[0].files.length > 0) {
+                            uploadFile(id);
+                        } else {
+                            window.location.replace("technicianEquipment?action=details&equipmentID=" + id + "&update=success");
+                        }
                     } else {
-                        window.location.replace("technicianEquipment?action=details&equipmentID=" + id + "&update=success");
+                        window.location.replace("technicianEquipment?action=details&equipmentID=" + id + "&update=failed");
                     }
+
                     // window.location.replace(response.url);
                 }, error: function (xhr, status, error) {
                     console.error("Error adding equipment: ", error);

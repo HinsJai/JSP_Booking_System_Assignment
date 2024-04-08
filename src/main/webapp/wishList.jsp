@@ -40,7 +40,7 @@
 
 
         <%@ include file="side-cart.jsp" %>
-        <section class=" bg-slate-100 text-black w-screen  h-full">
+        <section class=" bg-gray-900 text-black w-screen  h-full">
             <div class="flex flex-wrap">
                 <%--                <%@ include file="layout/equipement_menu.jsp" %>--%>
                 <main class="flex-1">

@@ -47,6 +47,7 @@ public class TechnicianEquipmentController extends HttpServlet {
         RequestDispatcher rd;
         String action = request.getParameter("action");
         String json;
+        boolean result;
         switch (action) {
             case "list":
                 rd = getServletContext().getRequestDispatcher("/technician_e_list.jsp");
@@ -67,15 +68,18 @@ public class TechnicianEquipmentController extends HttpServlet {
                 String pDate = request.getParameter("pDate");
                 String wPeriod = request.getParameter("wPeriod");
                 int isPrivate = Integer.parseInt(request.getParameter("isPrivate"));
-                boolean result = db.updateEquipment(id, name, type, status, campus, pDate, wPeriod, isPrivate);
-//                if (result) {
-//                    json = "{\"url\":\"technicianEquipment?action=list&equipmentID" + id + "&update=success\"}";
-//                } else {
-//                    json = "{\"url\":\"technicianEquipment?action=list&equipmentID" + id + "&update=failed\"}";
-//                }
-//                response.setContentType("application/json");
-//                response.setCharacterEncoding("UTF-8");
-//                response.getWriter().write(json);
+                result = db.updateEquipment(id, name, type, status, campus, pDate, wPeriod, isPrivate);
+
+                if (result) {
+                    json = "{\"update\":\"success\"}";
+                } else {
+                    json = "{\"update\":\"failed\"}";
+                }
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(json);
+                break;
+
             case "delete":
                 id = Integer.parseInt(request.getParameter("id"));
                 result = db.deleteEquipment(id);

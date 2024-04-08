@@ -10,6 +10,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ include file="layout/technician_nav.jsp" %>
+<%@ include file="bookingNotification.jsp" %>
+
 <html>
     <head>
         <title>Booking Request</title>
@@ -97,6 +99,14 @@
                                             <c:when test="${ b.bookingStatus == 'Approved'}">
                                                 <div class="flex w-40">
                                                     <p class="text-black font-bold p-4 text-xl rounded rounded-lg bg-green-500">
+                                                            ${ b.bookingStatus}
+                                                    </p>
+                                                </div>
+                                            </c:when>
+
+                                            <c:when test="${ b.bookingStatus == 'In delivery'}">
+                                                <div class="flex w-40">
+                                                    <p class="text-black font-bold p-4 text-xl rounded rounded-lg bg-blue-500">
                                                             ${ b.bookingStatus}
                                                     </p>
                                                 </div>

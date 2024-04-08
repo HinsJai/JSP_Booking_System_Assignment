@@ -12,6 +12,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cc" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="bookingNotification.jsp" %>
 <%! int maxTempID = -1;%>
 
 <html class="bg-gray-900">

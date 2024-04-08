@@ -1,7 +1,8 @@
 package ict.itp4511_assignment.servlet;
 
-import ict.itp4511_assignment.db.WishListDB;
+import ict.itp4511_assignment.db.DeliveryDB;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,21 +13,20 @@ import java.io.IOException;
 
 /**
  * @Author: Kong Kwok Hin
- * @Date: 2024/4/3 - 04 - 03 - 下午 05:19
+ * @Date: 2024/4/8 - 04 - 08 - 下午 04:44
  * @Description: ict.itp4511_assignment.servlet
  * @version: 1.0
  */
-@WebServlet(name = "NotificationController", urlPatterns = "/notification")
-public class NotificationController extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    private WishListDB db;
+@WebServlet(name = "DeliveryController", value = "/delivery")
+public class DeliveryController extends HttpServlet {
+    private DeliveryDB deliveryDB;
 
     @Override
     public void init() {
         String dbUser = this.getServletContext().getInitParameter("dbUser");
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
-        db = new WishListDB(dbUrl, dbUser, dbPassword);
+        deliveryDB = new DeliveryDB(dbUrl, dbUser, dbPassword);
     }
 
     @Override
@@ -34,25 +34,22 @@ public class NotificationController extends HttpServlet {
         doPost(request, response);
     }
 
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         HttpSession session = request.getSession(false);
+        RequestDispatcher rd;
         if (session == null) {
             response.sendRedirect("login?success=false");
             return;
         }
-        int userID = (int) request.getSession().getAttribute("userID");
 
         switch (action) {
-            case "wishNotification":
-                session.setAttribute("wishNotification", db.getAvailableWishList(userID));
+            case "arrange":
+                session.setAttribute("page", "delivery");
+                rd = request.getRequestDispatcher("/deliveryArrange.jsp");
+                rd.forward(request, response);
                 break;
-            case "wish_dismiss":
-            case "bookingRequestDismiss":
-                session.setAttribute("notificationDismiss", true);
-                break;
-
         }
+
     }
 }

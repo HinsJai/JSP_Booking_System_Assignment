@@ -27,10 +27,10 @@
                         class="text-white text-2xl hover:text-orange-500">
                     Create Equipment</p></a>
                 </li>
-                <%--                <li><a class="hover:text-orange-500" href="#"><p class="text-white text-2xl hover:text-orange-500">--%>
-                <%--                    Home</p></a></li>--%>
-                <%--                <li><a class="hover:text-orange-2500" href="#"><p class="text-white text-2xl hover:text-orange-500">--%>
-                <%--                    Home</p></a></li>--%>
+                <li><a class="hover:text-orange-500" href="delivery?action=insertEquipment"><p
+                        class="text-white text-2xl hover:text-orange-500">
+                    Delivery</p></a>
+                </li>
             </ul>
             <!-- Header Icons -->
             <div class="hidden xl:flex items-center space-x-5 items-center">

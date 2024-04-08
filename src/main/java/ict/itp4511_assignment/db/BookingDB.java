@@ -1,10 +1,10 @@
 package ict.itp4511_assignment.db;
 
+import ict.itp4511_assignment.bean.BookingNotificationBean;
+
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * @Author: Kong Kwok Hin
@@ -36,7 +36,7 @@ public class BookingDB {
     public void createBookingTable() {
         try {
             Connection conn = getConnection();
-            String sql = "Create table if not exists booking (" + "bookingID int(5) AUTO_INCREMENT PRIMARY KEY ," + "userID int(5) not null," + "bookingDate date not null," + "pickupDate date not null," + "returnDate date not null," + "bookingStatus ENUM('Pending', 'Approved', 'Declined', 'Completed', 'Cancelled') not null default 'Pending'," + "rejectReason varchar(255)," + "FOREIGN KEY (userID) REFERENCES userInfo(userID))";
+            String sql = "Create table if not exists booking (" + "bookingID int(5) AUTO_INCREMENT PRIMARY KEY ," + "userID int(5) not null," + "bookingDate date not null," + "pickupDate date not null," + "returnDate date not null," + "bookingStatus ENUM('Pending', 'Approved','In delivery', 'Declined', 'Completed', 'Cancelled') not null default 'Pending'," + "rejectReason varchar(255)," + "FOREIGN KEY (userID) REFERENCES userInfo(userID))";
 //                    "FOREIGN KEY (equipmentID) REFERENCES equipment(equipmentID))";
             conn.createStatement().execute(sql);
             conn.close();
@@ -189,5 +189,31 @@ public class BookingDB {
             return false;
         }
         return result;
+    }
+
+    public ArrayList<BookingNotificationBean> getBookingNotification() {
+        ArrayList<BookingNotificationBean> bookingList = new ArrayList<>();
+        String sql = "";
+        try {
+            Connection conn = getConnection();
+            sql = "SELECT * FROM booking WHERE  bookingStatus = 'Pending' ";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                BookingNotificationBean booking = new BookingNotificationBean();
+                booking.setBookingID(rs.getInt("bookingID"));
+                booking.setUserID(rs.getInt("userID"));
+                bookingList.add(booking);
+            }
+            conn.close();
+        } catch (SQLException e) {
+            while (e != null) {
+                e.printStackTrace();
+                e = e.getNextException();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bookingList;
     }
 }

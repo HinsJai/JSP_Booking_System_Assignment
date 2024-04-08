@@ -10,7 +10,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="ct" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ include file="layout/technician_nav.jsp" %>
-
+<%@ include file="bookingNotification.jsp" %>
 <html>
     <head>
         <title>Technician Equipment List</title>
@@ -110,7 +110,7 @@
                                                 <ct:when test="${ e.status == 'UnderMaintenance' }">
                                                     <p class="flex items-center justify-center w-44 p-4 text-xl rounded rounded-lg bg-yellow-500 font-bold
                                                  text-white font-bold">
-                                                        CheckedOut
+                                                        Maintenance
                                                     </p>
                                                 </ct:when>
 

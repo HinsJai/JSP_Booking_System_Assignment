@@ -206,10 +206,12 @@
                                             class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-green-500 hover:bg-orange-500 border-2">
                                         Confirm
                                     </button>
-                                    <button type="button" id="delete" onclick="deleteEquipment()"
-                                            class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-red-500 hover:bg-orange-500 border-2">
-                                        Delete
-                                    </button>
+                                    <ce:if test="${e.status != 'Available' && e.status != 'CheckedOut' }">
+                                        <button type="button" id="delete" onclick="deleteEquipment()"
+                                                class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-red-500 hover:bg-orange-500 border-2">
+                                            Delete
+                                        </button>
+                                    </ce:if>
                                 </div>
                             </div>
                         </div>

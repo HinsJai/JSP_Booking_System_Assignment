@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: jason
-  Date: 2024/4/4
-  Time: 下午 04:28
+  Date: 2024/4/8
+  Time: 下午 05:02
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -11,16 +11,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cr" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <html>
     <head>
-        <title>Booking Request Details</title>
+        <title>Arrange Delivery</title>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-        <script src="js/bookingRequest.js"></script>
     </head>
     <body>
-        <sql:setDataSource var="bookRequestDetails" driver="com.mysql.cj.jdbc.Driver"
+        <sql:setDataSource var="bookRequest" driver="com.mysql.cj.jdbc.Driver"
                            url="jdbc:mysql://localhost:3306/itp4511_db?useSSL=false"
                            user="root" password="root" />
 
@@ -34,14 +32,17 @@
                             <div class="space-y-6 mt-10">
                                 <div class="grid sm:grid-cols-2 items-start gap-6">
 
-                                    <sql:query dataSource="${bookRequestDetails}" var="result">
+                                    <sql:query dataSource="${bookRequest}" var="result">
                                         select * from booking right join
                                         bookingequipment on booking.bookingID = bookingequipment.bookingID
                                         LEFT JOIN equipment on bookingequipment.equipmentID = equipment.equipmentID
-                                        where booking.bookingID=${sessionScope.bookingID};
+                                        where booking.bookingID=${param.bookingID};
                                     </sql:query>
 
                                     <cr:forEach var="b" items="${result.rows}">
+                                        <div hidden>
+                                            <input type="text" id="bookingID" value="${b.bookingID}">
+                                        </div>
                                         <div class="px-4 py-6 shrink-0 bg-gray-50 rounded-md">
                                             <img src="images/equipment/${b.equipmentID}.jpg"
                                                  class="w-full object-contain" />
@@ -68,17 +69,20 @@
                         </div>
                     </div>
                 </div>
+
+
                 <div class="xl:col-span-2 h-max rounded-md p-8 sticky top-0">
-                    <sql:query dataSource="${bookRequestDetails}" var="result">
+                    <sql:query dataSource="${bookRequest}" var="result">
                         select * from userinfo right join
                         booking on booking.userID = userinfo.userID
-                        where booking.bookingID=${sessionScope.bookingID};
+                        where booking.bookingID=${param.bookingID};
                     </sql:query>
-                    <h2 class="text-4xl font-bold text-[#333]">Booking Details</h2>
+
+                    <h2 class="text-4xl font-bold text-[#333]">Delivery arrangement</h2>
                     <div class="mt-10">
                         <cr:forEach var="bd" items="${result.rows}">
                         <div>
-                            <h3 class="text-2xl font-bold text-[#333] mb-6">Personal Details</h3>
+                            <h3 class="text-2xl font-bold text-[#333] mb-6">Consignee Details</h3>
                             <div class="grid sm:grid-cols-2 gap-6">
                                 <div class="relative flex items-center">
                                     <span class=" w-40 font-bold">First Name</span>
@@ -92,6 +96,9 @@
                                                 d="M14 15H6a5 5 0 0 0-5 5 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 5 5 0 0 0-5-5zm8-4h-2.59l.3-.29a1 1 0 0 0-1.42-1.42l-2 2a1 1 0 0 0 0 1.42l2 2a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42l-.3-.29H22a1 1 0 0 0 0-2z"
                                                 data-original="#000000"></path>
                                     </svg>
+                                </div>
+                                <div hidden>
+                                    <input type="text" value="${bd.userID}" id="userID">
                                 </div>
                                 <div class="relative flex items-center">
                                     <span class=" w-40 font-bold">Last Name</span>
@@ -154,91 +161,71 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="mt-6">
-                            <h3 class="text-2xl font-bold text-[#333] mb-6">Booking Details</h3>
-                            <div class="grid sm:grid-cols-2 gap-6">
-                                <div class="relative flex items-center">
-                                    <span class=" w-40 font-bold">Booking ID</span>
-                                    <input type="number" value="${sessionScope.bookingID}" disabled id="bookID"
-                                           class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
-                                </div>
-                                <div class="relative flex items-center">
-                                    <span class=" w-40 font-bold">Booking Date</span>
-                                    <input type="date" name="bookDate" value="<fmt:formatDate pattern="yyyy-MM-dd"
-                                                                                                                            value="${bd.bookingDate}" />"
-                                           disabled
-                                           id="bookDate"
-                                           class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
 
-                                </div>
-                                <div class="relative flex items-center">
-                                    <span class=" w-40 font-bold">Pick-up date</span>
-                                    <input type="date" name="pickUpDate" value="<fmt:formatDate pattern="yyyy-MM-dd"
-                                                                                                                            value="${bd.pickupDate}" />"
-                                           id="pickUpDate" disabled
-                                           class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
+                            <sql:query dataSource="${bookRequest}" var="r">
+                                SELECT COALESCE(MAX(deliveryID) + 1, 1) AS next_id FROM delivery;
+                            </sql:query>
 
-                                </div>
-                                <div class="relative flex items-center">
-                                    <span class=" w-40 font-bold">Return date</span>
-                                    <input type="date" name="returnDate" value="<fmt:formatDate pattern="yyyy-MM-dd"
-                                                                                                                            value="${bd.returnDate}" />"
-                                           id="returnDate" disabled
-                                           class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
-                                </div>
-                                <div class="relative flex items-center">
-                                    <span class=" w-40 font-bold">Pick-up Place</span>
-                                    <input type="text" name="returnDate" value="${bd.pickupPlace}" disabled
-                                           class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
-                                </div>
-                                <div class="relative flex items-center">
-                                    <span class=" w-40 font-bold">Booking Status</span>
-                                        ${bd.bookingStatus}
-                                </div>
-                                <div class="relative flex items-center">
-                                        <%--                                        <span class=" w-40 font-bold"></span>--%>
-                                    <label for="reason" class="w-40 font-bold">Reject Reason</label>
-                                    <textarea id="reason" name="reason" disabled
-                                              class="bg-gray-200 px-4 py-3.5 text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none"
-                                              rows="4" cols="50">${bd.rejectReason}</textarea>
-                                </div>
+                            <cr:forEach var="d" items="${r.rows}">
 
-                            </div>
-                            <div class="flex gap-6 max-sm:flex-col mt-10">
-                                <cr:if test="${bd.bookingStatus == 'Pending'}">
-                                    <button type="button" id="approve" onclick="approveBooking()"
-                                            class="rounded-md px-6 py-3 w-full text-xl font-semibold bg-green-500 hover:bg-orange-500 border-2 text-[#333]">
-                                        Approve Booking
-                                    </button>
-                                    <button type="button" id="reject" onclick="rejectBooking()"
-                                            class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-red-500 hover:bg-orange-500 border-2 text-[#333]">
-                                        Reject Booking
-                                    </button>
-                                    <button type="button" id="cancelReject" onclick="cancelReject()" hidden
-                                            class="bg-gray-200 rounded-md px-6 py-3 w-full text-xl font-semibold hover:bg-orange-500 border-2 text-[#333]">
-                                        Cancel
-                                    </button>
-                                    <button type="button" id="confirmedReject" onclick="confirmReject()" hidden
-                                            class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-green-500 hover:bg-orange-500 border-2 text-[#333]">
-                                        Confirm
-                                    </button>
-                                </cr:if>
-                            </div>
-                            <div>
-                                <cr:if test="${bd.bookingStatus == 'Approved'}">
-                                    <div class=" gap-6 max-sm:flex-col mt-10">
-                                        <a href="delivery?action=arrange&bookingID=${sessionScope.bookingID}&userID=${bd.userID}"
-                                           class="flex justify-center w-full rounded-md px-6 py-3 text-xl font-semibold bg-blue-500 hover:bg-orange-500 border-2 text-[#333]">
-                                            Arrange Delivery
-                                        </a>
+
+                                <h3 class="text-2xl font-bold text-[#333] mb-6">Delivery Details</h3>
+                                <div class="grid sm:grid-cols-2 gap-6">
+                                    <div class="relative flex items-center">
+                                        <span class=" w-40 font-bold">Delivery No.</span>
+                                        <input type="number" value="${d.next_id}" disabled id="deliveryID"
+                                               class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
                                     </div>
-                                </cr:if>
+                                        <%--                                    <div class="relative flex items-center">--%>
+                                        <%--                                        <span class=" w-40 font-bold">Booking Date</span>--%>
+                                        <%--                                        <input type="date" name="bookDate" value="<fmt:formatDate pattern="yyyy-MM-dd"--%>
+                                        <%--                                                                                                                            value="${bd.bookingDate}" />"--%>
+                                        <%--                                               disabled--%>
+                                        <%--                                               id="bookDate"--%>
+                                        <%--                                               class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />--%>
+
+                                        <%--                                    </div>--%>
+                                    <div class="relative flex items-center">
+                                        <span class=" w-40 font-bold">Pick-up date</span>
+                                        <input type="date" name="pickupDate" value="<fmt:formatDate pattern="yyyy-MM-dd"
+                                                                                                                            value="${bd.pickupDate}" />"
+                                               id="pickupDate" disabled
+                                               class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
+
+                                    </div>
+                                        <%--                                    <div class="relative flex items-center">--%>
+                                        <%--                                        <span class=" w-40 font-bold">Return date</span>--%>
+                                        <%--                                        <input type="date" name="returnDate" value="<fmt:formatDate pattern="yyyy-MM-dd"--%>
+                                        <%--                                                                                                                            value="${bd.returnDate}" />"--%>
+                                        <%--                                               id="returnDate" disabled--%>
+                                        <%--                                               class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />--%>
+                                        <%--                                    </div>--%>
+                                    <div class="relative flex items-center">
+                                        <span class=" w-40 font-bold">Pick-up Place</span>
+                                        <input type="text" value="${bd.pickupPlace}" disabled id="pickupPlace"
+                                               class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
+                                    </div>
+                                        <%--                                    <div class="relative flex items-center">--%>
+                                        <%--                                        <span class=" w-40 font-bold">Delivery Status</span>--%>
+                                        <%--                                            ${bd.bookingStatus}--%>
+                                        <%--                                    </div>--%>
+
+                                </div>
+                            </cr:forEach>
+
+                            <div class="flex gap-6 max-sm:flex-col mt-10">
+                                <button type="button" onclick="generateDeliveryNote()"
+                                        class="rounded-md px-6 py-3 w-full text-xl font-semibold bg-blue-500 hover:bg-orange-500 border-2 text-[#333]">
+                                    Generate Delivery Note
+                                </button>
                             </div>
                         </div>
                     </div>
-                    </cr:forEach>
                 </div>
             </div>
         </div>
+        </cr:forEach>
     </body>
 </html>

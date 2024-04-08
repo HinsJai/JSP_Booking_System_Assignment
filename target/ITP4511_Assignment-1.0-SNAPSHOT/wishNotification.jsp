@@ -8,8 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
-<%--&& sessionScope.wishNotification.js.getIsDismissed() ==false}--%>
-<script src="js/wishNotification.js"></script>
+<%--&& sessionScope.notification.js.getIsDismissed() ==false}--%>
+<script src="js/notification.js"></script>
 
 <cn:if test="${not empty sessionScope.wishNotification && sessionScope.notificationDismiss == false}">
     <div class="absolute bottom-0 right-0 mb-4 mr-4 z-10">
@@ -22,7 +22,7 @@
                      alt="" />
                 <div class="ms-3 text-sm font-normal">
                     <span class="mb-4 text-xl font-semibold text-gray-900">Notification</span>
-                        <%--                    <cn:forEach var="n" items="${sessionScope.wishNotification.js}">--%>
+                        <%--                    <cn:forEach var="n" items="${sessionScope.notification.js}">--%>
                     <div class="mb-2 text-base font-normal">
                             <%--                                ${n.getEquipmentName()}--%>
                         Your wish equipment is available now!
@@ -33,7 +33,7 @@
                        focus:ring-4 focus:outline-none focus:ring-blue-300">
                         Wish list
                     </a>
-                    <button type="button" data-dismiss-target="#toast-message-cta" onclick="dismissNotification()"
+                    <button type="button" data-dismiss-target="#toast-message-cta" onclick="dismissWishNotification()"
                             class="ml-6 inline-flex px-2.5 py-1.5 text-base font-medium text-center text-white bg-red-600 rounded-lg hover:bg-blue-700
                             focus:ring-4 focus:outline-none focus:ring-blue-300 ">
                         Dismiss
@@ -51,10 +51,7 @@
                     <%--                </button>--%>
             </div>
         </div>
-
-
     </div>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 
 </cn:if>

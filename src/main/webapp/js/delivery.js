@@ -16,14 +16,14 @@ function generateDeliveryNote() {
                     pickupDate: pickupDate,
                     pickupPlace: pickupPlace
                 }, success: function (response) {
-                    if (response.generate === "success") {
+                    if (response.generateDeliveryNote === "success") {
                         window.location.replace("delivery?action=deliveryNote&deliveryID=" + deliveryID + "&generate=success");
                     } else {
-                        window.location.replace("delivery?action=arrange&bookingID=" + bookingID + "userID=" + userID + "&generate=failed");
+                        window.location.replace("delivery?action=arrange&bookingID=" + bookingID + "&userID=" + userID + "&generate=failed");
                     }
                 }, error: function (xhr, status, error) {
                     console.error("Error deleting equipment: ", error);
-                    window.location.replace("delivery?action=arrange&bookingID=" + bookingID + "userID=" + userID + "&generate=failed");
+                    window.location.replace("delivery?action=arrange&bookingID=" + bookingID + "&userID=" + userID + "&generate=failed");
                 }
             });
         }

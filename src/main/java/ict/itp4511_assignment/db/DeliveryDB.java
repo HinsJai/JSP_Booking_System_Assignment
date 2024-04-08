@@ -1,10 +1,7 @@
 package ict.itp4511_assignment.db;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * @Author: Kong Kwok Hin
@@ -40,15 +37,7 @@ public class DeliveryDB {
         try {
             conn = getConnection();
             stmnt = conn.createStatement();
-            String sql = "Create table if not exists delivery (" +
-                    "deliveryID int(5) AUTO_INCREMENT PRIMARY KEY ," +
-                    "courierID int(5)  null," +
-                    "bookingID int(5) not null," +
-                    "userPickupDate date not null," +
-                    "deliveryAddress varchar(255) not null," +
-                    "status ENUM('Pending', 'InTransit', 'Delivered', 'Cancelled') not null default 'Pending'," +
-                    "FOREIGN KEY (bookingID) REFERENCES booking(bookingID)," +
-                    "FOREIGN KEY (courierID) REFERENCES userInfo(userID))";
+            String sql = "Create table if not exists delivery (" + "deliveryID int(5) AUTO_INCREMENT PRIMARY KEY ," + "createDate date not null  DEFAULT (CURRENT_DATE)," + "courierID int(5)  null," + "bookingID int(5) not null," + "userPickupDate date not null," + "deliveryAddress varchar(255) not null," + "status ENUM('Pending', 'InTransit', 'Delivered', 'Cancelled') not null default 'Pending'," + "FOREIGN KEY (bookingID) REFERENCES booking(bookingID)," + "FOREIGN KEY (courierID) REFERENCES userInfo(userID))";
             stmnt.execute(sql);
             stmnt.close();
             conn.close();
@@ -61,6 +50,36 @@ public class DeliveryDB {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public boolean generateDeliveryNote(int deliveryID, int bookingID, String userPickupDate, String deliveryAddress) {
+        PreparedStatement pStmt = null;
+        Connection conn = null;
+        boolean result = false;
+        String sql = "";
+        try {
+            conn = getConnection();
+            sql = "insert into delivery (deliveryID, bookingID, userPickupDate, deliveryAddress) values (?,?,?,?)";
+            pStmt = conn.prepareStatement(sql);
+            pStmt.setInt(1, deliveryID);
+            pStmt.setInt(2, bookingID);
+            pStmt.setString(3, userPickupDate);
+            pStmt.setString(4, deliveryAddress);
+            int count = pStmt.executeUpdate();
+            if (count > 0) {
+                result = true;
+            }
+            pStmt.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            while (e != null) {
+                e.printStackTrace();
+                e = e.getNextException();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

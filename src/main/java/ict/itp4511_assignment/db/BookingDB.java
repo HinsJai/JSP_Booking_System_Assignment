@@ -216,4 +216,33 @@ public class BookingDB {
         }
         return bookingList;
     }
+
+    public boolean updateStatus(int bookingID, String status) {
+        boolean result = false;
+        PreparedStatement pStmt = null;
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            String sql = "UPDATE booking SET bookingStatus = ? WHERE bookingID = ?";
+            pStmt = conn.prepareStatement(sql);
+            pStmt.setString(1, status);
+            pStmt.setInt(2, bookingID);
+            int rowCount = pStmt.executeUpdate();
+            if (rowCount > 0) {
+                result = true;
+            }
+            pStmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            while (e != null) {
+                e.printStackTrace();
+                e = e.getNextException();
+            }
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return result;
+    }
 }

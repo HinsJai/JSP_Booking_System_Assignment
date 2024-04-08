@@ -136,22 +136,9 @@
                                     </td>
                                 </tr>
                             </tbody>
-                                <%--                            <c:if test="${param.addWish.equals('success')}">--%>
-                                <%--                                <script>--%>
-                                <%--                                    Swal.fire({--%>
-                                <%--                                        title: 'Added',--%>
-                                <%--                                        text: 'Equipment has been added to your wishlist',--%>
-                                <%--                                        icon: 'success',--%>
-                                <%--                                        confirmButtonText: 'OK'--%>
-                                <%--                                    });--%>
-                                <%--                                </script>--%>
-                                <%--                            </c:if>--%>
-
                             </c:forEach>
-
                         </table>
                     </div>
-
                 </main>
             </div>
         </section>

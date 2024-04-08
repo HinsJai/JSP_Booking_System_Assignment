@@ -23,7 +23,7 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10">
         </script>
     </head>
-    <body>
+    <body class="bg-gray-900">
         <cp:choose>
             <cp:when test="${sessionScope.userType == 'User' || sessionScope.userType == 'Staff'  }">
                 <%@ include file="layout/user_nav.jsp" %>
@@ -49,9 +49,9 @@
             <cp:otherwise>
                 <cp:if test="${requestScope.user.isValidUser == true}">
                     <div class="page-content page-container " id="profile-container">
-                        <div class="padding ">
-                            <div class="row container d-flex justify-content-center ">
-                                <div class="relative top-20 left-60">
+                        <div class="padding">
+                            <div class="">
+                                <div class="w-full">
                                     <div class="card user-card-full ">
                                         <div class="row m-l-0 m-r-0">
                                             <div class="col-sm-4 bg-c-lite-green user-profile">

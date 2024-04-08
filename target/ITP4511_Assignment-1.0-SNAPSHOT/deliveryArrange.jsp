@@ -16,6 +16,7 @@
         <title>Arrange Delivery</title>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script src="js/delivery.js"></script>
     </head>
     <body>
         <sql:setDataSource var="bookRequest" driver="com.mysql.cj.jdbc.Driver"
@@ -178,15 +179,7 @@
                                         <input type="number" value="${d.next_id}" disabled id="deliveryID"
                                                class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
                                     </div>
-                                        <%--                                    <div class="relative flex items-center">--%>
-                                        <%--                                        <span class=" w-40 font-bold">Booking Date</span>--%>
-                                        <%--                                        <input type="date" name="bookDate" value="<fmt:formatDate pattern="yyyy-MM-dd"--%>
-                                        <%--                                                                                                                            value="${bd.bookingDate}" />"--%>
-                                        <%--                                               disabled--%>
-                                        <%--                                               id="bookDate"--%>
-                                        <%--                                               class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />--%>
 
-                                        <%--                                    </div>--%>
                                     <div class="relative flex items-center">
                                         <span class=" w-40 font-bold">Pick-up date</span>
                                         <input type="date" name="pickupDate" value="<fmt:formatDate pattern="yyyy-MM-dd"
@@ -195,22 +188,12 @@
                                                class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
 
                                     </div>
-                                        <%--                                    <div class="relative flex items-center">--%>
-                                        <%--                                        <span class=" w-40 font-bold">Return date</span>--%>
-                                        <%--                                        <input type="date" name="returnDate" value="<fmt:formatDate pattern="yyyy-MM-dd"--%>
-                                        <%--                                                                                                                            value="${bd.returnDate}" />"--%>
-                                        <%--                                               id="returnDate" disabled--%>
-                                        <%--                                               class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />--%>
-                                        <%--                                    </div>--%>
+
                                     <div class="relative flex items-center">
                                         <span class=" w-40 font-bold">Pick-up Place</span>
-                                        <input type="text"  value="${bd.pickupPlace}" disabled id="pickupPlace"
+                                        <input type="text" value="${bd.pickupPlace}" disabled id="pickupPlace"
                                                class="px-4 py-3.5 bg-white text-[#333] w-full text-sm border-b-2 focus:border-[#333] outline-none" />
                                     </div>
-                                        <%--                                    <div class="relative flex items-center">--%>
-                                        <%--                                        <span class=" w-40 font-bold">Delivery Status</span>--%>
-                                        <%--                                            ${bd.bookingStatus}--%>
-                                        <%--                                    </div>--%>
 
                                 </div>
                             </cr:forEach>

@@ -88,6 +88,13 @@
                                         </span>
                                     </td>
                                 </c:when>
+                                <c:when test="${row.bookingStatus == 'In delivery'}">
+                                    <td class="px-6 py-4 text-2xl">
+                                        <span class="text-2xl text-black bg-green-200  dark:bg-blue-500  p-2 rounded-md">
+                                            <c:out value="${row.bookingStatus}" />
+                                        </span>
+                                    </td>
+                                </c:when>
                                 <c:when test="${row.bookingStatus == 'Declined'}">
                                     <td class="px-6 py-4 text-2xl">
                                         <span class="text-2xl text-black bg-red-500 dark:bg-red-500  p-2 rounded-md">

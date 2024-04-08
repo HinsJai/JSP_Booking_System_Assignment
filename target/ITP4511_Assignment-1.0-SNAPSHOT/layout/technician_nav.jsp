@@ -27,7 +27,7 @@
                         class="text-white text-2xl hover:text-orange-500">
                     Create Equipment</p></a>
                 </li>
-                <li><a class="hover:text-orange-500" href="delivery?action=insertEquipment"><p
+                <li><a class="hover:text-orange-500" href="delivery?action=list"><p
                         class="text-white text-2xl hover:text-orange-500">
                     Delivery</p></a>
                 </li>

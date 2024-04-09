@@ -59,7 +59,7 @@
                                         Booking Status
                                     </th>
                                     <th scope="col" class="px-6 py-3  text-2xl">
-                                        Details
+                                        Action
                                     </th>
 
                                 </tr>

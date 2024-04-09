@@ -12,9 +12,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
+
     <head>
         <title>Equipment Details</title>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -160,11 +158,6 @@
                                         <option value="TY" ${e.campusID == "TY" ? 'selected="selected"' : ''}>TY
                                         </option>
 
-                                            <%--                                        <option value="CW">CW</option>--%>
-                                            <%--                                        <option value="LWL" selected>LWL</option>--%>
-                                            <%--                                        <option value="ST">ST</option>--%>
-                                            <%--                                        <option value="TM">TM</option>--%>
-                                            <%--                                        <option value="TY">TY</option>--%>
                                     </select>
                                 </div>
                                 <div class="relative flex items-center">
@@ -177,9 +170,11 @@
                                         </option>
                                     </select>
                                 </div>
+
+
                                 <div id="upload-container" hidden>
                                     <div class="relative flex items-center">
-                                        <label for="upload" class="w-40 font-bold text-xl">Upload</label>
+                                        <label for="upload" class="w-40 font-bold text-xl">Change Image</label>
                                         <input id="upload"
                                                class="px-4 py-3.5 bg-white text-base w-full  border-b-2 focus:border-[#333] outline-none"
                                                type="file">
@@ -187,15 +182,73 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div id="report-container" hidden>
+                            <div class="grid sm:grid-cols-2 gap-6 mt-10">
+                                <div class="">
+                                    <label for="damageDescription" class="w-40 font-bold text-xl text-red-500">Damage
+                                                                                                               description</label>
+                                    <textarea id="damageDescription" class="p-2 mt-2" name="" rows="4"
+                                              cols="56"></textarea>
+                                </div>
+
+                                <div class="">
+                                    <label class="w-40 font-bold text-xl text-red-500"
+                                           for="damageImage">Damage Image</label>
+                                    <input class="p-2 mt-8 block w-full text-lg border border-gray-300 bg-white   rounded-lg cursor-pointer"
+                                           id="damageImage" type="file" multiple>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="mt-6">
                             <div id="edit-container">
                                 <div class="flex gap-6 max-sm:flex-col mt-10">
+
                                     <button type="button" id="edit" onclick="edit()"
                                             class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-blue-500 hover:bg-orange-500 border-2">
                                         Edit
                                     </button>
+                                    <ce:if test="${e.status == 'Damaged'  }">
+                                        <sql:query dataSource="${equipmentDetails}" var="result">
+                                            select * from damagereport where equipmentID=${requestScope.equipmentID}
+                                        </sql:query>
+
+                                        <ce:forEach var="r" items="${result.rows}">
+                                            <ce:if test="${r.status != 'Pending'}">
+                                                <button type="button" id="damage" onclick="reportDamage()"
+                                                        class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-red-500 hover:bg-orange-500 border-2">
+                                                    Report Damage
+                                                </button>
+                                            </ce:if>
+                                        </ce:forEach>
+
+                                        <%--                                    <ce:if test="${e.status == 'Damaged' &&  e.status != 'Available' && e.status != 'CheckedOut' }">--%>
+                                        <%--                                        <button type="button" id="damage" onclick="reportDamage()"--%>
+                                        <%--                                                class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-red-500 hover:bg-orange-500 border-2">--%>
+                                        <%--                                            Report Damage--%>
+                                        <%--                                        </button>--%>
+
+                                    </ce:if>
                                 </div>
                             </div>
+
+                            <div id="report-btn-container" hidden>
+                                <div class="flex gap-6 max-sm:flex-col mt-10">
+
+                                    <button type="button" id="cancelReport" onclick="cancelReport()"
+                                            class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-gray-500 hover:bg-orange-500 border-2">
+                                        Cancel
+                                    </button>
+
+                                    <button type="button" id="confirmReport" onclick="confirmReport()"
+                                            class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-green-500 hover:bg-orange-500 border-2">
+                                        Confirm Report
+                                    </button>
+
+                                </div>
+                            </div>
+
                             <div id="confirm-container" hidden>
                                 <div class="flex justify between">
                                     <button type="button" id="cancel" onclick="cancel()"
@@ -206,12 +259,13 @@
                                             class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-green-500 hover:bg-orange-500 border-2">
                                         Confirm
                                     </button>
-                                    <ce:if test="${e.status != 'Available' && e.status != 'CheckedOut' }">
+                                    <ce:if test="${ e.status != 'Available' && e.status != 'CheckedOut'}">
                                         <button type="button" id="delete" onclick="deleteEquipment()"
                                                 class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-red-500 hover:bg-orange-500 border-2">
                                             Delete
                                         </button>
                                     </ce:if>
+
                                 </div>
                             </div>
                         </div>
@@ -222,6 +276,16 @@
                             Swal.fire({
                                 title: 'Updated',
                                 text: 'Equipment has been updated!',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            });
+                        </script>
+                    </ce:if>
+                    <ce:if test="${param.createDamageReport.equals('success')}">
+                        <script>
+                            Swal.fire({
+                                title: 'Reported',
+                                text: 'Equipment damage has been reported!',
                                 icon: 'success',
                                 confirmButtonText: 'OK'
                             });

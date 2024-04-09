@@ -24,11 +24,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.logging.Logger;
 
 @WebServlet(name = "UploadController", urlPatterns = "/UploadServlet")
 public class UploadController extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private static final Logger LOGGER = Logger.getLogger(UploadController.class.getName());
 
 
 //    private static final String UPLOAD_DIRECTORY = "upload";
@@ -65,11 +66,16 @@ public class UploadController extends HttpServlet {
 
 //        String uploadPath = getServletContext().getRealPath("/") + "images\\equipment";
         String uploadPath = "C:\\Users\\jason\\Desktop\\ITP4511_Assignment\\ITP4511_Assignment\\src\\main\\webapp\\images\\equipment";
-
+        String damagePath = "C:\\Users\\jason\\Desktop\\ITP4511_Assignment\\ITP4511_Assignment\\src\\main\\webapp\\images\\damage";
         // create dir if not exists
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
             uploadDir.mkdir();
+        }
+
+        File damageDir = new File(damagePath);
+        if (!damageDir.exists()) {
+            damageDir.mkdir();
         }
 
         String id;
@@ -107,6 +113,31 @@ public class UploadController extends HttpServlet {
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write(json);
+                break;
+
+            case "reportImage":
+                id = request.getParameter("id");
+                int imageIndex = Integer.parseInt(request.getParameter("imageLength"));
+                List<FileItem> damageImage = null;
+                try {
+                    damageImage = upload.parseRequest(request);
+//                    LOGGER.log(Level.INFO, "damageImage:  " + imageIndex);
+                    for (FileItem item : damageImage) {
+                        if (!item.isFormField()) {
+                            String fileName = id + "_" + imageIndex + "_" + java.time.LocalDate.now() + ".jpg";
+                            String filePath = damagePath + File.separator + fileName;
+                            File storeFile = new File(filePath);
+                            item.write(storeFile);
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                json = "{\"uploadDamageImage\":\"success\"}";
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(json);
+
                 break;
 
             case "deleteImage":

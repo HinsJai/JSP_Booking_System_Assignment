@@ -8,7 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="tailwindcss/tailwindcss_cdn.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="cp" %>
-<%--<%@ include file="bootstrap/bootstrp_css.jsp" %>--%>
 
 <html>
     <head>

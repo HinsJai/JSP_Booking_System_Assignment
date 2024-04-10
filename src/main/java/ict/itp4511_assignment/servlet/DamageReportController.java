@@ -1,6 +1,7 @@
 package ict.itp4511_assignment.servlet;
 
 import ict.itp4511_assignment.db.DamageReportDB;
+import ict.itp4511_assignment.db.EquipmentDB;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,6 +21,7 @@ import java.io.IOException;
 @WebServlet(name = "DamageReportController", urlPatterns = "/damageReport")
 public class DamageReportController extends HttpServlet {
     private DamageReportDB damageReportDB;
+    private EquipmentDB equipmentDB;
 
     @Override
     public void init() {
@@ -27,6 +29,7 @@ public class DamageReportController extends HttpServlet {
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
         damageReportDB = new DamageReportDB(dbUrl, dbUser, dbPassword);
+        equipmentDB = new EquipmentDB(dbUrl, dbUser, dbPassword);
     }
 
     @Override
@@ -40,6 +43,7 @@ public class DamageReportController extends HttpServlet {
         HttpSession session = request.getSession(false);
         RequestDispatcher rd;
         boolean result = false;
+        int equipmentID;
         String json = "";
         if (session == null) {
             response.sendRedirect("login?success=false");
@@ -48,7 +52,7 @@ public class DamageReportController extends HttpServlet {
 
         switch (action) {
             case "reportDamage":
-                int equipmentID = Integer.parseInt(request.getParameter("equipmentID"));
+                equipmentID = Integer.parseInt(request.getParameter("equipmentID"));
                 int reportedBy = Integer.parseInt(session.getAttribute("userID").toString());
                 String damageDescription = request.getParameter("damageDescription");
                 int imageLength = Integer.parseInt(request.getParameter("imageLength"));
@@ -72,6 +76,24 @@ public class DamageReportController extends HttpServlet {
                 session.setAttribute("page", "damageReportDetails");
                 rd = request.getRequestDispatcher("/damageReportDetails.jsp");
                 rd.forward(request, response);
+                break;
+            case "resolve":
+                int damageReportID = Integer.parseInt(request.getParameter("damageReportID"));
+                equipmentID = Integer.parseInt(request.getParameter("equipmentID"));
+                result = damageReportDB.resolveDamageReport(damageReportID);
+                if (result) {
+                    result = equipmentDB.updateStatus("Available", equipmentID);
+                    if (result) {
+                        json = "{\"resolveDamageReport\":\"success\"}";
+                    } else {
+                        json = "{\"resolveDamageReport\":\"fail\"}";
+                    }
+                } else {
+                    json = "{\"resolveDamageReport\":\"fail\"}";
+                }
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(json);
                 break;
         }
     }

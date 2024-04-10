@@ -6,6 +6,7 @@ import ict.itp4511_assignment.db.ReserveCartDB;
 import ict.itp4511_assignment.db.UserDB;
 import ict.itp4511_assignment.db.WishListDB;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -92,14 +93,16 @@ public class LoginController extends HttpServlet {
     }
 
     private void doLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        response.sendRedirect("login?logout=true");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
+        dispatcher.forward(request, response);
+
 
     }
 
     private void doLogout(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            session.removeAttribute("userInfo");
+//            session.removeAttribute("userInfo");
             session.invalidate();
         }
         doLogin(request, response);

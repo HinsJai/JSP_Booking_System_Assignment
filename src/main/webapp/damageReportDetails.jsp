@@ -16,13 +16,12 @@
         <title>Damage Report Details</title>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-        <script src="js/equipmentDetails.js"></script>
+        <script src="js/damageReportDetails.js"></script>
     </head>
     <body>
         <sql:setDataSource var="damageReportDetails" driver="com.mysql.cj.jdbc.Driver"
                            url="jdbc:mysql://localhost:3306/itp4511_db?useSSL=false"
                            user="root" password="root" />
-
 
         <div class="font-[sans-serif] bg-gray-200">
             <div class="grid lg:grid-cols-2 xl:grid-cols-3 gap-4 h-full">
@@ -40,6 +39,7 @@
                                                  class="w-44 h-44 object-contain" />
                                         </div>
                                     </cd:forEach>
+                                    <input type="number" value="${param.imageLength}" hidden id="imageLength">
                                 </div>
                             </div>
                         </div>
@@ -67,13 +67,18 @@
                                            class="px-4 py-3.5 bg-white text-base w-full  border-b-2 focus:border-[#333] outline-none" />
                                 </div>
                                 <div class="relative flex items-center">
+                                    <span class=" w-40 font-bold text-xl">Equipment ID</span>
+                                    <input type="text" value="${d.equipmentID}" disabled id="equipmentID"
+                                           class="px-4 py-3.5 bg-white text-base w-full  border-b-2 focus:border-[#333] outline-none" />
+                                </div>
+                                <div class="relative flex items-center">
                                     <span class=" w-40 font-bold text-xl">Courier ID</span>
                                     <input type="text" value="${d.reportedBy}" disabled id="courierID"
                                            class="px-4 py-3.5 bg-white text-base w-full  border-b-2 focus:border-[#333] outline-none" />
                                 </div>
                                 <div class="relative flex items-center">
                                     <span class=" w-40 font-bold text-xl">Damage Description</span>
-                                    <textarea rows="4" cols="65" disabled
+                                    <textarea rows="4" cols="70" disabled
                                               class="p-2 bg-white">${d.damageDescription}
                                     </textarea>
                                 </div>
@@ -85,19 +90,28 @@
                             </div>
                         </div>
 
+                        <cd:if test="${d.status.equals('Pending') && sessionScope.userType == 'Technician_admin'}">
+                            <div class="mt-12">
+                                <button type="button" id="confirm" onclick="resolveEquipment()"
+                                        class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-blue-500 hover:bg-orange-500 border-2">
+                                    Resolve
+                                </button>
+                            </div>
+                        </cd:if>
+
                     </div>
                 </div>
 
-                    <%--                    <ce:if test="${param.update.equals('success')}">--%>
-                    <%--                        <script>--%>
-                    <%--                            Swal.fire({--%>
-                    <%--                                title: 'Updated',--%>
-                    <%--                                text: 'Equipment has been updated!',--%>
-                    <%--                                icon: 'success',--%>
-                    <%--                                confirmButtonText: 'OK'--%>
-                    <%--                            });--%>
-                    <%--                        </script>--%>
-                    <%--                    </ce:if>--%>
+                <cd:if test="${param.resolved.equals('success')}">
+                    <script>
+                        Swal.fire({
+                            title: 'Resolved',
+                            text: 'Equipment has been resolved!',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        });
+                    </script>
+                </cd:if>
 
             </div>
             </cd:forEach>

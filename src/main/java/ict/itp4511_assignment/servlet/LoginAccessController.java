@@ -18,8 +18,11 @@ import java.io.IOException;
 @WebServlet(name = "LoginAccessController", urlPatterns = {"/login"})
 public class LoginAccessController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request, response);
+    }
 
-
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean loginPass = "true".equals(request.getParameter("success"));
         HttpSession session = request.getSession(false);
         boolean sessionCheck = session != null && session.getAttribute("userInfo") != null;
@@ -36,6 +39,12 @@ public class LoginAccessController extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
             dispatcher.forward(request, response);
         }
+//
+//        String action = request.getParameter("action");
+//        if ("logout".equals(action)) {
+//            RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
+//            dispatcher.forward(request, response);
+//        }
     }
 
     protected void getAccessPage(HttpServletRequest request, HttpServletResponse response, String userType) throws ServletException, IOException {

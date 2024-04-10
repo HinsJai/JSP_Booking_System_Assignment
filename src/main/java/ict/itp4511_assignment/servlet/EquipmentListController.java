@@ -86,7 +86,8 @@ public class EquipmentListController extends HttpServlet {
                 break;
             case "projector":
                 session.setAttribute("page", "projector");
-                fetchData(request, response, "projector", userID, userType, campus);
+                fetchData(request, response, "Projector", userID, userType, campus);
+                break;
             case "monitor":
                 session.setAttribute("page", "monitor");
                 fetchData(request, response, "monitor", userID, userType, campus);

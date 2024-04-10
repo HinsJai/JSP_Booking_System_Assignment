@@ -206,23 +206,34 @@
                                 <div class="flex gap-6 max-sm:flex-col mt-10">
 
                                     <button type="button" id="edit" onclick="edit()"
-                                            class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-blue-500 hover:bg-orange-500 border-2">
+                                            class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-blue-500 ho-+ver:bg-orange-500 border-2">
                                         Edit
                                     </button>
-                                    <ce:if test="${e.status == 'Damaged'  }">
+                                    <ce:if test="${e.status == 'Damaged' && sessionScope.userType == 'Technician'}">
                                         <sql:query dataSource="${equipmentDetails}" var="result">
                                             select * from damagereport where equipmentID=${requestScope.equipmentID}
                                         </sql:query>
 
-                                        <ce:forEach var="r" items="${result.rows}">
-                                            <ce:if test="${r.status != 'Pending'}">
+                                        <ce:choose>
+                                            <ce:when test="${empty result.rows}">
                                                 <button type="button" id="damage" onclick="reportDamage()"
                                                         class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-red-500 hover:bg-orange-500 border-2">
                                                     Report Damage
                                                 </button>
-                                            </ce:if>
-                                        </ce:forEach>
+                                            </ce:when>
 
+                                            <ce:otherwise>
+                                                <ce:forEach var="r" items="${result.rows}">
+                                                    <ce:if test="${r.status != 'Pending'}">
+                                                        <button type="button" id="damage" onclick="reportDamage()"
+                                                                class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-red-500 hover:bg-orange-500 border-2">
+                                                            Report Damage
+                                                        </button>
+                                                    </ce:if>
+                                                </ce:forEach>
+                                            </ce:otherwise>
+
+                                        </ce:choose>
                                         <%--                                    <ce:if test="${e.status == 'Damaged' &&  e.status != 'Available' && e.status != 'CheckedOut' }">--%>
                                         <%--                                        <button type="button" id="damage" onclick="reportDamage()"--%>
                                         <%--                                                class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-red-500 hover:bg-orange-500 border-2">--%>

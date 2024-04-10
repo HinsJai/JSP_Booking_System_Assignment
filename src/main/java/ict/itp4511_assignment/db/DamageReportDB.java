@@ -86,4 +86,29 @@ public class DamageReportDB {
         }
         return result;
     }
+
+    public boolean resolveDamageReport(int reportID) {
+        boolean result = false;
+        PreparedStatement pStmt = null;
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            String sql = "UPDATE damageReport SET status = 'Resolved' WHERE reportID = ?";
+            pStmt = conn.prepareStatement(sql);
+            pStmt.setInt(1, reportID);
+            int count = pStmt.executeUpdate();
+            if (count > 0) {
+                result = true;
+            }
+            conn.close();
+        } catch (SQLException e) {
+            while (e != null) {
+                e.printStackTrace();
+                e = e.getNextException();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

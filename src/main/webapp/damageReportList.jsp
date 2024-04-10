@@ -102,7 +102,6 @@
                                             </c:when>
                                         </c:choose>
                                     </td>
-
                                     <td class="px-6 py-4 text-2xl">
                                         <a href="damageReport?action=details&reportID=${d.reportID}&imageLength=${d.imageLength}&equipmentID=${d.equipmentID}&reportDate=${d.reportDate}"
                                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Details</a>

@@ -52,11 +52,6 @@ public class UserProfileController extends HttpServlet {
                             rd.forward(request, response);
                         }
                         break;
-                    case "userList":
-                        session.setAttribute("page", "userList");
-                        rd = getServletContext().getRequestDispatcher("/userManagement.jsp");
-                        rd.forward(request, response);
-                        break;
                     case "updatePassword":
                         String password = request.getParameter("password");
                         int userId = userBean.getUserID();

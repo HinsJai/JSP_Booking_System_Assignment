@@ -27,7 +27,7 @@
                         class="text-white text-2xl hover:text-orange-500">
                     Create Equipment</p></a>
                 </li>
-                <li><a class="hover:text-orange-500" href="userProfile?action=userList"><p
+                <li><a class="hover:text-orange-500" href="userManagement?action=userList"><p
                         class="text-white text-2xl hover:text-orange-500">
                     User Management</p></a>
                 </li>

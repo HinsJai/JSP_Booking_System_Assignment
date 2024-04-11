@@ -223,6 +223,12 @@
                                         Confirm
                                     </button>
                                 </cr:if>
+                                <cr:if test="${bd.bookingStatus == 'Delivered'}">
+                                    <button type="button" id="confirmedReject" onclick="completeBooking()"
+                                            class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-blue-500 hover:bg-orange-500 border-2">
+                                        Complete booking
+                                    </button>
+                                </cr:if>
                             </div>
                             <div>
                                 <cr:if test="${bd.bookingStatus == 'Approved'}">
@@ -232,16 +238,6 @@
                                             Arrange Delivery
                                         </a>
                                     </div>
-                                </cr:if>
-                            </div>
-
-                            <div>
-                                <cr:if test="${bd.bookingStatus == 'In delivery' }">
-                                    <%--    <cr:if test="${bd.bookingStatus == 'Deliverd' }">--%>
-                                    <button type="button" id="confirmedReject" onclick="completeBooking()"
-                                            class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-blue-500 hover:bg-orange-500 border-2">
-                                        Complete booking
-                                    </button>
                                 </cr:if>
                             </div>
 

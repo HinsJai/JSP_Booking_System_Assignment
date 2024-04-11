@@ -8,6 +8,7 @@ package ict.itp4511_assignment.utils;
  */
 
 import ict.itp4511_assignment.db.BookingDB;
+import ict.itp4511_assignment.db.DeliveryDB;
 import ict.itp4511_assignment.db.WishListDB;
 
 import javax.servlet.*;
@@ -17,12 +18,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/home.jsp", "/userProfile.jsp", "/wishList.jsp", "/checkout.jsp", "/bookingList.jsp", "/bookingRequestList", "/insertEquipment.jsp", "/technician_e_list.jsp", "/equipmentDetails.jsp"})
+@WebFilter(urlPatterns = {"/home.jsp", "/userProfile.jsp", "/wishList.jsp", "/checkout.jsp", "/bookingList.jsp", "/bookingRequestList", "/insertEquipment.jsp", "/technician_e_list.jsp", "/equipmentDetails.jsp", "/courier_deliveryList.jsp"})
 public class AuthenticationFilter implements Filter {
 
     public FilterConfig config;
     private WishListDB wishListDB;
     private BookingDB bookingDB;
+    private DeliveryDB deliveryDB;
 
     @Override
     public void init(FilterConfig config) throws ServletException {
@@ -30,6 +32,7 @@ public class AuthenticationFilter implements Filter {
         DBConnection conn = new DBConnection();
         wishListDB = new WishListDB(conn.getDbUrl(), conn.getDbUser(), conn.getDbPassword());
         bookingDB = new BookingDB(conn.getDbUrl(), conn.getDbUser(), conn.getDbPassword());
+        deliveryDB = new DeliveryDB(conn.getDbUrl(), conn.getDbUser(), conn.getDbPassword());
     }
 
     @Override
@@ -55,6 +58,9 @@ public class AuthenticationFilter implements Filter {
                 case "Technician":
                 case "Technician_admin":
                     session.setAttribute("bookingRequestNotification", bookingDB.getBookingNotification());
+                    break;
+                case "Courier":
+                    session.setAttribute("deliveryRequestNotification", deliveryDB.getDeliveryNotification());
                     break;
 
             }

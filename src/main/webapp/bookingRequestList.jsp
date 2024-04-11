@@ -112,6 +112,22 @@
                                                 </div>
                                             </c:when>
 
+                                            <c:when test="${ b.bookingStatus == 'Delivered'}">
+                                                <div class="flex w-40">
+                                                    <p class="text-black font-bold p-4 text-xl rounded rounded-lg bg-gray-500">
+                                                            ${ b.bookingStatus}
+                                                    </p>
+                                                </div>
+                                            </c:when>
+
+                                            <c:when test="${ b.bookingStatus == 'Completed'}">
+                                                <div class="flex w-40">
+                                                    <p class="text-black font-bold p-4 text-xl rounded rounded-lg bg-orange-500">
+                                                            ${ b.bookingStatus}
+                                                    </p>
+                                                </div>
+                                            </c:when>
+
                                             <c:when test="${ b.bookingStatus == 'Declined'}">
                                                 <div class="flex w-40">
                                                     <p class="text-black font-bold p-4 text-xl rounded rounded-lg bg-red-500">

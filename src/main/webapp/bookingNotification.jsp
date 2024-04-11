@@ -16,7 +16,7 @@
              class="w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow "
              role="alert">
             <div class="flex">
-                <img class="w-12 h-12 rounded-full" src="./images/equipment/1.jpg"
+                <img class="w-12 h-12 rounded-full" src="./images/notification_icon.png"
                      alt="" />
                 <div class="ms-3 text-sm font-normal">
                     <span class="mb-4 text-xl font-semibold text-gray-900">Notification</span>

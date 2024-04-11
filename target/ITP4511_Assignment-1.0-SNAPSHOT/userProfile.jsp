@@ -30,6 +30,9 @@
             <cp:when test="${sessionScope.userType == 'Technician_admin' ||  sessionScope.userType == 'Technician'}">
                 <%@ include file="layout/technician_nav.jsp" %>
             </cp:when>
+            <cp:when test="${sessionScope.userType == 'Courier' }">
+                <%@ include file="layout/courier_nav.jsp" %>
+            </cp:when>
         </cp:choose>
 
         <cp:if test="${param.reserve.equals('showCart')}">

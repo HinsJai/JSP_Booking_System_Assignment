@@ -57,6 +57,11 @@ public class DeliveryController extends HttpServlet {
                 rd = request.getRequestDispatcher("/deliveryList.jsp");
                 rd.forward(request, response);
                 break;
+            case "courier_deliveryList":
+                session.setAttribute("page", "courier_deliveryList");
+                rd = request.getRequestDispatcher("/courier_deliveryList.jsp");
+                rd.forward(request, response);
+                break;
             case "arrange":
                 session.setAttribute("page", "deliveryArrangement");
                 rd = request.getRequestDispatcher("/deliveryArrange.jsp");
@@ -79,6 +84,30 @@ public class DeliveryController extends HttpServlet {
                 rd = request.getRequestDispatcher("/deliveryNote.jsp");
                 rd.forward(request, response);
                 break;
+
+            case "acceptDeliveryNote":
+                result = acceptDeliveryNote(request, response);
+                if (result) {
+                    json = "{\"acceptDeliveryNote\":\"success\"}";
+                } else {
+                    json = "{\"acceptDeliveryNote\":\"fail\"}";
+                }
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(json);
+                break;
+
+            case "completeDeliveryNote":
+                result = completeDeliveryNote(request, response);
+                if (result) {
+                    json = "{\"completeDeliveryNote\":\"success\"}";
+                } else {
+                    json = "{\"completeDeliveryNote\":\"fail\"}";
+                }
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(json);
+                break;
         }
     }
 
@@ -94,5 +123,20 @@ public class DeliveryController extends HttpServlet {
         } else {
             return false;
         }
+    }
+
+    public boolean acceptDeliveryNote(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int deliveryID = Integer.parseInt(request.getParameter("deliveryID"));
+        int courierID = Integer.parseInt(request.getParameter("userID"));
+        return deliveryDB.acceptDeliveryNote(deliveryID, courierID);
+    }
+
+    public boolean completeDeliveryNote(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int deliveryID = Integer.parseInt(request.getParameter("deliveryID"));
+        int bookingID = Integer.parseInt(request.getParameter("bookingID"));
+        if (!bookingDB.updateStatus(bookingID, "Delivered")) {
+            return false;
+        }
+        return deliveryDB.completeDeliveryNote(deliveryID);
     }
 }

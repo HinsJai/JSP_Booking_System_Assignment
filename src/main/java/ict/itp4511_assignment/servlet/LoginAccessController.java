@@ -63,6 +63,7 @@ public class LoginAccessController extends HttpServlet {
                 response.sendRedirect("booking?action=requestList");
                 break;
             case "Courier":
+                response.sendRedirect("delivery?action=courier_deliveryList");
                 break;
             default:
                 response.sendRedirect("login?success=false");

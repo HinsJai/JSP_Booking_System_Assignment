@@ -53,3 +53,27 @@ function cancelReject() {
     $("#confirmedReject").attr("hidden", true);
     $("#cancelReject").attr("hidden", true);
 }
+
+function completeBooking() {
+    Swal.fire({
+        title: 'Do you want to complete this booking?', showCancelButton: true, confirmButtonText: 'Yes',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let bookingID = $("#bookID").val().trim();
+            $.ajax({
+                url: `booking?action=completeBooking`, type: "POST", data: {
+                    bookingID: bookingID
+                }, success: function (response) {
+                    if (response.completeBooking === "success") {
+                        window.location.replace(`booking?action=requestDetails&bookingID=${bookingID}&complete=success`);
+                    } else {
+                        Swal.fire("Error completing booking!");
+                    }
+                }, error: function (xhr, status, error) {
+                    console.error("Error completing booking: ", error);
+                    Swal.fire("Error completing booking!");
+                }
+            });
+        }
+    });
+}

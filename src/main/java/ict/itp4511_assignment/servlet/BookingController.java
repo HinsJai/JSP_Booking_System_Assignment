@@ -41,6 +41,7 @@ public class BookingController extends HttpServlet {
         RequestDispatcher rd;
         int bookID;
         boolean result = false;
+        String json = "";
         if (session == null) {
             response.sendRedirect("login?success=false");
             return;
@@ -102,6 +103,19 @@ public class BookingController extends HttpServlet {
 //                    response.sendRedirect("booking?action=details&id=" + request.getParameter("id"));
                     response.sendRedirect("booking?action=details&bookID=" + bookID + "&cancel=failed");
                 }
+                break;
+
+            case "completeBooking":
+                bookID = Integer.parseInt(request.getParameter("bookingID"));
+                result = bookingDB.updateStatus(bookID, "Completed");
+                if (result) {
+                    json = "{\"completeBooking\":\"success\"}";
+                } else {
+                    json = "{\"completeBooking\":\"failed\"}";
+                }
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(json);
                 break;
         }
     }

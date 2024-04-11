@@ -39,6 +39,10 @@
                         class="text-white text-2xl hover:text-orange-500">
                     Report</p></a>
                 </li>
+                <li><a class="hover:text-orange-500" href="analytic?action=list"><p
+                        class="text-white text-2xl hover:text-orange-500">
+                    Analytic</p></a>
+                </li>
             </ul>
             <!-- Header Icons -->
             <div class="hidden xl:flex items-center space-x-5 items-center">

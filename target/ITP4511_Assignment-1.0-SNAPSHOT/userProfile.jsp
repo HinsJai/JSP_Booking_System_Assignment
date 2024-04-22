@@ -50,7 +50,7 @@
             </cp:when>
             <cp:otherwise>
                 <cp:if test="${requestScope.user.isValidUser == true}">
-                    <div class="page-content page-container " id="profile-container">
+                    <div class="page-content page-container" id="profile-container">
                         <div class="padding">
                             <div class="">
                                 <div class="w-full">

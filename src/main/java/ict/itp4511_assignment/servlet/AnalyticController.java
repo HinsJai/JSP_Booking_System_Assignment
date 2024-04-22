@@ -15,8 +15,8 @@ import java.io.IOException;
  * @Description: ict.itp4511_assignment.servlet
  * @version: 1.0
  */
-@WebServlet(name = "analyticController", value = "/analytic")
-public class analyticController extends HttpServlet {
+@WebServlet(name = "AnalyticController", value = "/analytic")
+public class AnalyticController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
@@ -42,7 +42,9 @@ public class analyticController extends HttpServlet {
 
         switch (action) {
             case "list":
-                session.setAttribute("page", "analytic");
+//                session.setAttribute("page", "analytic");
+//                response.sendRedirect("analytic?action=list&duration=month");
+
                 rd = request.getRequestDispatcher("/analytic.jsp");
                 rd.forward(request, response);
                 break;
@@ -54,7 +56,11 @@ public class analyticController extends HttpServlet {
                 response.getWriter().write(json);
                 break;
 
+            case "venue":
+                response.sendRedirect("analytic?action=list&campusID=" + request.getParameter("campusID") + "&duration=" + request.getParameter("duration") + "&eDuration=" + request.getParameter("eDuration"));
+                break;
         }
+
     }
 
 }

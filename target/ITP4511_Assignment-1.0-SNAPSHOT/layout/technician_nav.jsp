@@ -5,7 +5,10 @@
   Time: 下午 11:13
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="ct" %>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="js/common.js"></script>
+
 <section class="relative mx-auto">
     <!-- navbar -->
     <nav class="flex justify-between bg-gray-900 text-white w-screen">
@@ -16,37 +19,43 @@
             <!-- Nav Links -->
             <ul class="hidden md:flex px-4 mt-4 mx-auto font-semibold font-heading space-x-16">
                 <li><a class="hover:text-orange-500" href="booking?action=requestList"><p
-                        class="text-white text-2xl hover:text-orange-500">
+                        class="text-white text-xl hover:text-orange-500 border-b-2">
                     Booking</p></a>
                 </li>
                 <li><a class="hover:text-orange-500" href="technicianEquipment?action=list"><p
-                        class="text-white text-2xl hover:text-orange-500">
+                        class="text-white text-xl hover:text-orange-500 border-b-2">
                     Equipments</p></a>
                 </li>
                 <li><a class="hover:text-orange-500" href="createEquipment?action=insertEquipment"><p
-                        class="text-white text-2xl hover:text-orange-500">
+                        class="text-white text-xl hover:text-orange-500 border-b-2">
                     Create Equipment</p></a>
                 </li>
                 <li><a class="hover:text-orange-500" href="userManagement?action=userList"><p
-                        class="text-white text-2xl hover:text-orange-500">
+                        class="text-white text-xl hover:text-orange-500 border-b-2">
                     User Management</p></a>
                 </li>
                 <li><a class="hover:text-orange-500" href="delivery?action=list"><p
-                        class="text-white text-2xl hover:text-orange-500">
+                        class="text-white text-xl hover:text-orange-500 border-b-2">
                     Delivery</p></a>
                 </li>
                 <li><a class="hover:text-orange-500" href="damageReport?action=list"><p
-                        class="text-white text-2xl hover:text-orange-500">
+                        class="text-white text-xl hover:text-orange-500 border-b-2">
                     Report</p></a>
                 </li>
-                <li><a class="hover:text-orange-500" href="analytic?action=list"><p
-                        class="text-white text-2xl hover:text-orange-500">
-                    Analytic</p></a>
-                </li>
+                <ct:if test="${sessionScope.userType == 'Technician_admin'}">
+                    <li><a class="hover:text-orange-500"
+                           href="analytic?action=list&duration=month&campusID=TY&eDuration=month"><p
+                            class="text-white text-xl hover:text-orange-500 border-b-2">
+                        Analytic</p></a>
+                    </li>
+                </ct:if>
             </ul>
             <!-- Header Icons -->
             <div class="hidden xl:flex items-center space-x-5 items-center">
-                <p class="font-bold">${sessionScope.userType}</p>
+                <p class="font-bold text-yellow-500">${sessionScope.userType} <br>
+                    <span class="flex justify-center"><span class="text-white font-semibold">Welcome</span>  <span
+                            class="text-green-500 ml-2"> ${sessionScope.userInfo.getfName()} !</span></span>
+                </p>
                 <a class="flex items-center hover:text-gray-200" href="userProfile?action=profile">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200"
                          fill="none"

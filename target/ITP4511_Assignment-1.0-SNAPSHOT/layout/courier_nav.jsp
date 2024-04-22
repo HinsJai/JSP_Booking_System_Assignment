@@ -22,7 +22,10 @@
             </ul>
             <!-- Header Icons -->
             <div class="hidden xl:flex items-center space-x-5 items-center">
-                <p class="font-bold">${sessionScope.userType}</p>
+                <p class="font-bold text-yellow-500">${sessionScope.userType} <br>
+                    <span class="flex justify-center"><span class="text-white font-semibold">Welcome</span>  <span
+                            class="text-green-500 ml-2"> ${sessionScope.userInfo.getfName()} !</span></span>
+                </p>
                 <a class="flex items-center hover:text-gray-200" href="userProfile?action=profile">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200"
                          fill="none"

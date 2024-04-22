@@ -245,4 +245,31 @@ public class BookingDB {
         }
         return result;
     }
+
+    public boolean updateEquipmentStatus(int bookingID) {
+        boolean result = false;
+        PreparedStatement pStmt = null;
+        Connection conn = null;
+        try {
+            conn = getConnection();
+            String sql = "Update equipment set status = 'Available' where equipmentID " + "in (select equipmentID from bookingEquipment where bookingID =" + bookingID + ")";
+            pStmt = conn.prepareStatement(sql);
+            int rowCount = pStmt.executeUpdate();
+            if (rowCount > 0) {
+                result = true;
+            }
+            pStmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            while (e != null) {
+                e.printStackTrace();
+                e = e.getNextException();
+            }
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return result;
+    }
 }

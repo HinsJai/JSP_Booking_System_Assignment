@@ -109,7 +109,12 @@ public class BookingController extends HttpServlet {
                 bookID = Integer.parseInt(request.getParameter("bookingID"));
                 result = bookingDB.updateStatus(bookID, "Completed");
                 if (result) {
-                    json = "{\"completeBooking\":\"success\"}";
+                    result = bookingDB.updateEquipmentStatus(bookID);
+                    if (result) {
+                        json = "{\"completeBooking\":\"success\"}";
+                    } else {
+                        json = "{\"completeBooking\":\"failed\"}";
+                    }
                 } else {
                     json = "{\"completeBooking\":\"failed\"}";
                 }

@@ -209,9 +209,9 @@
                                             class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-blue-500 ho-+ver:bg-orange-500 border-2">
                                         Edit
                                     </button>
-                                    <ce:if test="${e.status == 'Damaged' && sessionScope.userType == 'Technician'}">
+                                    <ce:if test="${e.status == 'CheckedOut' ||  e.status == 'Available' && sessionScope.userType == 'Technician' || sessionScope.userType == 'Technician_admin'}">
                                         <sql:query dataSource="${equipmentDetails}" var="result">
-                                            select * from damagereport where equipmentID=${requestScope.equipmentID}
+                                            select * from damagereport where equipmentID=${requestScope.equipmentID} and status = 'Pending'
                                         </sql:query>
 
                                         <ce:choose>
@@ -227,7 +227,7 @@
                                                     <ce:if test="${r.status != 'Pending'}">
                                                         <button type="button" id="damage" onclick="reportDamage()"
                                                                 class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-red-500 hover:bg-orange-500 border-2">
-                                                            Report Damage
+                                                            Report Damage ${r.status }
                                                         </button>
                                                     </ce:if>
                                                 </ce:forEach>

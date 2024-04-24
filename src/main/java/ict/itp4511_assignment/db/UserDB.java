@@ -40,7 +40,7 @@ public class UserDB {
         try {
             conn = getConnection();
             stmnt = conn.createStatement();
-            String sql = "Create table if not exists userInfo (" + "userID int(5) AUTO_INCREMENT PRIMARY KEY ," + "email varchar(50) not null," + "password varchar(50) not null," + "fName varchar(25) not null," + "lName varchar(25) not null," + "gender ENUM('M', 'F') not null," + "contact int(8) not null," + "root ENUM('User', 'Staff', 'Technician', 'Technician_admin', 'Courier') NOT NULL," + "campusID ENUM('CW','LWL','ST','TM','TY') not null," + "FOREIGN KEY (campusID) REFERENCES campus(campusID))";
+            String sql = "Create table if not exists userInfo (" + "userID int(5) AUTO_INCREMENT PRIMARY KEY ," + "email varchar(50) not null," + "password varchar(50) not null," + "fName varchar(25) not null," + "lName varchar(25) not null," + "gender ENUM('M', 'F') not null," + "contact int(8) not null," + "root ENUM('User', 'Staff', 'Technician', 'Technician_admin', 'Courier') NOT NULL," + "campusID ENUM('CW','LWL','ST','TM','TY') not null," + "isLocked tinyint(1) default 0 not null" + "FOREIGN KEY (campusID) REFERENCES campus(campusID))";
             stmnt.execute(sql);
             stmnt.close();
             conn.close();
@@ -83,7 +83,7 @@ public class UserDB {
         UserInfoBean userBean = null;
         try {
             conn = getConnection();
-            String sql = "Select * From userInfo WHERE email=? and password=?";
+            String sql = "Select * From userInfo WHERE email=? and password=? and isLocked = 0";
             pStmnt = conn.prepareStatement(sql);
             pStmnt.setString(1, email);
             pStmnt.setString(2, password);
@@ -197,13 +197,13 @@ public class UserDB {
         return result;
     }
 
-    public boolean deleteUser(int userID) {
+    public boolean lockUser(int userID) {
         Connection conn = null;
         PreparedStatement pStmnt = null;
         boolean result = false;
         try {
             conn = getConnection();
-            String sql = "Delete from userInfo where userID=?";
+            String sql = "Update userInfo  set isLocked = 1 where userID=?";
             pStmnt = conn.prepareStatement(sql);
             pStmnt.setInt(1, userID);
             int count = pStmnt.executeUpdate();
@@ -221,6 +221,56 @@ public class UserDB {
         }
         return result;
     }
+
+    public boolean unlockUser(int userID) {
+        Connection conn = null;
+        PreparedStatement pStmnt = null;
+        boolean result = false;
+        try {
+            conn = getConnection();
+            String sql = "Update userInfo  set isLocked = 0 where userID=?";
+            pStmnt = conn.prepareStatement(sql);
+            pStmnt.setInt(1, userID);
+            int count = pStmnt.executeUpdate();
+            if (count > 0) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            while (e != null) {
+                e = e.getNextException();
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+//    public boolean deleteUser(int userID) {
+//        Connection conn = null;
+//        PreparedStatement pStmnt = null;
+//        boolean result = false;
+//        try {
+//            conn = getConnection();
+//            String sql = "Delete from userInfo where userID=?";
+//            pStmnt = conn.prepareStatement(sql);
+//            pStmnt.setInt(1, userID);
+//            int count = pStmnt.executeUpdate();
+//            if (count > 0) {
+//                result = true;
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            while (e != null) {
+//                e = e.getNextException();
+//                e.printStackTrace();
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+//    }
 
     public int getMaxID() {
         boolean result = false;

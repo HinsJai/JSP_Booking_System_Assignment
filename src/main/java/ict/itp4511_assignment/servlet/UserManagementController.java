@@ -79,13 +79,26 @@ public class UserManagementController extends HttpServlet {
                     rd = getServletContext().getRequestDispatcher("/userManagement.jsp");
                     rd.forward(request, response);
                     break;
-                case "delete":
+                case "lock":
                     userID = Integer.parseInt(request.getParameter("userID"));
-                    result = userDB.deleteUser(userID);
+                    result = userDB.lockUser(userID);
                     if (result) {
-                        json = "{\"delete\":\"success\"}";
+                        json = "{\"lock\":\"success\"}";
                     } else {
-                        json = "{\"delete\":\"fail\"}";
+                        json = "{\"lock\":\"fail\"}";
+                    }
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(json);
+                    break;
+
+                case "unlock":
+                    userID = Integer.parseInt(request.getParameter("userID"));
+                    result = userDB.unlockUser(userID);
+                    if (result) {
+                        json = "{\"unlock\":\"success\"}";
+                    } else {
+                        json = "{\"unlock\":\"fail\"}";
                     }
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");

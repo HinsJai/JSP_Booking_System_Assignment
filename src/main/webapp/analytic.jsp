@@ -50,195 +50,6 @@
             ORDER BY
             Year;
         </sql:query>
-
-        <%--        <div class=" w-[800px] h-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">--%>
-        <%--            <div class="flex justify-between border-gray-200 border-b dark:border-gray-700 pb-3">--%>
-        <%--                <div>--%>
-        <%--                    <div class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Total booking--%>
-        <%--                                                                                             (<fmt:formatDate--%>
-        <%--                                pattern="yyyy"--%>
-        <%--                                value="${now}" />)--%>
-        <%--                    </div>--%>
-        <%--                    <p class="leading-none text-3xl font-bold text-gray-900 dark:text-white">--%>
-        <%--                        <cd:forEach var="row" items="${result.rows}">--%>
-        <%--                            ${row.TotalBookingRate}--%>
-
-        <%--                        </cd:forEach>--%>
-        <%--                    </p>--%>
-        <%--                </div>--%>
-        <%--                <div>--%>
-
-        <%--                </div>--%>
-        <%--            </div>--%>
-
-
-        <%--            &lt;%&ndash;            <div id=""></div>&ndash;%&gt;--%>
-        <%--            <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">--%>
-        <%--                <div class="flex justify-between items-center pt-5">--%>
-        <%--                    <div id=""--%>
-        <%--                         class="z-10   shadow ">--%>
-        <%--                        <label class="text-white"> Campus:--%>
-        <%--                            <select class="py-2 text-sm text-white bg-gray-600 rounded-md p-2" id="venue">--%>
-        <%--                                <option value="TY" ${param.campusID == null ||  param.campusID == 'TY'? 'selected="selected"' : ''}>--%>
-        <%--                                    TY--%>
-        <%--                                </option>--%>
-        <%--                                <option value="CW" ${param.campusID == 'CW' ? 'selected="selected"' : ''}>CW</option>--%>
-        <%--                                <option value="LWL" ${param.campusID == 'LWL' ? 'selected="selected"' : ''}>LWL</option>--%>
-        <%--                                <option value="ST" ${param.campusID == 'ST' ? 'selected="selected"' : ''}>ST</option>--%>
-        <%--                                <option value="TM" ${param.campusID == 'TM' ? 'selected="selected"' : ''}>TM</option>--%>
-        <%--                            </select>--%>
-        <%--                        </label>--%>
-        <%--                    </div>--%>
-        <%--                    &lt;%&ndash;                    <a&ndash;%&gt;--%>
-        <%--                    &lt;%&ndash;                            href="#"&ndash;%&gt;--%>
-        <%--                    &lt;%&ndash;                            class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">&ndash;%&gt;--%>
-        <%--                    &lt;%&ndash;                        &ndash;%&gt;--%>
-        <%--                    &lt;%&ndash;                        <svg class="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true"&ndash;%&gt;--%>
-        <%--                    &lt;%&ndash;                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">&ndash;%&gt;--%>
-        <%--                    &lt;%&ndash;                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"&ndash;%&gt;--%>
-        <%--                    &lt;%&ndash;                                  d="m1 9 4-4-4-4" />&ndash;%&gt;--%>
-        <%--                    &lt;%&ndash;                        </svg>&ndash;%&gt;--%>
-        <%--                    &lt;%&ndash;                    </a>&ndash;%&gt;--%>
-        <%--                </div>--%>
-        <%--            </div>--%>
-        <%--        </div>--%>
-        <%--        <sql:query dataSource="${bookingRate}" var="result">--%>
-        <%--            SELECT YEAR(booking.bookingDate) AS Year,--%>
-        <%--            MONTH(booking.bookingDate) AS Month,--%>
-        <%--            campusID,--%>
-        <%--            COUNT(*) AS BookingRate--%>
-        <%--            FROM booking--%>
-        <%--            INNER JOIN--%>
-        <%--            userinfo ON booking.userID = userinfo.userID--%>
-        <%--            WHERE userinfo.campusID = '${param.campusID == null ? 'TY' : param.campusID}'--%>
-
-        <%--            and booking.bookingStatus = 'Completed'--%>
-        <%--            GROUP BY YEAR(booking.bookingDate),--%>
-        <%--            MONTH(booking.bookingDate)--%>
-        <%--            ORDER BY Year,--%>
-        <%--            Month;--%>
-        <%--        </sql:query>--%>
-
-        <%--        <script>--%>
-        <%--            let data = new Array(12).fill(0);--%>
-        <%--            <cd:forEach var="row" items="${result.rows}">--%>
-        <%--            data[parseInt(${row.Month}) - 1] = parseInt(${row.BookingRate});--%>
-        <%--            console.log(${row.Month});--%>
-        <%--            </cd:forEach>--%>
-        <%--            const options = {--%>
-        <%--                series: [--%>
-        <%--                    {--%>
-        <%--                        name: "Venue booking rate",--%>
-        <%--                        color: "#31C48D",--%>
-        <%--                        data: data--%>
-
-
-        <%--                    },--%>
-        <%--                ],--%>
-        <%--                chart: {--%>
-        <%--                    sparkline: {--%>
-        <%--                        enabled: false,--%>
-        <%--                    },--%>
-        <%--                    type: "bar",--%>
-        <%--                    width: "100%",--%>
-        <%--                    height: 400,--%>
-        <%--                    toolbar: {--%>
-        <%--                        show: false,--%>
-        <%--                    }--%>
-        <%--                },--%>
-        <%--                fill: {--%>
-        <%--                    opacity: 1,--%>
-        <%--                },--%>
-        <%--                plotOptions: {--%>
-        <%--                    bar: {--%>
-        <%--                        horizontal: true,--%>
-        <%--                        columnWidth: "100%",--%>
-        <%--                        borderRadiusApplication: "end",--%>
-        <%--                        borderRadius: 6,--%>
-        <%--                        dataLabels: {--%>
-        <%--                            position: "top",--%>
-        <%--                        },--%>
-        <%--                    },--%>
-        <%--                },--%>
-        <%--                legend: {--%>
-        <%--                    show: true,--%>
-        <%--                    position: "bottom",--%>
-        <%--                },--%>
-        <%--                dataLabels: {--%>
-        <%--                    enabled: false,--%>
-        <%--                },--%>
-        <%--                tooltip: {--%>
-        <%--                    shared: true,--%>
-        <%--                    intersect: false,--%>
-        <%--                    formatter: function (value) {--%>
-        <%--                        return value--%>
-        <%--                    }--%>
-        <%--                },--%>
-        <%--                xaxis: {--%>
-        <%--                    labels: {--%>
-        <%--                        show: true,--%>
-        <%--                        style: {--%>
-        <%--                            fontFamily: "Inter, sans-serif",--%>
-        <%--                            cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'--%>
-        <%--                        },--%>
-        <%--                        formatter: function (value) {--%>
-        <%--                            return value--%>
-        <%--                        }--%>
-        <%--                    },--%>
-        <%--                    categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],--%>
-        <%--                    axisTicks: {--%>
-        <%--                        show: false,--%>
-        <%--                    },--%>
-        <%--                    axisBorder: {--%>
-        <%--                        show: false,--%>
-        <%--                    },--%>
-        <%--                },--%>
-        <%--                yaxis: {--%>
-        <%--                    labels: {--%>
-        <%--                        show: true,--%>
-        <%--                        style: {--%>
-        <%--                            fontFamily: "Inter, sans-serif",--%>
-        <%--                            cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'--%>
-        <%--                        }--%>
-        <%--                    }--%>
-        <%--                },--%>
-        <%--                grid: {--%>
-        <%--                    show: true,--%>
-        <%--                    strokeDashArray: 4,--%>
-        <%--                    padding: {--%>
-        <%--                        left: 2,--%>
-        <%--                        right: 2,--%>
-        <%--                        top: -20--%>
-        <%--                    },--%>
-        <%--                },--%>
-        <%--                fill: {--%>
-        <%--                    opacity: 1,--%>
-        <%--                }--%>
-        <%--            }--%>
-
-        <%--            if (document.getElementById("bar-chart") && typeof ApexCharts !== 'undefined') {--%>
-        <%--                const chart = new ApexCharts(document.getElementById("bar-chart"), options);--%>
-        <%--                chart.render();--%>
-        <%--            }--%>
-
-        <%--        </script>--%>
-        <%--        <script>--%>
-        <%--            $("#venue").change(function () {--%>
-        <%--                console.log($(this).val());--%>
-        <%--                $.ajax({--%>
-        <%--                    url: "analytic?action=changeCampus",--%>
-        <%--                    type: "POST",--%>
-        <%--                    data: {--%>
-        <%--                        campusID: $(this).val()--%>
-        <%--                    },--%>
-        <%--                    success: function (data) {--%>
-        <%--                        window.location.replace("analytic?action=list&campusID=" + data.campusID);--%>
-        <%--                    }--%>
-        <%--                });--%>
-        <%--            });--%>
-        <%--        </script>--%>
-
-
         <div class="flex-1 bg-[#222222] p-8">
             <div
                     style="height: 3%"
@@ -663,7 +474,7 @@
                     x: {
                         title: {
                             display: true,
-                            text: `num of  ${param.duration}`,
+                            text: `${param.duration =="month" ? "Day" : "Month"}`,
                             color: 'white',
                             font: {
                                 size: 20
@@ -679,7 +490,7 @@
                     y: {
                         title: {
                             display: true,
-                            text: `num of count`,
+                            text: `Count`,
                             color: 'white',
                             font: {
                                 size: 20

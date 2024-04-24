@@ -3,8 +3,8 @@ function edit(userID) {
     $(`#cancel_${userID}`).show();
     $(`#update_${userID}`).show();
     $(`#edit_${userID}`).hide();
-    $(`#delete_${userID}`).hide();
-
+    $(`#lock_${userID}`).hide();
+    $(`#unlock_${userID}`).hide();
     $(`#root_${userID}`).prop("disabled", false);
     $(`#campus_${userID}`).prop("disabled", false);
 }
@@ -19,7 +19,8 @@ function cancel(userID, root, campus) {
     $(`#cancel_${userID}`).hide();
     $(`#update_${userID}`).hide();
     $(`#edit_${userID}`).show();
-    $(`#delete_${userID}`).show();
+    $(`#lock_${userID}`).show();
+    $(`#unlock_${userID}`).show();
 
     $(`#root_${userID}`).val(root).prop('selected', true);
     $(`#campus_${userID}`).val(campus).prop('selected', true);
@@ -46,24 +47,65 @@ function update(userID) {
     });
 }
 
-function deleteUser(userID) {
+// function deleteUser(userID) {
+//     Swal.fire({
+//         title: 'Do you want to delete the user?', showCancelButton: true, confirmButtonText: 'Yes',
+//     }).then((result) => {
+//         if (result.isConfirmed) {
+//             $.ajax({
+//                 url: "userManagement?action=delete", type: "POST", data: {
+//                     userID: userID,
+//                 }, success: function (response) {
+//                     if (response.delete === "success") {
+//                         window.location.replace("userManagement?action=userList&delete=success");
+//                     } else {
+//                         window.location.replace("userManagement?action=userList&userID=&delete=failed");
+//                     }
+//                 }
+//             });
+//         }
+//     });
+// }
+
+function lockUser(userID) {
     Swal.fire({
-        title: 'Do you want to delete the user?', showCancelButton: true, confirmButtonText: 'Yes',
+        title: 'Do you want to lock the user?', showCancelButton: true, confirmButtonText: 'Yes',
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: "userManagement?action=delete", type: "POST", data: {
+                url: "userManagement?action=lock", type: "POST", data: {
                     userID: userID,
                 }, success: function (response) {
-                    if (response.delete === "success") {
-                        window.location.replace("userManagement?action=userList&delete=success");
+                    if (response.lock === "success") {
+                        window.location.replace("userManagement?action=userList&lock=success");
                     } else {
-                        window.location.replace("userManagement?action=userList&userID=&delete=failed");
+                        window.location.replace("userManagement?action=userList&userID=&lock=failed");
                     }
                 }
             });
         }
     });
+}
+
+function unLockUser(userID) {
+    Swal.fire({
+        title: 'Do you want to unlock the user?', showCancelButton: true, confirmButtonText: 'Yes',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "userManagement?action=unlock", type: "POST", data: {
+                    userID: userID,
+                }, success: function (response) {
+                    if (response.unlock === "success") {
+                        window.location.replace("userManagement?action=userList&unlock=success");
+                    } else {
+                        window.location.replace("userManagement?action=userList&userID=&unlock=failed");
+                    }
+                }
+            });
+        }
+    });
+
 }
 
 function searchUser() {

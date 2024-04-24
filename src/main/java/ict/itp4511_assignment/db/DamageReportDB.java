@@ -37,16 +37,7 @@ public class DamageReportDB {
     public void createDamageReportTable() {
         try {
             Connection conn = getConnection();
-            String sql = "Create table if not exists damageReport (" +
-                    "reportID int(5) AUTO_INCREMENT PRIMARY KEY ," +
-                    "equipmentID int(5) not null," +
-                    "reportedBy int(5) not null," +
-                    "reportDate date not null DEFAULT (CURRENT_DATE)," +
-                    "damageDescription varchar(255) not null," +
-                    "imageLength int(5) not null," +
-                    "status ENUM('Pending', 'Resolved') not null DEFAULT 'Pending'," +
-                    "FOREIGN KEY (equipmentID) REFERENCES equipment(equipmentID)," +
-                    "FOREIGN KEY (reportedBy) REFERENCES userInfo(userID))";
+            String sql = "Create table if not exists damageReport (" + "reportID int(5) AUTO_INCREMENT PRIMARY KEY ," + "equipmentID int(5) not null," + "reportedBy int(5) not null," + "reportDate date not null DEFAULT (CURRENT_DATE)," + "damageDescription varchar(255) not null," + "imageLength int(5) not null," + "status ENUM('Pending', 'Resolved') not null DEFAULT 'Pending'," + "FOREIGN KEY (equipmentID) REFERENCES equipment(equipmentID)," + "FOREIGN KEY (reportedBy) REFERENCES userInfo(userID))";
             conn.createStatement().execute(sql);
             conn.close();
         } catch (SQLException e) {
@@ -63,9 +54,10 @@ public class DamageReportDB {
         boolean result = false;
         PreparedStatement pStmt = null;
         Connection conn = null;
+        String sql = "";
         try {
             conn = getConnection();
-            String sql = "INSERT INTO damageReport (equipmentID, reportedBy,damageDescription, imageLength) values (?, ?, ?, ?)";
+            sql = "INSERT INTO damageReport (equipmentID, reportedBy,damageDescription, imageLength) values (?, ?, ?, ?)";
             pStmt = conn.prepareStatement(sql);
             pStmt.setInt(1, equipmentID);
             pStmt.setInt(2, reportedBy);
@@ -75,6 +67,12 @@ public class DamageReportDB {
             if (count > 0) {
                 result = true;
             }
+
+            sql = "UPDATE equipment SET status = 'Damaged' WHERE equipmentID = ?";
+            pStmt = conn.prepareStatement(sql);
+            pStmt.setInt(1, equipmentID);
+            count = pStmt.executeUpdate();
+            result = count > 0;
             conn.close();
         } catch (SQLException e) {
             while (e != null) {

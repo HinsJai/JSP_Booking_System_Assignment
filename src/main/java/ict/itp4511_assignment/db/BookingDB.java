@@ -36,7 +36,7 @@ public class BookingDB {
     public void createBookingTable() {
         try {
             Connection conn = getConnection();
-            String sql = "Create table if not exists booking (" + "bookingID int(5) AUTO_INCREMENT PRIMARY KEY ," + "userID int(5) not null," + "bookingDate date not null," + "pickupDate date not null," + "returnDate date not null," + "bookingStatus ENUM('Pending', 'Approved','In delivery','Delivered', 'Declined', 'Completed', 'Cancelled') not null default 'Pending'," + "rejectReason varchar(255)," + "FOREIGN KEY (userID) REFERENCES userInfo(userID))";
+            String sql = "Create table if not exists booking (" + "bookingID int(5) AUTO_INCREMENT PRIMARY KEY ," + "userID int(5) not null," + "bookingDate date not null," + "pickupDate date not null," + "returnDate date not null," + "bookingStatus ENUM('Pending', 'Approved','In delivery','Delivered','UserReceived', 'Declined', 'Completed', 'Cancelled') not null default 'Pending'," + "rejectReason varchar(255)," + "FOREIGN KEY (userID) REFERENCES userInfo(userID))";
 //                    "FOREIGN KEY (equipmentID) REFERENCES equipment(equipmentID))";
             conn.createStatement().execute(sql);
             conn.close();

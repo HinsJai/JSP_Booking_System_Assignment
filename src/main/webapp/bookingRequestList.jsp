@@ -136,6 +136,14 @@
                                                 </div>
                                             </c:when>
 
+                                            <c:when test="${ b.bookingStatus == 'UserReceived'}">
+                                                <div class="flex w-40">
+                                                    <p class="text-black font-bold p-4 text-xl rounded rounded-lg bg-purple-500">
+                                                            ${ b.bookingStatus}
+                                                    </p>
+                                                </div>
+                                            </c:when>
+
                                             <c:when test="${ b.bookingStatus == 'Cancelled'}">
                                                 <div class="flex w-40">
                                                     <p class="text-black font-bold p-4 text-xl rounded rounded-lg bg-pink-500">

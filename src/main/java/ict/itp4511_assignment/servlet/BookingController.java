@@ -122,6 +122,20 @@ public class BookingController extends HttpServlet {
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write(json);
                 break;
+
+            case "userReceived":
+                bookID = Integer.parseInt(request.getParameter("bookingID"));
+                result = bookingDB.updateStatus(bookID, "UserReceived");
+                if (result) {
+                    json = "{\"userReceived\":\"success\"}";
+                } else {
+                    json = "{\"userReceived\":\"failed\"}";
+                }
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(json);
+                break;
+
         }
     }
 }

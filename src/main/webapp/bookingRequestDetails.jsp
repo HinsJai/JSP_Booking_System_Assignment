@@ -34,14 +34,14 @@
                             <div class="space-y-6 mt-10">
                                 <div class="grid sm:grid-cols-2 items-start gap-6">
 
-                                    <sql:query dataSource="${bookRequestDetails}" var="result">
+                                    <sql:query dataSource="${bookRequestDetails}" var="results">
                                         select * from booking right join
                                         bookingequipment on booking.bookingID = bookingequipment.bookingID
                                         LEFT JOIN equipment on bookingequipment.equipmentID = equipment.equipmentID
                                         where booking.bookingID=${sessionScope.bookingID};
                                     </sql:query>
 
-                                    <cr:forEach var="b" items="${result.rows}">
+                                    <cr:forEach var="b" items="${results.rows}">
                                         <div class="px-4 py-6 shrink-0 bg-gray-50 rounded-md">
                                             <img src="images/equipment/${b.equipmentID}.jpg"
                                                  class="w-full object-contain" />
@@ -58,7 +58,7 @@
                                             <div class="flex justify-end mt-6">
                                                 <a href="technicianEquipment?action=details&equipmentID=${b.equipmentID}"
                                                    class="text-black bg-yellow-500 p-4 rounded-md hover:bg-blue-500 font-bold">
-                                                    Details
+                                                    Report Damage
                                                 </a>
                                             </div>
                                         </div>
@@ -224,6 +224,22 @@
                                     </button>
                                 </cr:if>
                                 <cr:if test="${bd.bookingStatus == 'Delivered'}">
+                                    <%--                                    <cr:forEach var="b" items="${results.rows}">--%>
+                                    <%--                                        <cr:if test="${b.status != 'Available'}">--%>
+                                    <%--                                    <button type="button" id="confirmedReject" onclick="completeBooking()"--%>
+                                    <%--                                            class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-blue-500 hover:bg-orange-500 border-2">--%>
+                                    <%--                                        Complete booking&lt;%&ndash;                                    </cr:forEach>&ndash;%&gt;--%>
+
+                                    <%--                                    </button>--%>
+
+                                    <button type="button" id="confirmedReject" onclick="userReceived()"
+                                            class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-blue-500 hover:bg-orange-500 border-2">
+                                        User Received<%--                                    </cr:forEach>--%>
+
+                                    </button>
+                                    <%--                                        </cr:if>--%>
+                                </cr:if>
+                                <cr:if test="${bd.bookingStatus == 'UserReceived'}">
                                     <button type="button" id="confirmedReject" onclick="completeBooking()"
                                             class="ml-4 rounded-md px-6 py-3 w-full text-xl font-semibold bg-blue-500 hover:bg-orange-500 border-2">
                                         Complete booking
@@ -238,7 +254,9 @@
                                             Arrange Delivery
                                         </a>
                                     </div>
+
                                 </cr:if>
+
                             </div>
 
                         </div>

@@ -28,7 +28,7 @@
         </script>
     </head>
     <body class="bg-gray-900">
-        <sql:setDataSource var="damageReportList" driver="com.mysql.cj.jdbc.Driver"
+        <sql:setDataSource var="userManagement" driver="com.mysql.cj.jdbc.Driver"
                            url="jdbc:mysql://localhost:3306/itp4511_db?useSSL=false"
                            user="root" password="root" />
 
@@ -105,7 +105,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <sql:query dataSource="${damageReportList}" var="result">
+                                <sql:query dataSource="${userManagement}" var="result">
                                     <cu:choose>
                                         <cu:when
                                                 test="${param.action.equals('search')}">
@@ -195,10 +195,28 @@
                                                 onclick="cancel(${u.userID},'${u.root}','${u.campusID}')">Cancel
                                         </button>
 
-                                        <button class="p-2 bg-red-500 rounded-md hover:bg-orange-500"
-                                                id=delete_${u.userID} onclick="deleteUser(${u.userID})">
-                                            Delete
-                                        </button>
+                                        <sql:query dataSource="${userManagement}" var="result">
+                                            select * from userInfo where userID = ${u.userID};
+                                        </sql:query>
+
+                                        <cu:forEach var="r" items="${result.rows}">
+                                            <cu:choose>
+                                                <cu:when test="${r.isLocked == false }">
+
+                                                    <button class="px-5 py-2 bg-red-500 rounded-md hover:bg-orange-500"
+                                                            id=lock_${u.userID} onclick="lockUser(${u.userID})">
+                                                        Lock
+                                                    </button>
+                                                </cu:when>
+
+                                                <cu:otherwise>
+                                                    <button class="p-2 bg-green-500 rounded-md hover:bg-orange-500"
+                                                            id=unlock_${u.userID} onclick="unLockUser(${u.userID})">
+                                                        Unlock
+                                                    </button>
+                                                </cu:otherwise>
+                                            </cu:choose>
+                                        </cu:forEach>
                                     </td>
                                 </tr>
                             </tbody>
@@ -213,11 +231,21 @@
                                     });
                                 </script>
                             </cu:if>
-                            <cu:if test="${param.delete.equals('success')}">
+                            <cu:if test="${param.lock.equals('success')}">
                                 <script>
                                     Swal.fire({
-                                        title: 'Deleted',
-                                        text: 'User has been deleted!',
+                                        title: 'Locked',
+                                        text: 'User has been locked!',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    });
+                                </script>
+                            </cu:if>
+                            <cu:if test="${param.unlock.equals('success')}">
+                                <script>
+                                    Swal.fire({
+                                        title: 'unLocked',
+                                        text: 'User has been unLocked!',
                                         icon: 'success',
                                         confirmButtonText: 'OK'
                                     });

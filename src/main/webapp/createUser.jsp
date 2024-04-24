@@ -166,11 +166,11 @@
                             </cc:choose>
                         </div>
                     </div>
-                    <cc:if test="${param.insertUser.equals('success')}">
+                    <cc:if test="${param.addToDB.equals('success')}">
                         <script>
                             Swal.fire({
                                 title: 'Added',
-                                text: 'User has been created successfully!',
+                                text: 'All user has been created successfully!',
                                 icon: 'success',
                                 confirmButtonText: 'OK'
                             });

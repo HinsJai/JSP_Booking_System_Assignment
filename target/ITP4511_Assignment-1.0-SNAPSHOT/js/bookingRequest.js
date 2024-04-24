@@ -77,3 +77,29 @@ function completeBooking() {
         }
     });
 }
+
+function userReceived() {
+    Swal.fire({
+        title: 'Do you want to confirm that the user has received the item?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let bookingID = $("#bookID").val().trim();
+            $.ajax({
+                url: `booking?action=userReceived`, type: "POST", data: {
+                    bookingID: bookingID
+                }, success: function (response) {
+                    if (response.userReceived === "success") {
+                        window.location.replace(`booking?action=requestDetails&bookingID=${bookingID}&userReceived=success`);
+                    } else {
+                        Swal.fire("Error confirming user received item!");
+                    }
+                }, error: function (xhr, status, error) {
+                    console.error("Error confirming user received item: ", error);
+                    Swal.fire("Error confirming user received item!");
+                }
+            });
+        }
+    });
+}

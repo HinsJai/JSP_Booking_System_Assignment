@@ -23,7 +23,7 @@
         </script>
         <script>
             $(document).ready(function () {
-                $('#table').paging({limit: 5});
+                $('#table').paging({limit: 6});
             });
         </script>
 

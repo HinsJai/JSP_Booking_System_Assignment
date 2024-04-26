@@ -21,7 +21,7 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         <script>
             $(document).ready(function () {
-                $('#table').paging({limit: 5});
+                $('#table').paging({limit: 6});
             });
         </script>
     </head>

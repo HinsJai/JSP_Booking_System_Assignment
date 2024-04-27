@@ -78,7 +78,7 @@
                                     class="font-semibold">Courier Name:</span> ${c.fName} ${c.lName}
                             </div>
                             <div class="text-gray-700 mb-2"><span
-                                    class="font-semibold">Contact:</span> ${d.courierID}
+                                    class="font-semibold">Contact:</span> ${c.contact}
                             </div>
                         </cd:forEach>
                     </cd:if>

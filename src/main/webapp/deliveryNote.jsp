@@ -46,7 +46,7 @@
                     <div class="flex items-center">
                         <img class="h-16 w-50 mr-2" src="images/HKIIT_logo.png"
                              alt="Logo" />
-                        <div class="text-gray-700 font-semibold text-4xl">HKITI</div>
+                        <div class="text-gray-700 font-semibold text-4xl">HKIIT</div>
                     </div>
                     <div class="text-gray-700">
                         <div class="font-bold text-xl mb-2">Delivery Note</div>

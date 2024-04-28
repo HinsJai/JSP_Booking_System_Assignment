@@ -150,11 +150,11 @@
                                 </c:when>
 
                                 <c:when test="${ row.bookingStatus == 'UserReceived'}">
-                                    <div class="flex w-40">
-                                        <p class="text-black font-bold p-4 text-xl rounded rounded-lg bg-purple-500">
+                                    <td class="px-6 py-4 text-2xl">
+                                        <span class="text-2xl  bg-purple-500 text-black  p-2 rounded-md">
                                                 ${ row.bookingStatus}
-                                        </p>
-                                    </div>
+                                        </span>
+                                    </td>
                                 </c:when>
 
                                 <c:when test="${row.bookingStatus == 'Completed'}">

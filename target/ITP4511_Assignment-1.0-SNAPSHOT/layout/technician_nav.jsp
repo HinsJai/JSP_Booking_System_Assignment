@@ -30,10 +30,12 @@
                         class="text-white text-xl hover:text-orange-500 border-b-2">
                     Create Equipment</p></a>
                 </li>
-                <li><a class="hover:text-orange-500" href="userManagement?action=userList"><p
-                        class="text-white text-xl hover:text-orange-500 border-b-2">
-                    User Management</p></a>
-                </li>
+                <ct:if test="${sessionScope.userType == 'Technician_admin'}">
+                    <li><a class="hover:text-orange-500" href="userManagement?action=userList"><p
+                            class="text-white text-xl hover:text-orange-500 border-b-2">
+                        User Management</p></a>
+                    </li>
+                </ct:if>
                 <li><a class="hover:text-orange-500" href="delivery?action=list"><p
                         class="text-white text-xl hover:text-orange-500 border-b-2">
                     Delivery</p></a>

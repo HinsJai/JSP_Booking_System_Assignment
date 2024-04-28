@@ -20,6 +20,7 @@
         <script src="js/cart.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10">
         </script>
+        <script src="js/booking.js"></script>
         <script>
             $(document).ready(function () {
                 $('#table').paging({limit: 5});
@@ -30,6 +31,33 @@
         <sql:setDataSource var="booking" driver="com.mysql.cj.jdbc.Driver"
                            url="jdbc:mysql://localhost:3306/itp4511_db?useSSL=false"
                            user="root" password="root" />
+        <div class="flex">
+            <select id="search-type"
+                    class="font-bold text-xl flex-shrink-0 z-10 inline-flex items-center py-2  text-center text-gray-900 bg-gray-100 border border-gray-300  hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+            >
+                <option value="all">All</option>
+                <option value="bookingStatus">Status</option>
+                <option value="bookingID">Booking ID</option>
+                <option value="bookingDate">Booking Date</option>
+                <option value="pickupDate">Pick-up Date</option>
+                <option value="returnDate">Return Date</option>
+            </select>
+
+            <div class="relative w-full">
+                <input type="search" id="keyword"
+                       class="h-14 block p-2.5 w-full z-20 text-white bg-gray-600    focus:ring-blue-500 focus:border-blue-500 "
+                       placeholder="Search by ID, status, booking date, pick-up date, return date" required />
+                <button id="search" onclick="searchBooking()"
+                        class="absolute top-0 end-0 p-4 text-base font-medium h-full text-white bg-blue-700  border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 0 ">
+                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                         viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
+                    <span class="sr-only">Search</span>
+                </button>
+            </div>
+        </div>
 
         <div class="relative overflow-x-auto shadow-md ">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" id="table">
@@ -56,9 +84,19 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     <sql:query dataSource="${booking}" var="result">
-                        SELECT * FROM booking where userID = ${sessionScope.userID} ORDER BY CASE WHEN bookingStatus = 'Pending' THEN 0 ELSE 1 END, bookingStatus;
+                        <c:choose>
+                            <c:when
+                                    test="${param.action.equals('userSearch')}">
+                                SELECT * FROM booking WHERE userID = ${sessionScope.userID} and  ${param.type} LIKE "%${param.keyword}%";
+                            </c:when>
+                            <c:otherwise>
+                                SELECT * FROM booking where userID = ${sessionScope.userID} ORDER BY CASE WHEN bookingStatus = 'Pending' THEN 0 ELSE 1 END, bookingStatus;
+                            </c:otherwise>
+                        </c:choose>
                     </sql:query>
+
                     <c:forEach var="row" items="${result.rows}">
                         <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                             <td class="px-6 py-4 text-2xl">

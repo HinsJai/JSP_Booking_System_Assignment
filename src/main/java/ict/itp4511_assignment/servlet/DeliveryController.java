@@ -62,6 +62,16 @@ public class DeliveryController extends HttpServlet {
                 rd = request.getRequestDispatcher("/courier_deliveryList.jsp");
                 rd.forward(request, response);
                 break;
+            case "search":
+                session.setAttribute("page", "deliveryList");
+                rd = request.getRequestDispatcher("/deliveryList.jsp");
+                rd.forward(request, response);
+                break;
+            case "courierSearch":
+                session.setAttribute("page", "courierSearch");
+                rd = request.getRequestDispatcher("/courier_deliveryList.jsp");
+                rd.forward(request, response);
+                break;
             case "arrange":
                 session.setAttribute("page", "deliveryArrangement");
                 rd = request.getRequestDispatcher("/deliveryArrange.jsp");

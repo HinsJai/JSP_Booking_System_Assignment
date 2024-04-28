@@ -103,3 +103,13 @@ function userReceived() {
         }
     });
 }
+
+function searchBookingRequest() {
+    let search = $("#search-type").val();
+    let keyword = $("#keyword").val();
+    if (search === "all") {
+        window.location.replace("booking?action=requestList");
+    } else {
+        window.location.replace("booking?action=search&type=" + search + "&keyword=" + keyword);
+    }
+}

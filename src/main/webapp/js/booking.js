@@ -8,3 +8,13 @@ function cancelBooking() {
         }
     })
 }
+
+function searchBooking() {
+    let search = $("#search-type").val();
+    let keyword = $("#keyword").val();
+    if (search === "all") {
+        window.location.replace("booking?action=list");
+    } else {
+        window.location.replace("booking?action=userSearch&type=" + search + "&keyword=" + keyword);
+    }
+}

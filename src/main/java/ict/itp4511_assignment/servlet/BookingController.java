@@ -59,7 +59,14 @@ public class BookingController extends HttpServlet {
                 rd = request.getRequestDispatcher("/bookingRequestList.jsp");
                 rd.forward(request, response);
                 break;
-
+            case "search":
+                rd = getServletContext().getRequestDispatcher("/bookingRequestList.jsp");
+                rd.forward(request, response);
+                break;
+            case "userSearch":
+                rd = getServletContext().getRequestDispatcher("/bookingList.jsp");
+                rd.forward(request, response);
+                break;
             case "details":
                 session.setAttribute("page", "booking");
                 rd = request.getRequestDispatcher("/bookingDetails.jsp");

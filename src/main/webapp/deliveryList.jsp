@@ -19,6 +19,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
         <script src="./js/paging.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script src="js/delivery.js"></script>
         <script>
             $(document).ready(function () {
                 $('#table').paging({limit: 5});
@@ -29,6 +30,34 @@
         <sql:setDataSource var="delivery" driver="com.mysql.cj.jdbc.Driver"
                            url="jdbc:mysql://localhost:3306/itp4511_db?useSSL=false"
                            user="root" password="root" />
+
+        <div class="flex">
+            <select id="search-type"
+                    class="font-bold text-xl flex-shrink-0 z-10 inline-flex items-center py-2  text-center text-gray-900 bg-gray-100 border border-gray-300  hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+            >
+                <option value="all">All</option>
+                <option value="deliveryID">Delivery ID</option>
+                <option value="bookingID">Booking ID</option>
+                <option value="createDate">Create Date</option>
+                <option value="userPickupDate">User Pick-up Date</option>
+                <option value="status">Status</option>
+            </select>
+
+            <div class="relative w-full">
+                <input type="search" id="keyword"
+                       class="h-14 block p-2.5 w-full z-20 text-white bg-gray-600    focus:ring-blue-500 focus:border-blue-500 "
+                       placeholder="Search by ID, status, create date, pick-up date" required />
+                <button id="search" onclick="searchDelivery()"
+                        class="absolute top-0 end-0 p-4 text-base font-medium h-full text-white bg-blue-700  border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 0 ">
+                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                         viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
+                    <span class="sr-only">Search</span>
+                </button>
+            </div>
+        </div>
 
         <section class=" bg-slate-900 text-black w-screen h-full">
 
@@ -70,7 +99,16 @@
                             </thead>
                             <tbody>
                                 <sql:query dataSource="${delivery}" var="result">
-                                    SELECT * FROM delivery ORDER BY CASE WHEN status = 'Pending' THEN 0 ELSE 1 END, status;
+
+                                    <c:choose>
+                                        <c:when
+                                                test="${param.action.equals('search')}">
+                                            SELECT * FROM delivery WHERE ${param.type} LIKE "%${param.keyword}%";
+                                        </c:when>
+                                        <c:otherwise>
+                                            SELECT * FROM delivery ORDER BY CASE WHEN status = 'Pending' THEN 0 ELSE 1 END, status;
+                                        </c:otherwise>
+                                    </c:choose>
                                 </sql:query>
 
                                 <c:forEach var="d" items="${result.rows}">

@@ -80,3 +80,23 @@ function completeDelivery(deliveryID, bookingID) {
         }
     })
 }
+
+function searchCourierDelivery() {
+    let search = $("#search-type").val();
+    let keyword = $("#keyword").val();
+    if (search === "all") {
+        window.location.replace("delivery?action=courier_deliveryList");
+    } else {
+        window.location.replace("delivery?action=courierSearch&type=" + search + "&keyword=" + keyword);
+    }
+}
+
+function searchDelivery() {
+    let search = $("#search-type").val();
+    let keyword = $("#keyword").val();
+    if (search === "all") {
+        window.location.replace("delivery?action=list");
+    } else {
+        window.location.replace("delivery?action=search&type=" + search + "&keyword=" + keyword);
+    }
+}
